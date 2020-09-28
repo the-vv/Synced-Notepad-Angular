@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Notepad"
+    }
+  },
+  "defaultProject": "Notepad",
+  "cli": {
+    "analytics": false
+  }
 }
