@@ -1,0 +1,13 @@
+.bg{    
+    background-image: url('../../assets/images/bg.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: calc(100vh - 56px);
+}
+.background-blue{
+    background-color: rgba($color: #0000ff, $alpha: 0.3);
+}
+.main-headding{
+    font-family: 'Baloo Tammudu 2', cursive;
+}
