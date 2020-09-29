@@ -1,18 +1,37 @@
 <div class="bg">
     <div class="container-fluid h-100 background-blue">
         <div class="row justify-content-center h-100 align-content-center">
-            <div class="container bg-white">
-                <div class="row justify-content-center">
-                    <div class="display-3 text-black m-4">
-                        Sign In With
-                    </div>                    
-                </div>
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 background-blue-inverse rounded text-center">
                 <div class="row">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Google</button>
+                    <div class="col-12 m-4">
+                        <p class="display-6 font-weight-bold text-dark">
+                            Sign In With
+                        </p>
+                    </div>
+                    <div class="col-8 mx-auto">
+                        <button type="button" class="btn btn-light btn-lg btn-block shadow" data-ripple-color="dark">
+                            Google <i class="fab fa-google"></i>
+                        </button>
+                    </div>
+                    <div class="col-8 mt-5 mx-auto text-dark">
+                        <p class="">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Outline form field</mat-label>
+                                <input matInput placeholder="Placeholder">
+                            </mat-form-field>
+                        </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Outline form field</mat-label>
+                                <input matInput placeholder="Placeholder" [type]="hide ? 'password' : 'text'">
+                                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+                                </mat-icon>
+                            </mat-form-field>
+                        </p>
                     </div>
                 </div>
-            </div>            
+
+            </div>
         </div>
     </div>
 </div>
