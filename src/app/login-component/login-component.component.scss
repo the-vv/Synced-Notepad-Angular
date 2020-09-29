@@ -10,7 +10,7 @@
     border-radius: 15px!important;
 }
 .bg{    
-    height: calc(100vh - 56px);
+    height: calc(100vh - 46.99px)!important;
 }
 @keyframes gradient {
 	0% {
@@ -25,4 +25,14 @@
 }
 .mat-form-field{
     width: 100%;
+}
+.mpointer {
+    cursor: pointer;
+}
+button.google{
+	font-size: large;
+}
+button.google:hover{	
+	color: white;
+	background: linear-gradient(-45deg,#23a6d5, #23d5ab);
 }
