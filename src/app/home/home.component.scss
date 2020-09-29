@@ -1,13 +1,61 @@
+@import 'https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap';
+
 .bg{    
-    background-image: url('../../assets/images/bg.png');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     height: calc(100vh - 56px);
-}
-.background-blue{
-    background-color: rgba($color: #0000ff, $alpha: 0.3);
 }
 .main-headding{
     font-family: 'Baloo Tammudu 2', cursive;
+    line-height: 0.3em;
+}
+.background-blue {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 600% 600%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+$avatar-size: 32px;
+$body-background: #333641;
+
+.wrapper {
+    text-align: center;
+    h1 {
+        margin-bottom: -15px!important;
+        color: #fff;
+        font-size: 52px;
+        font-family: 'Baloo Tammudu 2', cursive;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-family: 'Baloo Tammudu 2', cursive;
+        background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: auto auto;
+        background-clip: border-box;
+        background-size: 400% 400%;
+        color: #fff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradient 15s ease infinite;
+        display: inline-block;
+    }
+}
+
+@keyframes textclip {
+    to {
+        background-position: 200% center;
+    }
+}
+button{
+    font-weight: 500!important;
 }
