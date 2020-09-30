@@ -15,4 +15,7 @@ export class LoginComponentComponent implements OnInit {
     
   }
 
+  GLogin(){
+  }
+
 }
