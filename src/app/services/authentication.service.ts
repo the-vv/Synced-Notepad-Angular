@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable } from 'rxjs'
-import { promise } from 'protractor';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable, of } from 'rxjs'
+import { switchMap } from 'rxjs/operators';
+
+interface User {
+  uid: string;
+  email: string;
+  photoURL?: string;
+  displayName?: string;
+  myCustomData?: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,42 +19,46 @@ import { promise } from 'protractor';
 
 export class AuthenticationService {
 
+  user$: Observable<User>;
+
   constructor(
     public auth: AngularFireAuth,
-  ) { }
-
-  FacebookLogin(){
-    return new Promise<any>((resolve, reject) => {
-      let provider = new auth.FacebookAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      this.auth.signInWithPopup(provider).then(res => {
-        resolve(res);
-      },
-      (error) =>{
-        reject(error)       
-      }),
-        error => {
-          reject(error)
+    private afs: AngularFirestore
+  ) {
+    // Get the auth state, then fetch the Firestore user document or return null
+    this.user$ = this.auth.authState.pipe(
+      switchMap(user => {
+        // Logged in
+        if (user) {
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          // Logged out
+          return of(null);
         }
-    })
+      })
+    )
   }
 
-  GoogleLogin() {
-    return new Promise<any>((resolve, reject) => {
-      let provider = new auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      this.auth.signInWithPopup(provider).then(res => {
-        resolve(res);
-      },
-      (error) =>{
-        reject(error)       
-      }),
-        error => {
-          reject(error)
-        }
-    })
+  addUserToDB({ user }) {
+    // Sets user data to firestore on login
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const data = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL
+    }
+    return userRef.set(data, { merge: true })
+  }
+
+  FacebookLogin() {
+    return new Promise<any>((resolve, reject) => { }) //not working so deprecated
+  }
+
+  async GoogleLogin() {
+    const provider = new auth.GoogleAuthProvider();
+    const credential = await this.auth.signInWithPopup(provider);
+    return this.addUserToDB(credential);
   }
 
   IsLoggedIn() {
@@ -63,24 +76,24 @@ export class AuthenticationService {
           }
           resolve(User);
         }
-        else{
-          reject(null)       
+        else {
+          reject(null)
         }
       })
     })
   }
 
-  
+
   SignOut() {
     return new Promise<any>((resolve, reject) => {
       this.auth.signOut().then(() => {
         resolve(true)
       })
-      .catch((error) => {
+        .catch((error) => {
           reject(false);
         })
-      })
-    }
+    })
+  }
 
   // SignOut() {
   //   return new Promise<any>((resolve, reject) => {
