@@ -83,8 +83,8 @@ export class AuthenticationService {
     })
   }
 
-
   SignOut() {
+    console.log("signing out");    
     return new Promise<any>((resolve, reject) => {
       this.auth.signOut().then(() => {
         resolve(true)
@@ -94,17 +94,4 @@ export class AuthenticationService {
         })
     })
   }
-
-  // SignOut() {
-  //   return new Promise<any>((resolve, reject) => {
-  //     this.auth.signOut().then(function () {
-  //       resolve(false)
-  //     },
-  //       (error) => {
-  //         reject(false)
-  //       }).catch(function (error) {
-  //         console.log('error');
-  //       })
-  //     })
-  //   }
 }
