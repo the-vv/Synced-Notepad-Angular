@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 # my custom
-/src/app/enviornments
+src/app/enviornments/envs.ts

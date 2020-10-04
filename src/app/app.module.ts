@@ -17,12 +17,14 @@ import {MatInputModule} from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import { NotesContainerComponent } from './notes-container/notes-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponentComponent,
-    HomeComponent
+    HomeComponent,
+    NotesContainerComponent
   ],
   imports: [    
    AngularFireAuthModule,
