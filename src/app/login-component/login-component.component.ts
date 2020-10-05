@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponentComponent implements OnInit {
   
   hide = true;
+  signinCalled = false
 
   constructor(
     public Auth: AuthenticationService,
@@ -19,7 +20,8 @@ export class LoginComponentComponent implements OnInit {
   ngOnInit(): void { 
     this.Auth.user$
     .subscribe((user=>{
-      if(user){        
+      if(user && !this.signinCalled){  
+        console.log('back');              
       this.router.navigate(['/'])
       }
     }))

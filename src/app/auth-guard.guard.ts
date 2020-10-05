@@ -23,4 +23,3 @@ constructor(
     return this.router.parseUrl('/login');
   }  
 }
- 
