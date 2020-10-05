@@ -20,6 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { NotesContainerComponent } from './notes-container/notes-container.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
+    MatMenuModule
   ],
   providers: [
     AuthenticationService

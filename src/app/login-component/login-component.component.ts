@@ -25,14 +25,4 @@ export class LoginComponentComponent implements OnInit {
     })
   }
 
-  GLogin(){
-    this.Auth.GoogleLogin()
-    .then((user) => {   
-      console.log(user);      
-    })
-    .catch((error) =>{
-      console.log(error.message);      
-    })
-  }
-
 }
