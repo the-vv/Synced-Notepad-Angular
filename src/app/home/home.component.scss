@@ -1,11 +1,18 @@
 @import 'https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap';
 
-.bg{    
-    height: calc(100vh - 46.99px);
+@media (min-width: 992px) {
+	.bg{    
+		height: calc(100vh - 53px)!important;
+	}
+}
+@media (max-width: 991px) {
+	.bg{    
+		height: calc(100vh - 44px);
+	}
 }
 .main-headding{
     font-family: 'Baloo Tammudu 2', cursive;
-}
+} 
 .background-blue {
 	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 	background-size: 600% 600%;

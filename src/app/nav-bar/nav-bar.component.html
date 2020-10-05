@@ -1,24 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container-fluid">
         <a class="navbar-brand" routerLink="/">Synced Notepad</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <button class="navbar-toggler p-0" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <button class="btn btn-link p-0 m-0 dropdown-toggle" *ngIf="auths.user$ | async as user">
-                <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="30px">
+                <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="25px">
             </button>
-            <i class="fas fa-bars" *ngIf="!(auths.user$ | async)"></i>
+            <i class="fas fa-bars pt-1" *ngIf="!(auths.user$ | async)"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto" *ngIf="auths.user$ | async as user">
                 <li class="nav-item">
-                    <a class="nav-link">{{user.displayName}}</a>
+                    <a class="nav-link" routerLink="/notes">My Notes</a>
                 </li>
                 <li class="nav-item d-md-none">
                     <a class="nav-link" (click)="auths.SignOut()">Logout</a>
                 </li>
-                <li class="nav-item d-none d-md-inline" [matMenuTriggerFor]="menu">
-                    <button class="btn btn-link p-0 px-1 m-0 dropdown-toggle">
-                        <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="30px">
+                <li class="nav-item d-none d-lg-inline my-auto" [matMenuTriggerFor]="menu">
+                    <button class="btn btn-link p-0 px-1 m-0 dropdown-toggle text-light usernme">
+                        {{user.displayName}} 
+                        <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="25px">
                     </button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="auths.SignOut()">Logout</button>

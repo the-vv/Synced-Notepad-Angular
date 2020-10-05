@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-component',
@@ -10,9 +11,18 @@ export class LoginComponentComponent implements OnInit {
   
   hide = true;
 
-  constructor(public Auth: AuthenticationService) { }
+  constructor(
+    public Auth: AuthenticationService,
+    private router: Router
+    ) { }
 
   ngOnInit(): void { 
+    this.Auth.user$
+    .subscribe((user=>{
+      if(user){        
+      this.router.navigate(['/'])
+      }
+    }))
   }
 
   FBLogin(){

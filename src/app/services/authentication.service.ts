@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
   user$: Observable<any>;
+  redirectUrl: string;
+  isLoggedIn: boolean = false;
 
   constructor(
     public auth: AngularFireAuth,
@@ -24,13 +26,15 @@ export class AuthenticationService {
       switchMap(user => {
         // Logged in
         if (user) {
+          this.isLoggedIn = true;
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
           return of(null);
         }
       })
-    )
+    )   
+    console.log(this.redirectUrl);     
   }
 
   addUserToDB({ user }) {
@@ -42,7 +46,10 @@ export class AuthenticationService {
       displayName: user.displayName,
       photoURL: user.photoURL
     }
-    userRef.set(data, { merge: true })
+    return new Promise<boolean>(async (resolve, reject) =>{
+      await userRef.set(data, { merge: true })
+      resolve(true)
+    })
   }
 
   FacebookLogin() {
@@ -52,41 +59,20 @@ export class AuthenticationService {
   async GoogleLogin() {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.auth.signInWithPopup(provider);
-    this.addUserToDB(credential);
-    this.router.navigate(['/'])
-  }
-
-  IsLoggedIn() {
-    return new Promise<any>((resolve, reject) => {
-      this.auth.onAuthStateChanged((user) => {
-        if (user) {
-          var User = {
-            displayName: user.displayName,
-            email: user.email,
-            emailVerified: user.emailVerified,
-            photoURL: user.photoURL,
-            isAnonymous: user.isAnonymous,
-            uid: user.uid,
-            providerData: user.providerData
-          }
-          resolve(User);
-        }
-        else {
-          reject(null)
-        }
-      })
+    await this.addUserToDB(credential);  
+    console.log(this.redirectUrl);    
+    this.router.navigate([this.redirectUrl ? this.redirectUrl : '/'])
+    .then((res) =>{
+      console.log(res);      
+    })
+    .catch((err) =>{
+      console.log(err);      
     })
   }
 
   SignOut() {
+    this.isLoggedIn = false
     console.log("signing out");    
-    return new Promise<any>((resolve, reject) => {
-      this.auth.signOut().then(() => {
-        resolve(true)
-      })
-        .catch((error) => {
-          reject(false);
-        })
-    })
+      this.auth.signOut()
   }
 }

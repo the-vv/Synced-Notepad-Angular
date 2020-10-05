@@ -1,0 +1,10 @@
+@media (max-width: 991px) {
+    .container-fluid{    
+        height: calc(100vh - 47px);
+    }
+}
+@media (min-width: 992px) {
+    .container-fluid{
+        height:calc(100vh - 53px);
+    }
+}

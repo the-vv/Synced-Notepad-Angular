@@ -5,12 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
 import { HomeComponent } from './home/home.component';
+import { NotesContainerComponent } from './notes-container/notes-container.component';
+
+import { AuthenticationService } from '../app/services/authentication.service';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from "@angular/fire/firestore";
-
-import { AuthenticationService } from '../app/services/authentication.service';
 
 import { firebaseConfig } from '../app/enviornments/envs'
 
@@ -18,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { NotesContainerComponent } from './notes-container/notes-container.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MatMenuModule} from '@angular/material/menu';
 
