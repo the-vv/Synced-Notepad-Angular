@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NotesService } from '../services/notes.service';
 
 interface Note {
@@ -15,15 +15,20 @@ interface Note {
 })
 export class NotesContainerComponent implements OnInit {
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.isDrawerOpen = event.target.innerWidth >= 768 ? true : false
+  }
   Notes: Note[]
+  isDrawerOpen: boolean;
 
   constructor(public Note: NotesService) {
-   }
+  }
 
   ngOnInit(): void {
     this.Notes = this.Note.getNotes()
     console.log(this.Notes);
-    
+    this.isDrawerOpen = window.innerWidth >= 768 ? true : false
   }
 
 }

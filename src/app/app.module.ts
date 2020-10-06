@@ -2,10 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponentComponent } from './login-component/login-component.component';
-import { HomeComponent } from './home/home.component';
-import { NotesContainerComponent } from './notes-container/notes-container.component';
 
 import { AuthenticationService } from '../app/services/authentication.service';
 import { NotesService } from '../app/services/notes.service';
@@ -23,7 +19,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 import { NoteCardComponent } from './note-card/note-card.component';
+import { AppComponent } from './app.component';
+import { LoginComponentComponent } from './login-component/login-component.component';
+import { HomeComponent } from './home/home.component';
+import { NotesContainerComponent } from './notes-container/notes-container.component';
+
 
 
 
@@ -47,7 +50,8 @@ import { NoteCardComponent } from './note-card/note-card.component';
     MatFormFieldModule,
     MatIconModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatToolbarModule
   ],
   providers: [
     AuthenticationService,

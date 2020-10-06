@@ -1,7 +1,7 @@
-<div class="container-fluid bg-dark m-0 p-0">
+<div class="container-fluid bg-dark m-0 p-0 main-container">
     <div class="">
         <mat-sidenav-container class="example-container">
-            <mat-sidenav #sidenav mode="side" [opened]='true' class="sidebar">
+            <mat-sidenav #sidenav mode="side" [opened]='isDrawerOpen' class="sidebar">
                 <div class="container-fluid">
                     <div class="row">
                         <h2 class="p-0 my-1"># Tags</h2>
@@ -19,16 +19,28 @@
             </mat-sidenav>
             <mat-sidenav-content>
                 <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
-                
-                <div class="container-fluid">
+
+                <div class="container-fluid p-0 m-0">
+                    <div class="">
+                        <mat-toolbar>
+                            <button mat-icon-button class="example-icon btn btn-dark p-1 px-2 mr-2 text-white"
+                                aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen">
+                                <mat-icon>menu</mat-icon>
+                            </button>
+                            <span>My App</span>
+                            <span class="example-spacer"></span>
+                        </mat-toolbar>
+                    </div>
+                </div>
+                    
+                <div class="container">
                     <div class="row">
-                        <div class="col-md-6 col-lg-4" *ngFor="let Note of Notes" >
+                        <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
                             <app-note-card [note]="Note">
                             </app-note-card>
                         </div>
                     </div>
-                </div>     
-
+                </div>
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>
