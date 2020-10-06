@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { NotesContainerComponent } from './notes-container/notes-container.component';
 
 import { AuthenticationService } from '../app/services/authentication.service';
+import { NotesService } from '../app/services/notes.service';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -44,7 +45,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatMenuModule
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    NotesService
   ],
   bootstrap: [
     AppComponent

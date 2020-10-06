@@ -19,7 +19,7 @@ export class AuthenticationService {
   constructor(
     public auth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router  
+    private router: Router
   ) {
     // Get the auth state, then fetch the Firestore user document or return null
     this.user$ = this.auth.authState.pipe(
@@ -30,11 +30,11 @@ export class AuthenticationService {
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
+          this.isLoggedIn = false
           return of(null);
         }
       })
-    )   
-    console.log(this.redirectUrl);     
+    )
   }
 
   addUserToDB({ user }) {
@@ -46,7 +46,7 @@ export class AuthenticationService {
       displayName: user.displayName,
       photoURL: user.photoURL
     }
-    return new Promise<boolean>(async (resolve, reject) =>{
+    return new Promise<boolean>(async (resolve, reject) => {
       await userRef.set(data, { merge: true })
       resolve(true)
     })
@@ -59,20 +59,20 @@ export class AuthenticationService {
   async GoogleLogin() {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.auth.signInWithPopup(provider);
-    await this.addUserToDB(credential);  
-    console.log(this.redirectUrl);    
+    await this.addUserToDB(credential);
+    console.log(this.redirectUrl);
     this.router.navigate([this.redirectUrl ? this.redirectUrl : '/'])
-    .then((res) =>{
-      console.log(res);      
-    })
-    .catch((err) =>{
-      console.log(err);      
-    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   SignOut() {
     this.isLoggedIn = false
-    console.log("signing out");    
-      this.auth.signOut()
+    console.log("signing out");
+    this.auth.signOut()
   }
 }
