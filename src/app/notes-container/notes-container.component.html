@@ -9,18 +9,25 @@
                         <div class="col-12 p-0 m-0">
                             <ul class="p-0">
                                 <li class=" my-2" *ngFor="let tag of Note.getHashTags()">
-                                     #{{tag}}
+                                    #{{tag}}
                                     <hr class="m-0 p-0">
                                 </li>
-                              </ul>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </mat-sidenav>
             <mat-sidenav-content>
                 <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
-
-                <app-note-card *ngFor="let Note of Note.getNotes()" note=''></app-note-card>
+                
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4" *ngFor="let Note of Notes" >
+                            <app-note-card [note]="Note">
+                            </app-note-card>
+                        </div>
+                    </div>
+                </div>     
 
             </mat-sidenav-content>
         </mat-sidenav-container>

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 interface Note {
+  uid: String,
   title: String,
   description: String,
+  created?: String,
   hashTags?: any[],
   images?: any[]
 }
@@ -31,54 +33,64 @@ export class NotesService {
 
   userNotes: Note[] = [
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test2']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test1']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
     {
+      uid: '1',
       title: 'New Test',
       description: 'New test escription',
-      hashTags: ['new', 'temp', 'test']
+      hashTags: ['#new', '#temp', '#test']
     },
   ]
 
