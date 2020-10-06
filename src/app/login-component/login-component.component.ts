@@ -20,11 +20,15 @@ export class LoginComponentComponent implements OnInit {
   ngOnInit(): void { 
     this.Auth.user$
     .subscribe((user=>{
-      if(user && !this.signinCalled){  
-        console.log('back');              
+      if(user && !this.signinCalled){           
       this.router.navigate(['/'])
       }
     }))
+  }
+
+  Glogin(){
+    this.Auth.GoogleLogin();
+    this.signinCalled = true;
   }
 
   FBLogin(){

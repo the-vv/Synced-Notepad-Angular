@@ -9,7 +9,7 @@
                         <div class="col-12 p-0 m-0">
                             <ul class="p-0">
                                 <li class=" my-2" *ngFor="let tag of Note.getHashTags()">
-                                    #{{tag}}
+                                    {{tag}}
                                     <hr class="m-0 p-0">
                                 </li>
                             </ul>
@@ -18,26 +18,30 @@
                 </div>
             </mat-sidenav>
             <mat-sidenav-content>
-                <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
 
                 <div class="container-fluid p-0 m-0">
                     <div class="">
                         <mat-toolbar>
-                            <button mat-icon-button class="example-icon btn btn-dark p-1 px-2 mr-2 text-white"
+                            <button mat-icon-button class="example-icon btn btn-danger btn-sm mr-2 p-1 px-3 text-white"
                                 aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen">
-                                <mat-icon>menu</mat-icon>
+                                <i class="fas fa-2x"
+                                    [ngClass]="[isDrawerOpen ? 'fa-angle-left' : 'fa-angle-right']"></i>
                             </button>
-                            <span>My App</span>
+                            <span>Your Notes</span>
                             <span class="example-spacer"></span>
                         </mat-toolbar>
                     </div>
                 </div>
-                    
+
                 <div class="container">
-                    <div class="row">
+                    <div class="row" *ngIf="Notes.length>=1">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
-                            <app-note-card [note]="Note">
-                            </app-note-card>
+                            <app-note-card [note]="Note"></app-note-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="noNotes text-center" *ngIf="!(Notes.length>=1)">
+                            <h1>Create your first note by Clicking + icon</h1>
                         </div>
                     </div>
                 </div>

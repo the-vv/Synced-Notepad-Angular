@@ -63,16 +63,17 @@ export class AuthenticationService {
     console.log(this.redirectUrl);
     this.router.navigate([this.redirectUrl ? this.redirectUrl : '/'])
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       })
   }
 
-  SignOut() {
+  async SignOut() {
     this.isLoggedIn = false
     console.log("signing out");
-    this.auth.signOut()
+    await this.auth.signOut()
+    this.router.navigate(['/'])
   }
 }

@@ -85,12 +85,6 @@ export class NotesService {
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
-    {
-      uid: '1',
-      title: 'New Test',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
   ]
 
 }

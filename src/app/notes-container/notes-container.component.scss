@@ -1,19 +1,22 @@
 @media (max-width: 991px) {
     .main-container, .example-container{    
         height: calc(100vh - 47px);
+    } 
+    .sidebar{
+        width: 150px;
     }
 }
 @media (min-width: 992px) {
     .main-container, .example-container{
         height:calc(100vh - 53px);
+    } 
+    .sidebar{
+        width: 200px;
     }
 }
 .main-container{
     overflow-y: auto;
-}  
-.sidebar{
-    width: 200px;
-}
+} 
 .example-spacer {
     flex: 1 1 auto;
   }
