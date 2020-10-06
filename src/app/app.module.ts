@@ -22,6 +22,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { NoteCardComponent } from './note-card/note-card.component';
+
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import {MatMenuModule} from '@angular/material/menu';
     LoginComponentComponent,
     HomeComponent,
     NotesContainerComponent,
-    NavBarComponent
+    NavBarComponent,
+    NoteCardComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -42,7 +46,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSidenavModule
   ],
   providers: [
     AuthenticationService,

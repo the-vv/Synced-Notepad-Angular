@@ -8,10 +8,12 @@ import { NotesService } from '../services/notes.service';
 })
 export class NotesContainerComponent implements OnInit {
 
+
   constructor(public Note: NotesService) {
    }
 
   ngOnInit(): void {
+    console.log(this.Note.getNotes());
     
   }
 

@@ -1,10 +1,16 @@
 @media (max-width: 991px) {
-    .container-fluid{    
+    .container-fluid, .example-container{    
         height: calc(100vh - 47px);
     }
 }
 @media (min-width: 992px) {
-    .container-fluid{
+    .container-fluid, .example-container{
         height:calc(100vh - 53px);
     }
+}
+.container-fluid{
+    overflow-y: auto;
+}  
+.sidebar{
+    width: 200px;
 }

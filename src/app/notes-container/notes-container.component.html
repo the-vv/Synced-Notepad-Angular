@@ -1,4 +1,28 @@
-<div class="container-fluid bg-dark">
+<div class="container-fluid bg-dark m-0 p-0">
+    <div class="">
+        <mat-sidenav-container class="example-container">
+            <mat-sidenav #sidenav mode="side" [opened]='true' class="sidebar">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h2 class="p-0 my-1"># Tags</h2>
+                        <hr>
+                        <div class="col-12 p-0 m-0">
+                            <ul class="p-0">
+                                <li class=" my-2" *ngFor="let tag of Note.getHashTags()">
+                                     #{{tag}}
+                                    <hr class="m-0 p-0">
+                                </li>
+                              </ul>
+                        </div>
+                    </div>
+                </div>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <!-- <p><button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button></p> -->
 
+                <app-note-card *ngFor="let Note of Note.getNotes()" note=''></app-note-card>
+
+            </mat-sidenav-content>
+        </mat-sidenav-container>
+    </div>
 </div>
- 
