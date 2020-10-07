@@ -10,6 +10,7 @@ import { NotesService } from '../services/notes.service'
 export class NoteViewComponent implements OnInit {
 
   id: String
+  Note: any
 
   constructor(
     private route: ActivatedRoute,
@@ -19,7 +20,8 @@ export class NoteViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id'];   
-      console.log(this.Notes.getNote(this.id))
+      this.Note = this.Notes.getNote(this.id)
+      console.log(this.Note)
     });   
   }
 

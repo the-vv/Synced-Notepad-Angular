@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
+import Note from '../Interfaces/Note'
 
-interface Note {
-  uid: String,
-  title: String,
-  description: String,
-  created?: String,
-  hashTags?: any[],
-  images?: any[]
-}
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +26,7 @@ export class NotesService {
   getNote(id){ //return a single note matched from note id
     return this.userNotes.filter((note) => {
       return note.uid == id
-    })       
+    })[0] 
   }
 
   userNotes: Note[] = [
