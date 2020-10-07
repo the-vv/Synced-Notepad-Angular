@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 
 interface Note {
+  uid: String,
   title: String,
   description: String,
   hashTags?: any[],

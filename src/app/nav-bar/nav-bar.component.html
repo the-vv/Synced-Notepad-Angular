@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto" *ngIf="auths.user$ | async as user">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/notes">My Notes</a>
+                    <a class="nav-link" routerLink="/notes" routerLinkActive="active">My Notes</a>
                 </li>
                 <li class="nav-item d-md-none">
                     <a class="nav-link" (click)="auths.SignOut()">Logout</a>
