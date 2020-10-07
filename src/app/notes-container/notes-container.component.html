@@ -16,7 +16,7 @@
                         </div>
                         <hr>
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection">
-                            <mat-chip *ngFor="let tag of Note.getHashTags()" selected color="accent">
+                            <mat-chip *ngFor="let tag of hashTags" selected color="accent">
                                 {{tag}}
                             </mat-chip>
                         </mat-chip-list>

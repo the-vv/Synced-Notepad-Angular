@@ -17,19 +17,25 @@ export class NotesService {
   constructor() {
   }
 
-  getNotes() {
+  getNotes() { //return all the notes
     return this.userNotes;
   }
-  getHashTags() {
-    let hashes = []
+  getHashTags() { //return all the #Tags
+    let hashes = new Set
     for(let note of this.userNotes){
       for(let tag of note.hashTags){
-          hashes.push(tag)    
+          hashes.add(tag)    
       }
     }
-    hashes = [...new Set(hashes)]
     return hashes
   }
+
+  getNote(id){ //return a single note matched from note id
+    return this.userNotes.filter((note) => {
+      return note.uid == id
+    })       
+  }
+
   userNotes: Note[] = [
     {
       uid: '1',

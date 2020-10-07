@@ -22,11 +22,13 @@ export class NotesContainerComponent implements OnInit {
   
   Notes: Note[]
   isDrawerOpen: boolean;
+  hashTags = new Set
 
   constructor(public Note: NotesService) {
   }
 
   ngOnInit(): void {
+    this.hashTags = this.Note.getHashTags()
     this.Notes = this.Note.getNotes()
     console.log(this.Notes);
     this.isDrawerOpen = window.innerWidth >= 768
