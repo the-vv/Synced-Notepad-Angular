@@ -20,6 +20,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
@@ -51,7 +53,8 @@ import { NotesContainerComponent } from './notes-container/notes-container.compo
     MatIconModule,
     MatMenuModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatChipsModule
   ],
   providers: [
     AuthenticationService,

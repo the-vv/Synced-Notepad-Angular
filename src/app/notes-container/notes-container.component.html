@@ -3,29 +3,35 @@
         <mat-sidenav-container class="example-container">
             <mat-sidenav #sidenav mode="side" [opened]='isDrawerOpen' class="sidebar">
                 <div class="container-fluid">
-                    <div class="row">
-                        <h2 class="p-0 my-1"># Tags</h2>
-                        <hr>
-                        <div class="col-12 p-0 m-0">
-                            <ul class="p-0">
-                                <li class=" my-2" *ngFor="let tag of Note.getHashTags()">
-                                    {{tag}}
-                                    <hr class="m-0 p-0">
-                                </li>
-                            </ul>
+                    <div class="row  d-flex align-items-center">
+                        <div class="col-9 col-sm-10">
+                            <p class="my-1 h3"># Tags</p>
                         </div>
+                        <div class="col-3 col-sm-2">
+                            <button mat-icon-button class="example-icon btn btn-sm p-0 text-white"
+                            aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
+                            *ngIf="isDrawerOpen">
+                            <i class="fas fa-lg fa-times"></i>
+                        </button>
+                        </div>
+                        <hr>
+                        <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection">
+                            <mat-chip *ngFor="let tag of Note.getHashTags()" selected color="accent">
+                                {{tag}}
+                            </mat-chip>
+                        </mat-chip-list>
                     </div>
                 </div>
             </mat-sidenav>
-            <mat-sidenav-content>
+            <mat-sidenav-content class="mat-sidenav-content-height">
 
                 <div class="container-fluid p-0 m-0">
                     <div class="">
                         <mat-toolbar>
-                            <button mat-icon-button class="example-icon btn btn-danger btn-sm mr-2 p-1 px-3 text-white"
-                                aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen">
-                                <i class="fas fa-2x"
-                                    [ngClass]="[isDrawerOpen ? 'fa-angle-left' : 'fa-angle-right']"></i>
+                            <button mat-icon-button class="example-icon btn btn-danger btn-sm mr-2 p-0 px-2 text-white"
+                                aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
+                                *ngIf="!isDrawerOpen">
+                                <i class="fas fa-2x fa-angle-right"></i>
                             </button>
                             <span>Your Notes</span>
                             <span class="example-spacer"></span>
@@ -33,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="container">
+                <div class="container-fluid notes-container">
                     <div class="row" *ngIf="Notes.length>=1">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
                             <app-note-card [note]="Note"></app-note-card>
@@ -45,6 +51,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="container-fluid bg-grey bottom-bar shadow-lg">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger btn-rounded shadow new-button">
+                            <i class="fas fa-plus"></i> Add a Note
+                        </button>
+                    </div>
+                </div>
+
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>

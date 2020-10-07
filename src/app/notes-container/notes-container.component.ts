@@ -17,8 +17,9 @@ export class NotesContainerComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.isDrawerOpen = event.target.innerWidth >= 768 ? true : false
+    this.isDrawerOpen = event.target.innerWidth >= 768
   }
+  
   Notes: Note[]
   isDrawerOpen: boolean;
 
@@ -28,7 +29,7 @@ export class NotesContainerComponent implements OnInit {
   ngOnInit(): void {
     this.Notes = this.Note.getNotes()
     console.log(this.Notes);
-    this.isDrawerOpen = window.innerWidth >= 768 ? true : false
+    this.isDrawerOpen = window.innerWidth >= 768
   }
 
 }
