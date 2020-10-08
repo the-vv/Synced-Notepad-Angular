@@ -1,9 +1,33 @@
 <div class="container-fluid bg-dark main-container">
-    <div class="row">    
-       
+    <div class="row text-white note-container">
+        <div class="col-12 p-4 pb-2">
+            <p class="h1">
+                {{Note.title}}
+            </p>
+            <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
+                <mat-chip class="example-box" cdkDrag *ngFor="let tag of Note.hashTags">
+                    {{tag}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="col-12 p-3">
+            <p class="lead">{{Note.description}}</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="col-12 p-3" *ngIf="Note.images">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-4 py-2" *ngFor="let image of Note.images">
+                    <img src="{{image}}" alt="" class="img-fluid img-thumbnail">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 text-center pt-3" *ngIf="!Note.images">
+            Currently no images to show. You can add images by editing note.
+        </div>
     </div>
 </div>
-<div class="container-fluid bg-grey bottom-bar shadow-lg">
+<div class="container-fluid bg-dark bottom-bar shadow-lg">
     <div class="text-center">
         <button type="button" class="btn btn-danger btn-rounded shadow new-button">
             <i class="fas fa-edit"></i> Edit Note

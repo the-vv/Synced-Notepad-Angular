@@ -13,8 +13,13 @@
     }
 }
 
+.note-container{
+    overflow: auto;
+}
+
 .main-container {
-    padding-bottom: 42px;
+    padding-bottom: 60px;
+    overflow: auto;
 }
 
 .bottom-bar {

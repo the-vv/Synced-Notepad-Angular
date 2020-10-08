@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { NotesService } from '../services/notes.service'
+import Note from '../Interfaces/Note'
 
 @Component({
   selector: 'app-note-view',
@@ -10,7 +11,7 @@ import { NotesService } from '../services/notes.service'
 export class NoteViewComponent implements OnInit {
 
   id: String
-  Note: any
+  Note: Note
 
   constructor(
     private route: ActivatedRoute,

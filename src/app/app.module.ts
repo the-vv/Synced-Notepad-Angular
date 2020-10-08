@@ -21,6 +21,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatDividerModule} from '@angular/material/divider';
+
 
 
 import { NoteCardComponent } from './note-card/note-card.component';
@@ -56,7 +58,8 @@ import { NoteViewComponent } from './note-view/note-view.component';
     MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDividerModule
   ],
   providers: [
     AuthenticationService,
