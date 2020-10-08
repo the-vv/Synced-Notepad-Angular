@@ -8,13 +8,30 @@
 
 @media (max-width: 991px) {
     .bg {
-        height: calc(100vh - 44px);
+        height: calc(100vh - 47px);
+    }
+}
+@media (min-width: 769px){
+    h1{        
+    font-size  : 6em;
     }
 }
 
 @media (max-width: 768px) {
     * {
         text-align: center !important;
+    }
+    h1{
+        font-size  : 3em!important;
+    }
+    span.lead{
+        font-size: 0.9em;
+    }
+    div.sync{
+        margin-top: -30px!important;
+    }
+    button{
+        
     }
 }
 
@@ -29,15 +46,15 @@
     background-position: center;
 }
 
-.wrapper {
-    p {
-        color      : white;
-        font-weight: bolder;
-        font-family: 'Baloo Tammudu 2', cursive;
-        font-size  : 5em;
-        line-height: 70px;
-    }
-}
+// .wrapper {
+//     p {
+//         color      : white;
+//         font-weight: bolder;
+//         font-family: 'Baloo Tammudu 2', cursive;
+//         // font-size  : 5em;
+//         line-height: 70px;
+//     }
+// }
 
 //Main headding animation
 
@@ -47,8 +64,7 @@ h1 {
     color      : white;
     font-weight: bolder;
     font-family: 'Baloo Tammudu 2', cursive;
-    font-size  : 5em;
-    line-height: 70px;
+    line-height: 60px;
     text-shadow: 0 0.1em 20px rgba(0, 0, 0, 1), 0.05em -0.03em 0 rgba(0, 0, 0, 1),
         0.05em 0.005em 0 rgba(0, 0, 0, 1), 0em 0.08em 0 rgba(0, 0, 0, 1),
         0.05em 0.08em 0 rgba(0, 0, 0, 1), 0px -0.03em 0 rgba(0, 0, 0, 1),
@@ -90,88 +106,6 @@ h1 {
     }
 }
 
-//Description animation
-
-@import url('https://fonts.googleapis.com/css?family=Roboto:300');
-
-.sync,
-.across {
-    display    : inline-block;
-    overflow   : hidden;
-    white-space: nowrap;
-}
-
-div.sync {
-    animation: showup 7s infinite;
-}
-
-div.across {
-    width    : 0px;
-    animation: reveal 7s infinite;
-}
-
-div.across span {
-    margin-left: -355px;
-    animation  : slidein 7s infinite;
-}
-
-@keyframes showup {
-    0% {
-        opacity: 0;
-    }
-
-    20% {
-        opacity: 1;
-    }
-
-    80% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes slidein {
-    0% {
-        margin-left: -800px;
-    }
-
-    20% {
-        margin-left: -800px;
-    }
-
-    35% {
-        margin-left: 0px;
-    }
-
-    100% {
-        margin-left: 0px;
-    }
-}
-
-@keyframes reveal {
-    0% {
-        opacity: 0;
-        width  : 0px;
-    }
-
-    20% {
-        opacity: 1;
-        width  : 0px;
-    }
-
-    30% {
-        width: 355px;
-    }
-
-    80% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-        width  : 355px;
-    }
+div.sync{
+    margin-top: -10px;
 }
