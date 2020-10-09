@@ -1,1 +1,40 @@
-<p>create-note works!</p>
+<div class="container-fluid bg-dark main-container">
+    <div class="row text-white note-container">
+        <div class="col-12 pt-3">
+            <p class="pt-4 m-0">
+                <mat-form-field appearance="legacy" class="p-0 m-0 w-100">
+                  <mat-label>Create a Note</mat-label>
+                  <input matInput placeholder="Title" class="p-0 m-0">
+                </mat-form-field>
+              </p>
+        </div>
+        <div class="col-12 p-3">
+            <p class="p-0 m-0">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Write something</mat-label>
+                    <textarea matInput class="res-field" placeholder="Description"></textarea>
+                  </mat-form-field>
+            </p>
+        </div>   
+        <div class="col-12">
+            <img src="{{imagePreview}}" alt="" class="img-fluid" *ngIf="imagePreview">
+        </div>
+        <div class="col-12" *ngIf="!imagePreview">
+            <div class="form-file">
+                <input type="file" class="form-file-input" id="customFile" 
+                (change)="handleFileInput($event.target.files)"/>
+                <label class="form-file-label" for="customFile">
+                  <span class="form-file-text bg-dark text-white">{{fileName}}</span>
+                  <span class="form-file-button bg-dark text-white">Browse</span>
+                </label>
+              </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid bg-dark bottom-bar shadow-lg">
+    <div class="text-center">
+        <button type="button" class="btn btn-danger btn-rounded shadow new-button">
+            <i class="fas fa-check"></i> Save Note
+        </button>
+    </div>
+</div>
