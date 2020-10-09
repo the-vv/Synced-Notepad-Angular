@@ -31,6 +31,8 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { HomeComponent } from './home/home.component';
 import { NotesContainerComponent } from './notes-container/notes-container.component';
 import { NoteViewComponent } from './note-view/note-view.component';
+import { CreateNoteComponent } from './create-note/create-note.component';
+import { PageNoteFoundComponent } from './page-note-found/page-note-found.component';
 
 
 
@@ -43,7 +45,9 @@ import { NoteViewComponent } from './note-view/note-view.component';
     NotesContainerComponent,
     NavBarComponent,
     NoteCardComponent,
-    NoteViewComponent
+    NoteViewComponent,
+    CreateNoteComponent,
+    PageNoteFoundComponent
   ],
   imports: [
     AngularFireAuthModule,

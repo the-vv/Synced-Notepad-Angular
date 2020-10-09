@@ -38,8 +38,8 @@
                         </mat-toolbar>
                     </div>
                 </div>
-
-                <div class="container-fluid notes-container">
+ 
+                <div class="container-fluid notes-container pb-3">
                     <div class="row" *ngIf="Notes.length>=1">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
                             <app-note-card [note]="Note"></app-note-card>
