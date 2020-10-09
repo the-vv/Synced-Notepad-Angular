@@ -1,37 +1,39 @@
 <div class="container-fluid bg-dark main-container">
     <div class="row text-white note-container">
-        <div class="col-12 pt-3">
-            <p class="pt-4 m-0">
-                <mat-form-field appearance="legacy" class="p-0 m-0 w-100">
-                    <mat-label>Create a Note</mat-label>
-                    <input matInput placeholder="Title" class="p-0 m-0">
-                </mat-form-field>
-            </p>
-        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="col-12 pt-2">
+                <p class="pt-4 m-0">
+                    <mat-form-field appearance="legacy" class="p-0 m-0 w-100">
+                        <mat-label>Create a Note</mat-label>
+                        <input matInput placeholder="Title" class="p-0 m-0" formControlName="title" required
+                            style="font-size: 1.7em;">
+                        <mat-error *ngIf="f.title.errors">A note must have a title</mat-error>
+                    </mat-form-field>
+                </p>
+            </div>
+            <div class="col-12 py-3">
+                <p class="p-0 m-0">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Write something</mat-label>
+                        <textarea matInput class="res-field" placeholder="Description"
+                            formControlName="description"></textarea>
+                    </mat-form-field>
+                </p>
+            </div>
+        </form>
         <div class="col-12">
             <p class="p-0 m-0">
                 <mat-form-field class="example-chip-list">
                     <mat-chip-list #chipList aria-label="Fruit selection">
-                      <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
-                               [removable]="removable" (removed)="remove(tag)">
-                        {{tag}} 
-                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                      </mat-chip>
-                      <input placeholder="#Tags"
-                             [matChipInputFor]="chipList"
-                             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                             [matChipInputAddOnBlur]="addOnBlur"
-                             (matChipInputTokenEnd)="add($event)">
+                        <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable"
+                            (removed)="remove(tag)">
+                            {{tag}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="#Tags" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="add($event)">
                     </mat-chip-list>
-                  </mat-form-field>
-                  
-            </p>
-        </div>
-        <div class="col-12 p-3">
-            <p class="p-0 m-0">
-                <mat-form-field class="w-100" appearance="fill">
-                    <mat-label>Write something</mat-label>
-                    <textarea matInput class="res-field" placeholder="Description"></textarea>
                 </mat-form-field>
             </p>
         </div>
@@ -54,10 +56,11 @@
         </div>
     </div>
 </div>
-<div class="container-fluid bg-dark bottom-bar shadow-lg">
+<div class="container-fluid bg-dark bottom-bar shadow-lg text-center text-muted">
     <div class="text-center">
-        <button type="button" class="btn btn-danger btn-rounded shadow new-button">
+        <button type="button" class="btn btn-danger btn-rounded shadow new-button" (click)="onSubmit()">
             <i class="fas fa-check"></i> Save Note
         </button>
     </div>
+    <span class="">Tips: Add # tags for easy notes filtering </span>
 </div>

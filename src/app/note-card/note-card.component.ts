@@ -1,14 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-
-interface Note {
-  uid: String,
-  title: String,
-  description: String,
-  hashTags?: any[],
-  images?: any[]
-}
-
+import Note from '../Interfaces/Note'
 
 @Component({
   selector: 'app-note-card',

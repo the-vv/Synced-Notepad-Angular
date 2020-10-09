@@ -15,34 +15,34 @@
 
 .example-chip-list {
     width: 100%;
-  } 
+}
 
-.note-container{
+.note-container {
     overflow: auto;
 }
 
 .main-container {
     padding-bottom: 70px;
-    overflow: auto;
+    overflow      : auto;
 }
 
-.res-field{
-    height: calc(100vh - 330px);
+.res-field {
+    height: calc(100vh - 400px);
 }
 
 .bottom-bar {
-    position: fixed;
-    bottom:0;
-    margin-top: 2px;
-    height : 40px;
-    z-index: 2;
-    border-top: 1px solid #f93154;
+    position               : fixed;
+    bottom                 : 0;
+    margin-top             : 2px;
+    height                 : 40px;
+    z-index                : 2;
+    border-top             : 1px solid #f93154;
     border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
+    border-top-left-radius : 1rem;
 }
 
 .new-button {
-    position: sticky;
+    position  : sticky;
     margin-top: -20px;
     border-top: 1px solid #ffffff;
 }

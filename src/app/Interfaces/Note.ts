@@ -1,9 +1,10 @@
 export default interface Note { 
-  uid: String,
+  uid?: String,
+  id: String,
   title: String,
   description: String,
   created?: String,
   hashTags?: any[],
-  images?: any[]
+  images?: any
   [prop: string]: any
 }

@@ -15,6 +15,7 @@ export class NoteViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private Notes: NotesService
   ) { }
 
@@ -23,6 +24,9 @@ export class NoteViewComponent implements OnInit {
       this.id = params['id'];   
       this.Note = this.Notes.getNote(this.id)
       console.log(this.Note)
+      if(!this.Note){
+        this.router.navigate(['404'])
+      }
     });   
   }
 

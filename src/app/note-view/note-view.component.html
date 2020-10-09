@@ -17,8 +17,8 @@
         <mat-divider></mat-divider>
         <div class="col-12 p-3" *ngIf="Note.images">
             <div class="row">
-                <div class="col-12 col-sm-6 col-lg-4 py-2" *ngFor="let image of Note.images">
-                    <img src="{{image}}" alt="" class="img-fluid img-thumbnail">
+                <div class="col-12 text-center">
+                    <img src="{{Note.images}}" alt="" class="img-fluid img-thumbnail mx-auto">
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { firebaseConfig } from '../app/enviornments/envs'
 
 import { MatInputModule } from '@angular/material/input';
@@ -23,8 +24,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDividerModule} from '@angular/material/divider';
 
-
-
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
@@ -33,8 +32,6 @@ import { NotesContainerComponent } from './notes-container/notes-container.compo
 import { NoteViewComponent } from './note-view/note-view.component';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { PageNoteFoundComponent } from './page-note-found/page-note-found.component';
-
-
 
 
 @NgModule({
@@ -63,7 +60,9 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     MatSidenavModule,
     MatToolbarModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    FormsModule, 
+    ReactiveFormsModule,
   ],
   providers: [
     AuthenticationService,

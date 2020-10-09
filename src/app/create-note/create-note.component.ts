@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {COMMA, ENTER, SPACE} from '@angular/cdk/keycodes';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotesService } from '../services/notes.service';
+import { Router } from '@angular/router';
+import Note from '../Interfaces/Note';
 
 
 @Component({
@@ -13,10 +17,45 @@ export class CreateNoteComponent implements OnInit {
   fileInfo: string='Choose an image'
   imagePreview: any
 
-  constructor() { }
+  //form  
+  registerForm: FormGroup;
+  submitted = false;
 
-  ngOnInit(): void {
-  }
+  constructor(
+    private router: Router,
+    private noteService: NotesService,
+    private formBuilder: FormBuilder
+    ) { }
+
+    ngOnInit() {
+      this.registerForm = this.formBuilder.group({
+          title: ['', Validators.required,],
+          description: '',
+      }, {
+      });
+    }
+    get f() { return this.registerForm.controls; }
+  
+    onSubmit(){
+      if(!this.f.title.errors){
+        let note: Note;
+        note = this.registerForm.value
+        note.id =String(Math.floor(Math.random() * 100) + 1)
+        if(this.tags.length>0){
+          note.hashTags = this.tags;
+        }
+        if(this.imagePreview){
+          note.images = this.imagePreview
+        }
+        console.log(note); 
+        this.noteService.addNote(note)
+        .then(() =>{
+          console.log('added');          
+        })
+        this.router.navigate(['/notes'])
+      }      
+      return
+    }
 
   handleFileInput(file: FileList) {
     console.log(file[0]);
@@ -38,7 +77,6 @@ export class CreateNoteComponent implements OnInit {
       // console.log(reader.result);
       // console.log('imagepreview');
       
-
     }
   }
 
@@ -49,18 +87,20 @@ export class CreateNoteComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
-  tags: any[] = [
-  ];
+  tags: string[] = [];
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      this.tags.push(value.trim());
+      let tag = value.trim()
+      if(tag[0] != '#'){
+        tag = '#' + tag
+      }
+      this.tags.push(tag);
+      this.tags = [...new Set(this.tags)]
       console.log(this.tags);
-      
     }
 
     // Reset the input value
