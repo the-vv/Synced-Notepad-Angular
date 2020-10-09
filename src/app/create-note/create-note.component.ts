@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {COMMA, ENTER, SPACE} from '@angular/cdk/keycodes';
+
 
 @Component({
   selector: 'app-create-note',
@@ -7,8 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateNoteComponent implements OnInit {
 
-  fileName = "Choose an image"
-  fileData: any
+  fileInfo: string='Choose an image'
   imagePreview: any
 
   constructor() { }
@@ -17,27 +19,61 @@ export class CreateNoteComponent implements OnInit {
   }
 
   handleFileInput(file: FileList) {
-    this.fileName = file.item(0).name
-    console.log(file.item(0));
-    this.fileData = file[0]
-    this.preview()
+    console.log(file[0]);
+    this.preview(file[0])
   }
 
-  preview() {
+  preview(fileData) {
     // Show preview    
-    var mimeType = this.fileData.type;
+    var mimeType = fileData.type;
     if (mimeType.match(/image\/*/) == null) {
-      console.log('Select a valid image');      
+      this.fileInfo = 'Select a valid image'   
       return;
     }
+    this.fileInfo ='Choose an image'
     var reader = new FileReader();
-    reader.readAsDataURL(this.fileData);
+    reader.readAsDataURL(fileData);
     reader.onload = (_event) => {
       this.imagePreview = reader.result; 
       // console.log(reader.result);
-      console.log('imagepreview');
+      // console.log('imagepreview');
       
 
+    }
+  }
+
+  //#tags input chip
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
+  tags: any[] = [
+  ];
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.tags.push(value.trim());
+      console.log(this.tags);
+      
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(fruit: any): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
     }
   }
 

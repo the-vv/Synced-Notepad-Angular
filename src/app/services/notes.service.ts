@@ -10,6 +10,13 @@ export class NotesService {
   constructor() {
   }
 
+  ddNote(note: Note){
+    return new Promise((resolve, reject) =>{
+      this.userNotes.push(note)
+      resolve()
+    })
+  }
+
   getNotes() { //return all the notes
     return this.userNotes;
   }
