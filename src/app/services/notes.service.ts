@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 import Note from '../Interfaces/Note'
 
 
@@ -7,26 +10,59 @@ import Note from '../Interfaces/Note'
 })
 export class NotesService {
 
-  constructor() {
+  
+  task: AngularFireUploadTask;
+  percentage: Observable<number>;
+  snapshot: Observable<any>;
+  downloadURL: Observable<string>;
+
+  constructor(
+    private storage: AngularFireStorage
+  ) {
   }
 
-  addNote(note: Note){
-    return new Promise((resolve, reject) =>{
+  addNote(note: Note) {
+    return new Promise((resolve, reject) => {
       this.userNotes.push(note)
       resolve()
     })
+  }
+
+  upload(file) {
+    const path = `test/${Date.now()}_${file.name}`;
+
+    // Reference to storage bucket
+    const ref = this.storage.ref(path);
+
+    // The main task
+    this.task = this.storage.upload(path, file);
+
+    console.log(this.task)
+    // Progress monitoring
+    this.percentage = this.task.percentageChanges();
+    this.snapshot   = this.task.snapshotChanges().pipe(
+      // tap(console.log),
+      // The file's download URL
+      finalize( () =>  {
+        console.log('await');
+        
+        this.downloadURL = ref.getDownloadURL();
+        console.log(this.downloadURL);        
+      }),
+    );
   }
 
   getNotes() { //return all the notes
     return this.userNotes;
   }
   getHashTags() { //return all the #Tags
-    let hashes = new Set
+    let hashes = []
     for (let note of this.userNotes) {
       for (let tag of note.hashTags) {
-        hashes.add(tag)
+        hashes.push(tag)
       }
     }
+    hashes = [...new Set(hashes)]
     return hashes
   }
 
@@ -53,49 +89,49 @@ export class NotesService {
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '3',
+      uid: '1',
       id: '3',
       title: 'New Test3',
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '4',
+      uid: '2',
       id: '4',
       title: 'New Test4',
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '5',
+      uid: '3',
       id: '5',
       title: 'New Test5',
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '6',
+      uid: '2',
       id: '6',
       title: 'New Test6',
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '7',
+      uid: '1',
       id: '7',
       title: 'New Test7',
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '8',
+      uid: '3',
       id: '8',
       title: 'New Test8',
       description: 'New test escription',
       hashTags: ['#new', '#temp', '#test']
     },
     {
-      uid: '9',
+      uid: '1',
       id: '9',
       title: 'New Test9',
       description: 'New test escription',

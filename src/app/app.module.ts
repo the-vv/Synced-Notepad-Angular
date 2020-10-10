@@ -9,6 +9,7 @@ import { NotesService } from '../app/services/notes.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { firebaseConfig } from '../app/enviornments/envs'
@@ -50,6 +51,7 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -13,9 +13,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponentComponent },
   // { path: 'notes', component: NotesContainerComponent, canActivate: [AuthGuard]},  
-  { path: 'notes', component: NotesContainerComponent },
-  { path: 'notes/create', component: CreateNoteComponent },
-  { path: 'notes/view/:id', component: NoteViewComponent },
+  { path: 'notes', component: NotesContainerComponent, canActivate: [AuthGuard] },
+  { path: 'notes/create', component: CreateNoteComponent, canActivate: [AuthGuard] },
+  { path: 'notes/view/:id', component: NoteViewComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `home`
   { path: '404', component: PageNoteFoundComponent }, // redirect to `404`
   { path: '**', redirectTo: '/404' },  // Wildcard route for a 404 page

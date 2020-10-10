@@ -14,8 +14,11 @@ import Note from '../Interfaces/Note';
 })
 export class CreateNoteComponent implements OnInit {
 
+
   fileInfo: string='Choose an image'
   imagePreview: any
+  URL: string
+  percentage: any
 
   //form  
   registerForm: FormGroup;
@@ -23,7 +26,7 @@ export class CreateNoteComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private noteService: NotesService,
+    public noteService: NotesService,
     private formBuilder: FormBuilder
     ) { }
 
@@ -33,6 +36,9 @@ export class CreateNoteComponent implements OnInit {
           description: '',
       }, {
       });
+      // this.noteService.downloadURL.subscribe((url) =>{
+      //   console.log(url);        
+      // })
     }
     get f() { return this.registerForm.controls; }
   
@@ -43,16 +49,17 @@ export class CreateNoteComponent implements OnInit {
         note.id =String(Math.floor(Math.random() * 100) + 1)
         if(this.tags.length>0){
           note.hashTags = this.tags;
+        }else{
+          note.hashTags = [];
         }
         if(this.imagePreview){
           note.images = this.imagePreview
         }
         console.log(note); 
         this.noteService.addNote(note)
-        .then(() =>{
-          console.log('added');          
+        .then(() =>{        
         })
-        this.router.navigate(['/notes'])
+        console.log(this.noteService.downloadURL)
       }      
       return
     }
@@ -60,6 +67,11 @@ export class CreateNoteComponent implements OnInit {
   handleFileInput(file: FileList) {
     console.log(file[0]);
     this.preview(file[0])
+    this.noteService.upload(file[0])
+    this.noteService.percentage.subscribe((p) =>{
+      console.log(p); 
+      console.log(this.noteService.downloadURL);           
+    })
   }
 
   preview(fileData) {
@@ -87,7 +99,7 @@ export class CreateNoteComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
-  tags: string[] = [];
+  tags = [];
 
   add(event: MatChipInputEvent): void {
     const input = event.input;

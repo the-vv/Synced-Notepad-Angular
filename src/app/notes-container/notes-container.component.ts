@@ -1,12 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NotesService } from '../services/notes.service';
-
-interface Note {
-  title: String,
-  description: String,
-  hashTags?: any[],
-  images?: any[]
-}
+import Note from '../Interfaces/Note'
 
 @Component({
   selector: 'app-notes-container',
@@ -22,7 +16,7 @@ export class NotesContainerComponent implements OnInit {
   
   Notes: Note[]
   isDrawerOpen: boolean;
-  hashTags = new Set
+  hashTags :any[] = []
 
   constructor(public Note: NotesService) {
   }
