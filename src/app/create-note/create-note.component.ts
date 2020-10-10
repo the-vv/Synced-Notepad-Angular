@@ -3,6 +3,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotesService } from '../services/notes.service';
+import {AuthenticationService } from '../services/authentication.service'
 import { Router } from '@angular/router';
 import Note from '../Interfaces/Note';
 
@@ -14,24 +15,28 @@ import Note from '../Interfaces/Note';
 })
 export class CreateNoteComponent implements OnInit {
 
-
+  userInfo: any
   fileInfo: string = 'Choose an image'
   imagePreview: any
   percentage: any
   deletable: boolean = false
-  hasFile:boolean = false
+  hasFile: boolean = false
 
   //form  
   registerForm: FormGroup;
   submitted = false;
 
   constructor(
+    public auth: AuthenticationService,
     private router: Router,
     public noteService: NotesService,
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.auth.user$.subscribe((user) =>{
+      this.userInfo = user.uid;    
+    })
     this.registerForm = this.formBuilder.group({
       title: ['', Validators.required,],
       description: '',
@@ -41,39 +46,47 @@ export class CreateNoteComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   onSubmit() {
-    if (!this.f.title.errors) {
+    if (!this.f.title.errors && this.userInfo) {
       let note: Note;
       note = this.registerForm.value
+      note.uid = this.userInfo;
       note.id = String(Math.floor(Math.random() * 100) + 1)
       if (this.tags.length > 0) {
         note.hashTags = this.tags;
       } else {
         note.hashTags = [];
       }
-      if (this.imagePreview) {
-        note.images = this.imagePreview
+      if (this.hasFile) {
+        if (this.deletable) {
+          console.log(this.imagePreview);
+          note.images = this.imagePreview
+        }else{
+          console.log('wait for file upload');          
+        }
       }
       console.log(note);
       this.noteService.addNote(note)
         .then(() => {
+          this.router.navigate(['/']);
         })
-      console.log(this.noteService.downloadURL)
+    }else{
+      alert('Notes must have a Title')
     }
     return
   }
 
-  removeImage(){
+  removeImage() {
+    this.hasFile = false
     this.noteService.delete(this.imagePreview)
-    .then(() =>{
-      console.log('Deleted'); 
-      this.deletable =false 
-      this.imagePreview = ''
-      this.percentage = null  
-      this.hasFile = false  
-    })
-    .catch((e) =>{
-      console.log(e);      
-    })
+      .then(() => {
+        console.log('Deleted');
+        this.deletable = false
+        this.imagePreview = ''
+        this.percentage = null
+      })
+      .catch((e) => {
+        console.log(e);
+      })
   }
 
   handleFileInput(file: FileList) {
@@ -128,7 +141,6 @@ export class CreateNoteComponent implements OnInit {
       }
       this.tags.push(tag);
       this.tags = [...new Set(this.tags)]
-      console.log(this.tags);
     }
 
     // Reset the input value

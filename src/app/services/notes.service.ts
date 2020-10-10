@@ -46,7 +46,6 @@ export class NotesService {
   }
 
   delete(url){
-    console.log(url);    
     return this.storage.storage.refFromURL(url).delete()
   }
 
