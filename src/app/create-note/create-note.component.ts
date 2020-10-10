@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {COMMA, ENTER, SPACE} from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotesService } from '../services/notes.service';
 import { Router } from '@angular/router';
@@ -15,9 +15,11 @@ import Note from '../Interfaces/Note';
 export class CreateNoteComponent implements OnInit {
 
 
-  fileInfo: string='Choose an image'
+  fileInfo: string = 'Choose an image'
   imagePreview: any
   percentage: any
+  deletable: boolean = false
+  hasFile:boolean = false
 
   //form  
   registerForm: FormGroup;
@@ -27,52 +29,65 @@ export class CreateNoteComponent implements OnInit {
     private router: Router,
     public noteService: NotesService,
     private formBuilder: FormBuilder
-    ) { }
+  ) { }
 
-    ngOnInit() {
-      this.registerForm = this.formBuilder.group({
-          title: ['', Validators.required,],
-          description: '',
-      }, {
-      });
-      // this.noteService.downloadURL.subscribe((url) =>{
-      //   console.log(url);        
-      // })
-    }
-    get f() { return this.registerForm.controls; }
-  
-    onSubmit(){
-      if(!this.f.title.errors){
-        let note: Note;
-        note = this.registerForm.value
-        note.id =String(Math.floor(Math.random() * 100) + 1)
-        if(this.tags.length>0){
-          note.hashTags = this.tags;
-        }else{
-          note.hashTags = [];
-        }
-        if(this.imagePreview){
-          note.images = this.imagePreview
-        }
-        console.log(note); 
-        this.noteService.addNote(note)
-        .then(() =>{        
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      title: ['', Validators.required,],
+      description: '',
+    }, {
+    });
+  }
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    if (!this.f.title.errors) {
+      let note: Note;
+      note = this.registerForm.value
+      note.id = String(Math.floor(Math.random() * 100) + 1)
+      if (this.tags.length > 0) {
+        note.hashTags = this.tags;
+      } else {
+        note.hashTags = [];
+      }
+      if (this.imagePreview) {
+        note.images = this.imagePreview
+      }
+      console.log(note);
+      this.noteService.addNote(note)
+        .then(() => {
         })
-        console.log(this.noteService.downloadURL)
-      }      
-      return
+      console.log(this.noteService.downloadURL)
     }
+    return
+  }
+
+  removeImage(){
+    this.noteService.delete(this.imagePreview)
+    .then(() =>{
+      console.log('Deleted'); 
+      this.deletable =false 
+      this.imagePreview = ''
+      this.percentage = null  
+      this.hasFile = false  
+    })
+    .catch((e) =>{
+      console.log(e);      
+    })
+  }
 
   handleFileInput(file: FileList) {
-    console.log(file[0]);
+    // console.log(file[0]);
+    this.hasFile = true
     this.preview(file[0])
     this.noteService.upload(file[0])
-    .then((url: string) => {
-      this.imagePreview = url
-      console.log(this.imagePreview)
-    })
-    this.noteService.percentage.subscribe((p) =>{
-      this.percentage = p       
+      .then((url: string) => {
+        this.imagePreview = url
+        this.deletable = true
+        console.log(this.imagePreview)
+      })
+    this.noteService.percentage.subscribe((p) => {
+      this.percentage = Math.ceil(p)
       console.log(p)
     })
   }
@@ -81,17 +96,16 @@ export class CreateNoteComponent implements OnInit {
     // Show preview    
     var mimeType = fileData.type;
     if (mimeType.match(/image\/*/) == null) {
-      this.fileInfo = 'Select a valid image'   
+      this.fileInfo = 'Select a valid image'
       return;
     }
-    this.fileInfo ='Choose an image'
+    this.fileInfo = 'Choose an image'
     var reader = new FileReader();
     reader.readAsDataURL(fileData);
     reader.onload = (_event) => {
-      this.imagePreview = reader.result; 
+      this.imagePreview = reader.result;
       // console.log(reader.result);
       // console.log('imagepreview');
-      
     }
   }
 
@@ -110,7 +124,7 @@ export class CreateNoteComponent implements OnInit {
 
     if ((value || '').trim()) {
       let tag = value.trim()
-      if(tag[0] != '#'){
+      if (tag[0] != '#') {
         tag = '#' + tag
       }
       this.tags.push(tag);

@@ -39,17 +39,23 @@
         </div>
         <div class="col-12 text-center">
             <div class="col-12 text-right">
-                <button class="btn btn-link text-muted px-0" *ngIf="imagePreview" (click)="imagePreview=''"><i
+                <button class="btn btn-link text-muted px-0" *ngIf="deletable" (click)="removeImage()"><i
                         class="fas fa-times"></i> Remove Image</button>
             </div>
-
-            <img src="{{imagePreview}}" alt="" class="img-fluid" *ngIf="imagePreview">
+            <div class="col-12 py-2 bg-dark" *ngIf="percentage">
+                <mat-progress-bar mode="determinate" [value]="percentage" color="warn"></mat-progress-bar>
+                <span *ngIf="percentage">Uploading</span><span *ngIf="!deletable"> {{percentage}}%
+                </span><span *ngIf="deletable"> Completed</span>
+            </div>
+            <div class="col-12">
+                <img [src]=imagePreview alt="" class="img-fluid" *ngIf="imagePreview">
+            </div>
 
         </div>
         <div class="col-12" *ngIf="!imagePreview">
             <div class="form-file">
                 <input type="file" class="form-file-input" id="customFile"
-                    (change)="handleFileInput($event.target.files)" />
+                    (change)="handleFileInput($event.target.files)" accept=".jpg, .png, .jpeg" />
                 <label class="form-file-label" for="customFile">
                     <span class="form-file-text bg-dark text-white">{{fileInfo}}</span>
                     <span class="form-file-button bg-dark text-white">Browse</span>
@@ -61,8 +67,15 @@
 <div class="container-fluid bg-dark bottom-bar shadow-lg text-center text-muted">
     <div class="text-center">
         <button type="button" class="btn btn-danger btn-rounded shadow new-button" (click)="onSubmit()">
-            <i class="fas fa-check"></i> Save Note
+            <i class="fas fa-check" *ngIf="!hasFile || deletable"></i>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                *ngIf="hasFile && !deletable"></span>
+            Save Note
         </button>
     </div>
     <span class="">Tips: Add # tags for easy notes filtering </span>
 </div>
+
+<span #loading>
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+</span>

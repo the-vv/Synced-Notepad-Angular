@@ -28,7 +28,7 @@ export class NotesService {
   }
 
   upload(file) {
-    const path = `test/${Date.now()}_${file.name}`;
+    const path = `NoteImages/${Date.now()}_${file.name}`;
 
     // Reference to storage bucket
     const ref = this.storage.ref(path);
@@ -43,6 +43,11 @@ export class NotesService {
         resolve(url);      
       })
     })     
+  }
+
+  delete(url){
+    console.log(url);    
+    return this.storage.storage.refFromURL(url).delete()
   }
 
   getNotes() { //return all the notes

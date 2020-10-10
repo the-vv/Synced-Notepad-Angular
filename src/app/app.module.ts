@@ -24,6 +24,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
 
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
@@ -65,6 +67,7 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     MatDividerModule,
     FormsModule, 
     ReactiveFormsModule,
+    MatProgressBarModule
   ],
   providers: [
     AuthenticationService,
