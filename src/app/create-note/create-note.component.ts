@@ -88,7 +88,6 @@ export class CreateNoteComponent implements OnInit {
       })
     this.noteService.percentage.subscribe((p) => {
       this.percentage = Math.ceil(p)
-      console.log(p)
     })
   }
 
