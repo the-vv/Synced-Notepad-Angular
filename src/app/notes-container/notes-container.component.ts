@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NotesService } from '../services/notes.service';
+import { AuthenticationService } from '../services/authentication.service'
 import Note from '../Interfaces/Note'
 
 @Component({
@@ -14,17 +15,29 @@ export class NotesContainerComponent implements OnInit {
     this.isDrawerOpen = event.target.innerWidth >= 768
   }
   
-  Notes: Note[]
+  Notes: Note[] = []
   isDrawerOpen: boolean;
   hashTags :any[] = []
+  uid: string
 
-  constructor(public Note: NotesService) {
+  constructor(
+    private auth: AuthenticationService,
+    public Note: NotesService
+    ) {
   }
 
   ngOnInit(): void {
-    this.hashTags = this.Note.getHashTags()
-    this.Notes = this.Note.getNotes()
-    console.log(this.Notes);
+    this.auth.user$.subscribe((user) =>{
+      if(user){
+        this.Note.getNotes(user.uid).then((notes) =>{
+          if(notes){
+            this.Notes = notes
+            this.hashTags = this.Note.getHashTags()
+            console.log(this.Notes);
+          }
+        })        
+      }
+    })
     this.isDrawerOpen = window.innerWidth >= 768
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Note from '../Interfaces/Note'
 
 
@@ -10,47 +10,73 @@ import Note from '../Interfaces/Note'
 })
 export class NotesService {
 
-  
+  userNotes: Note[]
   task: AngularFireUploadTask;
   percentage: Observable<number>;
   downloadURL: Observable<string>;
 
   constructor(
+    private afs: AngularFirestore,
     private storage: AngularFireStorage
   ) {
   }
 
   addNote(note: Note) {
-    return new Promise((resolve, reject) => {
-      this.userNotes.push(note)
-      resolve()
+    const notesRef: any = this.afs.collection('notes');
+    return new Promise<boolean>(async (resolve, reject) => {
+      await notesRef.add(note, { merge: true })
+      resolve(true)
     })
+    // return new Promise((resolve, reject) => {
+    //   this.userNotes.push(note)
+    //   resolve()
+    // })
   }
 
   upload(file) {
     const path = `NoteImages/${Date.now()}_${file.name}`;
-
     // Reference to storage bucket
     const ref = this.storage.ref(path);
-
     // The main task
-    this.task = this.storage.upload(path, file);    
+    this.task = this.storage.upload(path, file);
     // Progress monitoring
-    this.percentage = this.task.percentageChanges();   
+    this.percentage = this.task.percentageChanges();
     return new Promise((resolve, reject) => {
-      this.task.then(async (any)=>{
-        let url = await any.ref.getDownloadURL()
-        resolve(url);      
+      this.task.then(async (res) => {
+        let url = await res.ref.getDownloadURL()
+        resolve(url);
       })
-    })     
+    })
   }
 
-  delete(url){
+  delete(url) {
     return this.storage.storage.refFromURL(url).delete()
   }
 
-  getNotes() { //return all the notes
-    return this.userNotes;
+  getNotes(uid: string) { //return all the notes
+    return new Promise<any[]>(async (resolve, reject) => {
+      this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
+      .subscribe((data) =>{
+        console.log(data);        
+        if(data.length){
+          // console.log(data[0].payload.doc.data()); 
+          let notes = []
+          data.forEach(element => {
+            let data = element.payload.doc.data() as Note
+            let note = {
+              id: element.payload.doc.id,
+              ...data
+            }            
+            notes.push(note)
+          });
+          this.userNotes = notes;
+          resolve(notes) 
+        }       
+        else{
+          console.log([]);          
+        }
+      })
+    })
   }
   getHashTags() { //return all the #Tags
     let hashes = []
@@ -60,7 +86,12 @@ export class NotesService {
       }
     }
     hashes = [...new Set(hashes)]
-    return hashes
+    if(hashes.length){
+      return hashes
+    }
+    else{
+      return []
+    }
   }
 
   getNote(id) { //return a single note matched from note id
@@ -68,72 +99,5 @@ export class NotesService {
       return note.id == id
     })[0]
   }
-
-  userNotes: Note[] = [
-    {
-      uid: '1',
-      id: '1',
-      title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      hashTags: ['#new', '#temp', '#test'],
-      images: 'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg'
-    },
-    {
-      uid: '2',
-      id: '2',
-      title: 'New Test2',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '1',
-      id: '3',
-      title: 'New Test3',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '2',
-      id: '4',
-      title: 'New Test4',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '3',
-      id: '5',
-      title: 'New Test5',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '2',
-      id: '6',
-      title: 'New Test6',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '1',
-      id: '7',
-      title: 'New Test7',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '3',
-      id: '8',
-      title: 'New Test8',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-    {
-      uid: '1',
-      id: '9',
-      title: 'New Test9',
-      description: 'New test escription',
-      hashTags: ['#new', '#temp', '#test']
-    },
-  ]
 
 }

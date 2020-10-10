@@ -3,7 +3,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotesService } from '../services/notes.service';
-import {AuthenticationService } from '../services/authentication.service'
+import { AuthenticationService } from '../services/authentication.service'
 import { Router } from '@angular/router';
 import Note from '../Interfaces/Note';
 
@@ -34,8 +34,8 @@ export class CreateNoteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.auth.user$.subscribe((user) =>{
-      this.userInfo = user.uid;    
+    this.auth.user$.subscribe((user) => {
+      this.userInfo = user.uid;
     })
     this.registerForm = this.formBuilder.group({
       title: ['', Validators.required,],
@@ -50,7 +50,6 @@ export class CreateNoteComponent implements OnInit {
       let note: Note;
       note = this.registerForm.value
       note.uid = this.userInfo;
-      note.id = String(Math.floor(Math.random() * 100) + 1)
       if (this.tags.length > 0) {
         note.hashTags = this.tags;
       } else {
@@ -60,16 +59,16 @@ export class CreateNoteComponent implements OnInit {
         if (this.deletable) {
           console.log(this.imagePreview);
           note.images = this.imagePreview
-        }else{
-          console.log('wait for file upload');          
+        } else {
+          console.log('wait for file upload');
         }
       }
       console.log(note);
       this.noteService.addNote(note)
         .then(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/notes']);
         })
-    }else{
+    } else {
       alert('Notes must have a Title')
     }
     return
