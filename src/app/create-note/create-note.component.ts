@@ -17,7 +17,6 @@ export class CreateNoteComponent implements OnInit {
 
   fileInfo: string='Choose an image'
   imagePreview: any
-  URL: string
   percentage: any
 
   //form  
@@ -68,9 +67,13 @@ export class CreateNoteComponent implements OnInit {
     console.log(file[0]);
     this.preview(file[0])
     this.noteService.upload(file[0])
+    .then((url: string) => {
+      this.imagePreview = url
+      console.log(this.imagePreview)
+    })
     this.noteService.percentage.subscribe((p) =>{
-      console.log(p); 
-      console.log(this.noteService.downloadURL);           
+      this.percentage = p       
+      console.log(p)
     })
   }
 

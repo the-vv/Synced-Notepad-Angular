@@ -13,7 +13,6 @@ export class NotesService {
   
   task: AngularFireUploadTask;
   percentage: Observable<number>;
-  snapshot: Observable<any>;
   downloadURL: Observable<string>;
 
   constructor(
@@ -35,21 +34,15 @@ export class NotesService {
     const ref = this.storage.ref(path);
 
     // The main task
-    this.task = this.storage.upload(path, file);
-
-    console.log(this.task)
+    this.task = this.storage.upload(path, file);    
     // Progress monitoring
-    this.percentage = this.task.percentageChanges();
-    this.snapshot   = this.task.snapshotChanges().pipe(
-      // tap(console.log),
-      // The file's download URL
-      finalize( () =>  {
-        console.log('await');
-        
-        this.downloadURL = ref.getDownloadURL();
-        console.log(this.downloadURL);        
-      }),
-    );
+    this.percentage = this.task.percentageChanges();   
+    return new Promise((resolve, reject) => {
+      this.task.then(async (any)=>{
+        let url = await any.ref.getDownloadURL()
+        resolve(url);      
+      })
+    })     
   }
 
   getNotes() { //return all the notes

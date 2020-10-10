@@ -37,21 +37,13 @@
                 </mat-form-field>
             </p>
         </div>
-        <div class="col-12">
+        <div class="col-12 text-center">
             <div class="col-12 text-right">
                 <button class="btn btn-link text-muted px-0" *ngIf="imagePreview" (click)="imagePreview=''"><i
                         class="fas fa-times"></i> Remove Image</button>
             </div>
 
-            <!-- <img src="{{imagePreview}}" alt="" class="img-fluid" *ngIf="imagePreview"> -->
-            <div class="bg-image col-12" *ngIf="imagePreview">
-                <img src="{{imagePreview}}" class="img-fluid" alt="Sample" />
-                <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
-                    <div class="d-flex justify-content-center align-items-center h-100">
-                        <p class="text-white mb-0" *ngIf="noteService.downloadURL as url">{{url}}</p>
-                    </div>
-                </div>
-            </div>
+            <img src="{{imagePreview}}" alt="" class="img-fluid" *ngIf="imagePreview">
 
         </div>
         <div class="col-12" *ngIf="!imagePreview">
