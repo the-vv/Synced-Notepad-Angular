@@ -9,10 +9,10 @@
                         </div>
                         <div class="col-3 col-sm-2">
                             <button mat-icon-button class="example-icon btn btn-sm p-0 text-white"
-                            aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
-                            *ngIf="isDrawerOpen">
-                            <i class="fas fa-lg fa-times"></i>
-                        </button>
+                                aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
+                                *ngIf="isDrawerOpen">
+                                <i class="fas fa-lg fa-times"></i>
+                            </button>
                         </div>
                         <hr>
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection">
@@ -38,22 +38,30 @@
                         </mat-toolbar>
                     </div>
                 </div>
- 
+
                 <div class="container-fluid notes-container pb-3">
-                    <div class="row" *ngIf="Notes.length>=1">
+                    <div class="row" *ngIf="Notes && Notes.length>=1">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="noNotes text-center" *ngIf="!(Notes.length>0)">
+                    <div class="row noNotes d-flex align-items-center justify-content-center"
+                        *ngIf="Notes && !(Notes.length>0)">
+                        <div class=" text-center">
                             <h1>Create your first note by Clicking + icon</h1>
+                        </div>
+                    </div>
+                    <div class="row noNotes d-flex align-items-center justify-content-center" *ngIf="!Notes">
+                        <div class="text-center">
+                            <h1>Fetching your Notes</h1>
+                            <mat-spinner class="mx-auto"></mat-spinner>
                         </div>
                     </div>
                 </div>
                 <div class="container-fluid bg-grey bottom-bar shadow-lg">
                     <div class="text-center">
-                        <a type="button" class="btn btn-danger btn-rounded shadow new-button" routerLink="/notes/create">
+                        <a type="button" class="btn btn-danger btn-rounded shadow new-button"
+                            routerLink="/notes/create">
                             <i class="fas fa-plus"></i> Add a Note
                         </a>
                     </div>

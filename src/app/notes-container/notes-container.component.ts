@@ -15,10 +15,11 @@ export class NotesContainerComponent implements OnInit {
     this.isDrawerOpen = event.target.innerWidth >= 768
   }
   
-  Notes: Note[] = []
+  Notes: Note[]
   isDrawerOpen: boolean;
   hashTags :any[] = []
   uid: string
+  loading: boolean = true;
 
   constructor(
     private auth: AuthenticationService,
@@ -33,6 +34,7 @@ export class NotesContainerComponent implements OnInit {
           if(notes){
             this.Notes = notes
             this.hashTags = this.Note.getHashTags()
+            this.loading = false
             console.log(this.Notes);
           }
         })        

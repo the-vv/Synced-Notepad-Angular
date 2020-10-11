@@ -13,6 +13,9 @@
     .notes-container {
         height: calc(100vh - 47px - 56px - 42px);
     }
+    .noNotes{        
+        height: calc(100vh - 47px - 56px - 42px - 56px);
+    }
 }
 
 @media (min-width: 992px) {
@@ -29,6 +32,9 @@
 
     .notes-container {
         height: calc(100vh - 53px - 64px - 42px);
+    }
+    .noNotes{        
+        height: calc(100vh - 53px - 64px - 42px - 64px);
     }
 }
 

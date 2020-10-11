@@ -27,10 +27,6 @@ export class NotesService {
       await notesRef.add(note, { merge: true })
       resolve(true)
     })
-    // return new Promise((resolve, reject) => {
-    //   this.userNotes.push(note)
-    //   resolve()
-    // })
   }
 
   upload(file) {
