@@ -16,7 +16,7 @@ export class NoteViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private Notes: NotesService
+    private Notes: NotesService 
   ) { }
 
   ngOnInit(): void {

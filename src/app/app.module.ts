@@ -27,6 +27,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
 import { LoginComponentComponent } from './login-component/login-component.component';
@@ -68,7 +70,8 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     FormsModule,
     ReactiveFormsModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LazyLoadImageModule
   ],
   providers: [
     AuthenticationService,
