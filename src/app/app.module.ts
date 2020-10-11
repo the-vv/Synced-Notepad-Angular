@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -29,6 +29,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
@@ -73,7 +75,8 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     MatProgressBarModule,
     MatProgressSpinnerModule,
     LazyLoadImageModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    NgxSpinnerModule
   ],
   providers: [
     AuthenticationService,
@@ -81,6 +84,7 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
   ],
   bootstrap: [
     AppComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

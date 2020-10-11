@@ -29,7 +29,7 @@
 </div>
 <div class="container-fluid bg-dark bottom-bar shadow-lg">
     <div class="text-center">
-        <button type="button" class="btn btn-danger btn-rounded shadow new-button mr-1">
+        <button type="button" class="btn btn-danger btn-rounded shadow new-button mr-1" (click)="removeNote()">
             <i class="fas fa-times"></i> Delete Note
         </button>
         <button type="button" class="btn btn-warning text-black btn-rounded shadow new-button ml-1">
@@ -37,3 +37,7 @@
         </button>
     </div>
 </div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>

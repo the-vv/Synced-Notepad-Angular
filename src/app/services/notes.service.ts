@@ -45,35 +45,58 @@ export class NotesService {
     })
   }
 
-  delete(url) {
+  delete(url) { //delete image
     return this.storage.storage.refFromURL(url).delete()
+  }
+
+  deleteNote(note: Note) {
+    let image = note.images
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection("notes").doc(String(note.id)).delete()
+        .then(() => {
+          if (image) {
+            this.delete(image).then((res) => {
+              resolve({ note: true, image: true });
+            })
+              .catch((res) => {
+                reject({ note: true, image: false })
+              })
+          } else {
+            resolve({ note: true })
+          }
+        })
+        .catch((res) => {
+          reject({ note: false, image: false })
+        })
+    })
   }
 
   getNotes(uid: string) { //return all the notes
     return new Promise<any[]>(async (resolve, reject) => {
       this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
-      .subscribe((data) =>{
-        console.log(data);        
-        if(data.length){
-          // console.log(data[0].payload.doc.data()); 
-          let notes = []
-          data.forEach(element => {
-            let data = element.payload.doc.data() as Note
-            let note = {
-              id: element.payload.doc.id,
-              ...data
-            }            
-            notes.push(note)
-          });
-          this.userNotes = notes;
-          resolve(notes) 
-        }       
-        else{
-          console.log([]);          
-        }
-      })
+        .subscribe((data) => {
+          if (data.length) {
+            // console.log(data[0].payload.doc.data()); 
+            let notes = []
+            data.forEach(element => {
+              let data = element.payload.doc.data() as Note
+              let note = {
+                id: element.payload.doc.id,
+                ...data
+              }
+              notes.push(note)
+            });
+            this.userNotes = notes;
+            resolve(notes)
+          }
+          else {
+            this.userNotes = [];
+            resolve([])
+          }
+        })
     })
   }
+
   getHashTags() { //return all the #Tags
     let hashes = []
     for (let note of this.userNotes) {
@@ -82,10 +105,10 @@ export class NotesService {
       }
     }
     hashes = [...new Set(hashes)]
-    if(hashes.length){
+    if (hashes.length) {
       return hashes
     }
-    else{
+    else {
       return []
     }
   }
