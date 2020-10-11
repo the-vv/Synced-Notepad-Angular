@@ -28,6 +28,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
@@ -71,7 +72,8 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     ReactiveFormsModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [
     AuthenticationService,

@@ -15,11 +15,21 @@
                             </button>
                         </div>
                         <hr>
-                        <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection">
+                        <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection"
+                            *ngIf="hashTags">
                             <mat-chip *ngFor="let tag of hashTags" selected color="accent">
                                 {{tag}}
                             </mat-chip>
                         </mat-chip-list>
+                        <div class="item" *ngIf="!hashTags">
+                            <ngx-skeleton-loader count="10" appearance="rectangle" animation="progress-dark" [theme]="{ 
+                                'border-radius': '5px',
+                                height: '30px',
+                                width: '100%',
+                                'background-color': '#b0bec5'
+                              }">
+                            </ngx-skeleton-loader>
+                        </div>
                     </div>
                 </div>
             </mat-sidenav>
@@ -52,10 +62,20 @@
                         </div>
                     </div>
                     <div class="row noNotes d-flex align-items-center justify-content-center" *ngIf="!Notes">
-                        <div class="text-center">
+                        <div class="item">
+                            <ngx-skeleton-loader count="4" appearance="rectangle" animation="progress-dark" [theme]="{ 
+                                'border-radius': '5px',
+                                height: '150px',
+                                width: '100%',
+                                'margin': '1%',
+                                'background-color': '#262626'
+                              }">
+                            </ngx-skeleton-loader>
+                        </div>
+                        <!-- <div class="text-center">
                             <h1>Fetching your Notes</h1>
                             <mat-spinner class="mx-auto"></mat-spinner>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="container-fluid bg-grey bottom-bar shadow-lg">

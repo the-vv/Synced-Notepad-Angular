@@ -17,7 +17,7 @@ export class NotesContainerComponent implements OnInit {
   
   Notes: Note[]
   isDrawerOpen: boolean;
-  hashTags :any[] = []
+  hashTags :any[]
   uid: string
   loading: boolean = true;
 
