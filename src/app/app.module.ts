@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -26,11 +26,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxSpinnerModule } from "ngx-spinner";
-
 
 import { NoteCardComponent } from './note-card/note-card.component';
 import { AppComponent } from './app.component';
@@ -76,7 +76,8 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     MatProgressSpinnerModule,
     LazyLoadImageModule,
     NgxSkeletonLoaderModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatDialogModule
   ],
   providers: [
     AuthenticationService,
