@@ -26,7 +26,16 @@ export class NotesService {
   addNote(note: Note) {
     const notesRef: any = this.afs.collection('notes');
     return new Promise<boolean>(async (resolve, reject) => {
-      await notesRef.add(note, { merge: true })
+      await notesRef.add(note)
+      resolve(true)
+    })
+  }
+  
+  updateNote(note: Note, id: string) {
+    console.log(note);    
+    const notesRef: any = this.afs.collection('notes').doc(id);
+    return new Promise<boolean>(async (resolve, reject) => {
+      await notesRef.set(note, { merge: true })
       resolve(true)
     })
   }

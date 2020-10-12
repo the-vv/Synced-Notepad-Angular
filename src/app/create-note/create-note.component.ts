@@ -24,13 +24,10 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   hasFile: boolean = false
   fstate: string
   editMode = false
-
+  NoteId: string
   //form  
   registerForm: FormGroup;
   submitted = false;
-
-  @Input()
-  editNote: Note
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -43,7 +40,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.log('destroyed');
-    if (this.deletable && !this.submitted) {
+    if (this.deletable && !this.submitted && !this.editMode) {
       this.removeImage();
     }
     if (this.fstate && this.fstate != 'success') {
@@ -53,21 +50,30 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      let id = params['id'];
-      console.log(id);
-      let Note = this.noteService.getNote(id)
+      this.NoteId = params['id'];
+      let Note = this.noteService.getNote(this.NoteId)
       console.log(Note)
-      if (id && !Note) {
+      if (this.NoteId && !Note) {
         console.log('redirect');
         this.router.navigate(['404'])
       }
-      else if (id && Note) {
+      else if (this.NoteId && Note) {
         this.editMode = true;
         this.registerForm = this.formBuilder.group({
           title: [Note.title, Validators.required,],
           description: Note.description,
         }, {
         });
+        if(Note.hashTags.length){
+          this.tags = this.tags.concat(Note.hashTags)
+        }
+        console.log(this.tags);        
+        if (Note.images) {
+          this.hasFile = true
+          this.imagePreview = Note.images
+          this.deletable = true
+          this.fstate = 'success'
+        }
       }
     });
     if (!this.editMode) {
@@ -107,12 +113,25 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         }
       }
       console.log(note);
-      this.noteService.addNote(note)
+      if(this.editMode){
+        if(!this.hasFile){
+          note.images = ''
+        }
+        this.noteService.updateNote(note, this.NoteId)
         .then(() => {
           this.spinner.hide()
           this.submitted = true;
           this.router.navigate(['/notes']);
         })
+      }
+      else{
+        this.noteService.addNote(note)
+          .then(() => {
+            this.spinner.hide()
+            this.submitted = true;
+            this.router.navigate(['/notes']);
+          })
+      }
     } else {
       alert('Notes must have a Title')
     }
@@ -141,6 +160,8 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         this.percentage = undefined
       })
       .catch((e) => {
+        this.deletable = false
+        this.imagePreview = ''
         this.spinner.hide()
         console.log(e);
       })
