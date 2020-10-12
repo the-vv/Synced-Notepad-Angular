@@ -51,8 +51,9 @@ mat-chip {
 }
 
 .bottom-bar {
+    position: fixed;
+    bottom:0;
     margin-top: 2px;
-    box-sizing: border-box;
     height : 40px;
     z-index: 2;
     border-top: 1px solid #f93154;
@@ -62,7 +63,7 @@ mat-chip {
 
 .notes-container {
     overflow: auto;
-}
+} 
 
 .new-button {
     position: sticky;

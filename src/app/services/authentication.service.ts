@@ -58,16 +58,39 @@ export class AuthenticationService {
 
   async GoogleLogin() {
     const provider = new auth.GoogleAuthProvider();
-    const credential = await this.auth.signInWithPopup(provider);
-    await this.addUserToDB(credential);
-    console.log(this.redirectUrl);
-    this.router.navigate([this.redirectUrl ? this.redirectUrl : '/'])
-      .then((res) => {
-        // console.log(res);
-      })
-      .catch((err) => {
-        // console.log(err);
-      })
+    // const credential = await this.auth.signInWithPopup(provider); 
+    return new Promise<any>((resolve, reject) => {
+      this.auth.signInWithPopup(provider)
+        .then(async (credential) => {
+          // await this.addUserToDB(credential);
+          this.addUserToDB(credential)
+            .then((res) => {
+              if (res) {
+                resolve(this.redirectUrl)
+                // console.log(this.redirectUrl);
+                // this.router.navigate([this.redirectUrl ? this.redirectUrl : '/'])
+                //   .then((res) => {
+                //     console.log(res);
+                //   })
+                //   .catch((err) => {
+                //     console.log('error routing from singn in');
+                //     console.log(err);
+                //   })
+              }
+              else {
+                reject('Write to db: false ')
+              }
+            })
+            .catch((err) => {
+              console.log('error writing user to db');
+              reject(err)
+            })
+        })
+        .catch((err) => {
+          console.log('error signing in with google');
+          reject(err)
+        })
+    })
   }
 
   async SignOut() {

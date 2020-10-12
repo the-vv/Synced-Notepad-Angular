@@ -8,13 +8,10 @@ h-100{
 h-50{
     height: 50%;
 }
-html, body { height: 100%; }
+html, body { min-height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 a{
     cursor: pointer;
-}
-body, html{
-  overflow: hidden
 }
 
 // Scroll Bar
