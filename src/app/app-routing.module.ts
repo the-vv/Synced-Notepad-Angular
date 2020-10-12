@@ -15,6 +15,7 @@ const routes: Routes = [
   // { path: 'notes', component: NotesContainerComponent, canActivate: [AuthGuard]},  
   { path: 'notes', component: NotesContainerComponent, canActivate: [AuthGuard] },
   { path: 'notes/create', component: CreateNoteComponent, canActivate: [AuthGuard] },
+  { path: 'notes/create/:id', component: CreateNoteComponent, canActivate: [AuthGuard] },
   { path: 'notes/view/:id', component: NoteViewComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect to `home`
   { path: '404', component: PageNoteFoundComponent }, // redirect to `404`

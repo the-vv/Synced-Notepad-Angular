@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotesService } from '../services/notes.service';
 import { AuthenticationService } from '../services/authentication.service'
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import Note from '../Interfaces/Note';
 import { NgxSpinnerService } from "ngx-spinner";
 
@@ -23,17 +23,22 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   deletable: boolean = false
   hasFile: boolean = false
   fstate: string
+  editMode = false
 
   //form  
   registerForm: FormGroup;
   submitted = false;
+
+  @Input()
+  editNote: Note
 
   constructor(
     private spinner: NgxSpinnerService,
     public auth: AuthenticationService,
     private router: Router,
     public noteService: NotesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnDestroy() {
@@ -41,22 +46,42 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     if (this.deletable && !this.submitted) {
       this.removeImage();
     }
-    if(this.fstate && this.fstate != 'success'){
+    if (this.fstate && this.fstate != 'success') {
       this.noteService.cancelUpload()
     }
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      let id = params['id'];
+      console.log(id);
+      let Note = this.noteService.getNote(id)
+      console.log(Note)
+      if (id && !Note) {
+        console.log('redirect');
+        this.router.navigate(['404'])
+      }
+      else if (id && Note) {
+        this.editMode = true;
+        this.registerForm = this.formBuilder.group({
+          title: [Note.title, Validators.required,],
+          description: Note.description,
+        }, {
+        });
+      }
+    });
+    if (!this.editMode) {
+      this.registerForm = this.formBuilder.group({
+        title: ['', Validators.required,],
+        description: '',
+      }, {
+      });
+    }
     this.auth.user$.subscribe((user) => {
       if (user) {
         this.userInfo = user.uid;
       }
     })
-    this.registerForm = this.formBuilder.group({
-      title: ['', Validators.required,],
-      description: '',
-    }, {
-    });
   }
   get f() { return this.registerForm.controls; }
 
@@ -94,7 +119,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     return
   }
 
-  cancelImageUpload(){
+  cancelImageUpload() {
     this.noteService.cancelUpload()
     console.log('Upload Cancelled');
     this.deletable = false
@@ -132,10 +157,10 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         this.deletable = true
         console.log(this.imagePreview)
       })
-      this.noteService.status.subscribe((s) =>{
-        this.fstate = s
-        console.log(s);        
-      })
+    this.noteService.status.subscribe((s) => {
+      this.fstate = s
+      console.log(s);
+    })
     this.noteService.percentage.subscribe((p) => {
       if (p >= 0) {
         this.spinner.hide()
