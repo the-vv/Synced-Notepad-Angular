@@ -22,6 +22,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   percentage: any
   deletable: boolean = false
   hasFile: boolean = false
+  fstate: string
 
   //form  
   registerForm: FormGroup;
@@ -35,16 +36,21 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) { }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     console.log('destroyed');
-    if(this.deletable && !this.submitted){
+    if (this.deletable && !this.submitted) {
       this.removeImage();
+    }
+    if(this.fstate && this.fstate != 'success'){
+      this.noteService.cancelUpload()
     }
   }
 
   ngOnInit() {
     this.auth.user$.subscribe((user) => {
-      this.userInfo = user.uid;
+      if (user) {
+        this.userInfo = user.uid;
+      }
     })
     this.registerForm = this.formBuilder.group({
       title: ['', Validators.required,],
@@ -88,6 +94,16 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     return
   }
 
+  cancelImageUpload(){
+    this.noteService.cancelUpload()
+    console.log('Upload Cancelled');
+    this.deletable = false
+    this.imagePreview = ''
+    this.percentage = undefined
+    this.hasFile = false
+    this.fstate = undefined
+  }
+
   removeImage() {
     this.hasFile = false
     this.spinner.show()
@@ -97,9 +113,10 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         console.log('Deleted');
         this.deletable = false
         this.imagePreview = ''
-        this.percentage = null
+        this.percentage = undefined
       })
       .catch((e) => {
+        this.spinner.hide()
         console.log(e);
       })
   }
@@ -115,8 +132,12 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         this.deletable = true
         console.log(this.imagePreview)
       })
+      this.noteService.status.subscribe((s) =>{
+        this.fstate = s
+        console.log(s);        
+      })
     this.noteService.percentage.subscribe((p) => {
-      if(p>0){        
+      if (p >= 0) {
         this.spinner.hide()
       }
       console.log(p);

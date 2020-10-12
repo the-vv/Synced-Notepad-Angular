@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "registration-91b64"
+  },
+  "targets": {
+    "registration-91b64": {
+      "hosting": {
+        "notepad": [
+          "syncednotepad"
+        ]
+      }
+    }
+  }
+}

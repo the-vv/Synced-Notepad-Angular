@@ -38,13 +38,17 @@
             </p>
         </div>
         <div class="col-12 text-center">
-            <div class="col-12 text-right">
-                <button class="btn btn-link text-muted px-0 btn-sm" *ngIf="deletable" (click)="removeImage()"><i
+            <div class="col-12 text-right" *ngIf="fstate && fstate != 'success'">
+                <button class="btn btn-link text-muted px-0 btn-sm" (click)="cancelImageUpload()"><i
+                        class="fas fa-times"></i> Cancel Upload</button>
+            </div> 
+            <div class="col-12 text-right" *ngIf="deletable">
+                <button class="btn btn-link text-muted px-0 btn-sm" (click)="removeImage()"><i
                         class="fas fa-times"></i> Remove Image</button>
             </div>
-            <div class="col-12 py-2 bg-dark" *ngIf="percentage && !deletable">
+            <div class="col-12 py-2 bg-dark" *ngIf="percentage>=0 && !deletable">
                 <mat-progress-bar mode="determinate" [value]="percentage" color="warn"></mat-progress-bar>
-                <span *ngIf="percentage">Uploading</span><span *ngIf="!deletable"> {{percentage}}%</span>
+                <span *ngIf="percentage>=0">Uploading</span><span *ngIf="!deletable"> {{percentage}}%</span>
             </div>
             <div class="col-12">
                 <img [src]=imagePreview alt="" class="img-fluid" *ngIf="imagePreview">

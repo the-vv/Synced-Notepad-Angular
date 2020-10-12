@@ -3,6 +3,7 @@ import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Note from '../Interfaces/Note'
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -10,6 +11,7 @@ import Note from '../Interfaces/Note'
 })
 export class NotesService {
 
+  status: Observable<string>
   userNotes: Note[]
   task: AngularFireUploadTask;
   percentage: Observable<number>;
@@ -36,12 +38,25 @@ export class NotesService {
     // The main task
     this.task = this.storage.upload(path, file);
     // Progress monitoring
+    this.status = this.task.snapshotChanges().pipe(map(s => s.state));
     this.percentage = this.task.percentageChanges();
     return new Promise((resolve, reject) => {
       this.task.then(async (res) => {
         let url = await res.ref.getDownloadURL()
         resolve(url);
       })
+      .catch((err) =>{
+        console.log(err.message_);        
+      })
+    })
+  }
+
+  cancelUpload(){
+    this.status.subscribe((s) =>{
+      if(s && s != 'success'){
+        let r = this.task.cancel()
+        console.log(r ? 'cancelled upload' : 'error canclling upload');        
+      }
     })
   }
 
@@ -72,7 +87,7 @@ export class NotesService {
   }
 
   getNotes(uid: string) { //return all the notes
-    return new Promise<any[]>(async (resolve, reject) => {
+    return new Promise<Note[]>(async (resolve, reject) => {
       this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
         .subscribe((data) => {
           if (data.length) {
