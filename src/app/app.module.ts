@@ -42,6 +42,7 @@ import { NotesContainerComponent } from './notes-container/notes-container.compo
 import { NoteViewComponent } from './note-view/note-view.component';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { PageNoteFoundComponent } from './page-note-found/page-note-found.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     NoteCardComponent,
     NoteViewComponent,
     CreateNoteComponent,
-    PageNoteFoundComponent
+    PageNoteFoundComponent,
+    ConfirmationComponent
   ],
   imports: [
     AngularFireAuthModule,
