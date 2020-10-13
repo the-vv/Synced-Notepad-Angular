@@ -49,8 +49,8 @@
                     </div>
                 </div>
 
-                <div class="container-fluid pb-3">
-                    <div class="row notes-container" *ngIf="Notes && Notes.length>=1">
+                <div class="container-fluid">
+                    <div class="dynamic notes-container row pb-4" *ngIf="Notes && Notes.length>=1">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
