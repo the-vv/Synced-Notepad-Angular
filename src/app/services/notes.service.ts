@@ -114,29 +114,7 @@ export class NotesService {
   }
 
   getNotes(uid: string) { //return all the notes
-    return new Promise<Note[]>(async (resolve, reject) => {
-      this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
-        .subscribe((data) => {
-          if (data.length) {
-            // console.log(data[0].payload.doc.data()); 
-            let notes = []
-            data.forEach(element => {
-              let data = element.payload.doc.data() as Note
-              let note = {
-                id: element.payload.doc.id,
-                ...data
-              }
-              notes.push(note)
-            });
-            this.userNotes = notes;
-            resolve(notes)
-          }
-          else {
-            this.userNotes = [];
-            resolve([])
-          }
-        })
-    })
+    return this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()        
   }
 
   getHashTags() { //return all the #Tags
