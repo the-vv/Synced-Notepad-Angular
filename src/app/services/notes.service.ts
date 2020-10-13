@@ -27,7 +27,7 @@ export class NotesService {
   ) {
   }
 
-  openSnackBar(message: string, dur: number = 5000, action: string = 'Dismiss') {
+  openSnackBar(message: string, dur: number = 3000, action: string = 'Dismiss') {
     this._snackBar.open(message, action, {
       duration: dur,
     });
@@ -67,7 +67,11 @@ export class NotesService {
         resolve(url);
       })
       .catch((err) =>{
-        console.log(err.message_);        
+        if(err.code_ == 'storage/unauthorized'){
+          this.openSnackBar('Permission denied: Max. file size is 5MB',  3000)
+          console.log(err.message_);        
+          reject(err.code_)
+        }
       })
     })
   }
@@ -114,7 +118,7 @@ export class NotesService {
   }
 
   getNotes(uid: string) { //return all the notes
-    return this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()        
+    return this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
   }
 
   getHashTags() { //return all the #Tags

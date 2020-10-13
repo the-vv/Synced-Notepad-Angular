@@ -1,85 +1,87 @@
-<div class="container-fluid bg-dark main-container">
-    <div class="row text-white note-container">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="col-12 pt-2">
-                <p class="pt-4 m-0">
-                    <mat-form-field appearance="legacy" class="p-0 m-0 w-100">
-                        <mat-label>Create a Note</mat-label>
-                        <input matInput placeholder="Title" class="p-0 m-0" formControlName="title" required
-                            style="font-size: 1.7em;">
-                        <mat-error *ngIf="f.title.errors">A note must have a title</mat-error>
-                    </mat-form-field>
-                </p>
-            </div>
-            <div class="col-12 py-3">
-                <p class="p-0 m-0">
-                    <mat-form-field class="w-100" appearance="fill">
-                        <mat-label>Write something</mat-label>
-                        <textarea matInput class="res-field" placeholder="Description"
-                            formControlName="description"></textarea>
-                    </mat-form-field>
-                </p>
-            </div>
-        </form>
-        <div class="col-12">
-            <p class="p-0 m-0">
-                <mat-form-field class="example-chip-list">
-                    <mat-chip-list #chipList aria-label="Fruit selection">
-                        <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable"
-                            (removed)="remove(tag)">
-                            {{tag}}
-                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                        </mat-chip>
-                        <input placeholder="#Tags" [matChipInputFor]="chipList"
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                            (matChipInputTokenEnd)="add($event)">
-                    </mat-chip-list>
-                </mat-form-field>
-            </p>
-        </div>
-        <div class="col-12 text-center">
-            <div class="col-12 text-right" *ngIf="fstate && fstate != 'success'">
-                <button class="btn btn-link text-muted px-0 btn-sm" (click)="cancelImageUpload()"><i
-                        class="fas fa-times"></i> Cancel Upload</button>
-            </div> 
-            <div class="col-12 text-right" *ngIf="deletable">
-                <button class="btn btn-link text-muted px-0 btn-sm" (click)="removeImage()"><i
-                        class="fas fa-times"></i> Remove Image</button>
-            </div>
-            <div class="col-12 py-2 bg-dark" *ngIf="percentage>=0 && !deletable">
-                <mat-progress-bar mode="determinate" [value]="percentage" color="warn"></mat-progress-bar>
-                <span *ngIf="percentage>=0">Uploading</span><span *ngIf="!deletable"> {{percentage}}%</span>
-            </div>
+<div class="bg-dark main-container">
+    <div class="container bg-dark">
+        <div class="row text-white note-container">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="col-12 pt-2">
+                    <p class="pt-4 m-0">
+                        <mat-form-field appearance="legacy" class="p-0 m-0 w-100">
+                            <mat-label>Create a Note</mat-label>
+                            <input matInput placeholder="Title" class="p-0 m-0" formControlName="title" required
+                                style="font-size: 1.7em;">
+                            <mat-error *ngIf="f.title.errors">A note must have a title</mat-error>
+                        </mat-form-field>
+                    </p>
+                </div>
+                <div class="col-12 py-3">
+                    <p class="p-0 m-0">
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Write something</mat-label>
+                            <textarea matInput class="res-field" placeholder="Description"
+                                formControlName="description"></textarea>
+                        </mat-form-field>
+                    </p>
+                </div>
+            </form>
             <div class="col-12">
-                <img [src]=imagePreview alt="" class="img-fluid" *ngIf="imagePreview">
+                <p class="p-0 m-0">
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList aria-label="Fruit selection">
+                            <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(tag)">
+                                {{tag}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="#Tags" [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                    </mat-form-field>
+                </p>
             </div>
+            <div class="col-12 text-center">
+                <div class="col-12 text-right" *ngIf="fstate && fstate != 'success'">
+                    <button class="btn btn-link text-muted px-0 btn-sm" (click)="cancelImageUpload()"><i
+                            class="fas fa-times"></i> Cancel Upload</button>
+                </div>
+                <div class="col-12 text-right" *ngIf="deletable">
+                    <button class="btn btn-link text-muted px-0 btn-sm" (click)="removeImage()"><i
+                            class="fas fa-times"></i> Remove Image</button>
+                </div>
+                <div class="col-12 py-2 bg-dark" *ngIf="percentage>=0 && !deletable">
+                    <mat-progress-bar mode="determinate" [value]="percentage" color="warn"></mat-progress-bar>
+                    <span *ngIf="percentage>=0">Uploading</span><span *ngIf="!deletable"> {{percentage}}%</span>
+                </div>
+                <div class="col-12">
+                    <img [src]=imagePreview alt="" class="img-fluid" *ngIf="imagePreview">
+                </div>
 
-        </div>
-        <div class="col-12" *ngIf="!imagePreview">
-            <div class="form-file">
-                <input type="file" class="form-file-input" id="customFile"
-                    (change)="handleFileInput($event.target.files)" accept=".jpg, .png, .jpeg" />
-                <label class="form-file-label" for="customFile">
-                    <span class="form-file-text bg-dark text-white">{{fileInfo}}</span>
-                    <span class="form-file-button bg-dark text-white">Browse</span>
-                </label>
+            </div>
+            <div class="col-12" *ngIf="!imagePreview">
+                <div class="form-file">
+                    <input type="file" class="form-file-input" id="customFile"
+                        (change)="handleFileInput($event.target.files)" accept=".jpg, .png, .jpeg" />
+                    <label class="form-file-label" for="customFile">
+                        <span class="form-file-text bg-dark text-white">{{fileInfo}}</span>
+                        <span class="form-file-button bg-dark text-white">Browse</span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="container-fluid bg-dark bottom-bar shadow-lg text-center text-muted">
-    <div class="text-center">
-        <button type="button" class="btn btn-danger btn-rounded shadow new-button" (click)="onSubmit()"
-            [disabled]="(hasFile && !deletable) || this.f.title.errors">
-            <i class="fas fa-check" *ngIf="!hasFile || deletable"></i>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                *ngIf="hasFile && !deletable"></span>
-            Save Note
-        </button>
+    <div class="container-fluid bg-dark bottom-bar shadow-lg text-center text-muted">
+        <div class="text-center">
+            <button type="button" class="btn btn-danger btn-rounded shadow new-button" (click)="onSubmit()"
+                [disabled]="(hasFile && !deletable) || this.f.title.errors">
+                <i class="fas fa-check" *ngIf="!hasFile || deletable"></i>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                    *ngIf="hasFile && !deletable"></span>
+                Save Note
+            </button>
+        </div>
+        <span class="">Tips: Add # tags for easy notes filtering </span>
     </div>
-    <span class="">Tips: Add # tags for easy notes filtering </span>
-</div>
 
+</div>
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>

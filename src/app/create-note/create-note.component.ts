@@ -188,6 +188,13 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         this.deletable = true
         console.log(this.imagePreview)
       })
+      .catch((err) =>{
+        this.spinner.hide()
+        this.imagePreview = ''
+        this.hasFile = false
+        this.fstate = undefined
+        this.percentage = undefined
+      })
     this.noteService.status.subscribe((s) => {
       this.fstate = s
       console.log(s);
