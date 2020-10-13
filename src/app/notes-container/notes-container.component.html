@@ -49,8 +49,8 @@
                     </div>
                 </div>
 
-                <div class="container-fluid notes-container pb-3">
-                    <div class="row" *ngIf="Notes && Notes.length>=1">
+                <div class="container-fluid pb-3">
+                    <div class="row notes-container" *ngIf="Notes && Notes.length>=1">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
@@ -78,14 +78,16 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="container-fluid bg-grey bottom-bar shadow-lg">
-                    <div class="text-center">
+
+                <div class="container-fluid shadow-lg p-0 m-0 bg-dark"> 
+                    <div class="text-center col-12 bottom-bar bg-dark" [ngClass]="{'bottomBar-dynamic': isDrawerOpen}"> 
                         <a type="button" class="btn btn-danger btn-rounded shadow new-button"
                             routerLink="/notes/create">
                             <i class="fas fa-plus"></i> Add a Note
                         </a>
                     </div>
-                </div> 
+
+                </div>
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>

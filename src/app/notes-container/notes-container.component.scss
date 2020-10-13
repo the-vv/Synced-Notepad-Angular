@@ -9,6 +9,10 @@
     .sidebar {
         width: 150px;
     }
+    .bottomBar-dynamic{
+        width: calc(100vw - 150px);
+        transition: 0.5s;
+    }
 
     .notes-container {
         height: calc(100vh - 47px - 56px - 42px);
@@ -17,13 +21,18 @@
         height: calc(100vh - 47px - 56px - 42px - 56px);
     }
 }
-
+ 
 @media (min-width: 992px) {
 
     .main-container,
     .mat-sidenav-content-height,
     .example-container {
         height: calc(100vh - 53px);
+    }
+
+    .bottomBar-dynamic{
+        width: calc(100vw - 200px);
+        transition: 0.5s;
     }
 
     .sidebar {
@@ -38,8 +47,13 @@
     }
 }
 
+.mat-sidenav-content-height{
+    overflow: auto;
+}
+
 .notes-Container {
-    overflow-y: auto;
+    overflow-y: inherit;
+    padding-bottom: 5rem;
 }
 
 .example-spacer {
@@ -50,18 +64,8 @@ mat-chip {
     max-width: 100%;
 }
 
-.note-container{
-    overflow: auto;
-}
-
-.main-container {
-    padding-bottom: 4rem;
-    overflow: auto;
-}
-
 .bottom-bar {
-    // position: fixed;
-    max-width: 100%;
+    position: fixed; 
     bottom:0;
     margin-top: 2px;
     height : 40px;
