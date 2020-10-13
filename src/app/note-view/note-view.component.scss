@@ -6,6 +6,10 @@
 
 }
 
+* {
+    max-width: 100% !important;
+}
+
 @media (min-width: 992px) {
 
     .main-container {
@@ -13,28 +17,35 @@
     }
 }
 
-.note-container{
+.ofw {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    white-space: pre-wrap;
+}
+
+.note-container {
     overflow: auto;
 }
 
 .main-container {
     padding-bottom: 4rem;
-    overflow: auto;
+    overflow      : auto;
 }
 
 .bottom-bar {
-    position: fixed;
-    bottom:0;
-    margin-top: 2px;
-    height : 40px;
-    z-index: 2;
-    border-top: 1px solid #f93154;
+    position               : fixed;
+    bottom                 : 0;
+    margin-top             : 2px;
+    height                 : 40px;
+    z-index                : 2;
+    border-top             : 1px solid #f93154;
     border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
+    border-top-left-radius : 1rem;
 }
 
 .new-button {
-    position: sticky;
+    position  : sticky;
     margin-top: -20px;
     border-top: 1px solid #ffffff;
 }

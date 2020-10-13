@@ -24,6 +24,7 @@ export class LoginComponentComponent implements OnInit {
     this.Auth.user$
       .subscribe((user => {
         if (user && !this.signinCalled) {
+          this.spinner.hide()
           this.router.navigate(['/'])
         }else if(!user){
           this.spinner.hide()
@@ -33,19 +34,19 @@ export class LoginComponentComponent implements OnInit {
   }
  
   Glogin() {
+    this.signinCalled = true;
     this.spinner.show()
     this.Auth.GoogleLogin()
       .then((url) => {
+        this.spinner.hide()
         this.router.navigate([url ? url : '/'])
           .then((res) => {
-            this.spinner.hide()
           })
       })
       .catch((err) => {
         this.spinner.hide()
         console.log(err);
       })
-    this.signinCalled = true;
   }
 
   FBLogin() {

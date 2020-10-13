@@ -1,9 +1,9 @@
 <div class="container-fluid bg-dark main-container">
     <div class="row text-white note-container">
         <div class="col-12 p-4 pb-2">
-            <p class="h1">
+            <p class="h1 ofw">
                 {{Note.title}}
-            </p>
+            </p> 
             <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
                 <mat-chip class="example-box" cdkDrag *ngFor="let tag of Note.hashTags">
                     {{tag}}
@@ -11,8 +11,10 @@
             </mat-chip-list>
         </div>
         <mat-divider></mat-divider>
-        <div class="col-12 p-3">
-            <p class="lead">{{Note.description}}</p>
+        <div class="col-12 p-3 ofw">
+            <!-- <p class="lead ofw"> -->
+                <p class="lead ofw">{{Note.description}}</p>
+            <!-- </p>  -->
         </div>
         <mat-divider></mat-divider>
         <div class="col-12 p-3" *ngIf="Note.images">

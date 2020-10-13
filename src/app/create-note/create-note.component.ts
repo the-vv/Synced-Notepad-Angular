@@ -88,6 +88,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         this.userInfo = user.uid;
       }
     })
+    this.spinner.hide()
   }
   get f() { return this.registerForm.controls; }
 

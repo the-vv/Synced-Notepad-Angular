@@ -50,20 +50,26 @@ mat-chip {
     max-width: 100%;
 }
 
+.note-container{
+    overflow: auto;
+}
+
+.main-container {
+    padding-bottom: 4rem;
+    overflow: auto;
+}
+
 .bottom-bar {
-    position: fixed;
+    // position: fixed;
+    max-width: 100%;
     bottom:0;
     margin-top: 2px;
     height : 40px;
-    z-index: 2;
+    z-index: 3;
     border-top: 1px solid #f93154;
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
 }
-
-.notes-container {
-    overflow: auto;
-} 
 
 .new-button {
     position: sticky;

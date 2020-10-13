@@ -32,6 +32,7 @@ export class NoteViewComponent implements OnInit {
         this.router.navigate(['404'])
       }
     });
+    // this.spinner.hide()
   }
 
   DeleteNote(): void {
