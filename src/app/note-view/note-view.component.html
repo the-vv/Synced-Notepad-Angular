@@ -3,7 +3,7 @@
         <div class="col-12 p-4 pb-2">
             <p class="h1 ofw">
                 {{Note.title}}
-            </p> 
+            </p>
             <mat-chip-list class="example-chip" cdkDropList cdkDropListOrientation="horizontal">
                 <mat-chip class="example-box" cdkDrag *ngFor="let tag of Note.hashTags">
                     {{tag}}
@@ -13,17 +13,18 @@
         <mat-divider></mat-divider>
         <div class="col-12 p-3 ofw">
             <!-- <p class="lead ofw"> -->
-                <p class="lead ofw">{{Note.description}}</p>
+            <p class="lead ofw">{{Note.description}}</p>
             <!-- </p>  -->
         </div>
         <mat-divider></mat-divider>
         <div class="col-12 p-3" *ngIf="Note.images">
             <div class="row">
                 <div class="col-12 text-center">
-                    <img defaultImage="../../assets/images/image-loader.gif" [lazyLoad]="Note.images" class="img-fluid" /> 
+                    <img defaultImage="../../assets/images/image-loader.gif" [lazyLoad]="Note.images"
+                        class="img-fluid" />
                 </div>
             </div>
-        </div> 
+        </div>
         <div class="col-12 text-center pt-3" *ngIf="!Note.images">
             Currently no images to show. You can add images by editing note.
         </div>
