@@ -27,6 +27,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -77,7 +79,8 @@ import { PageNoteFoundComponent } from './page-note-found/page-note-found.compon
     LazyLoadImageModule,
     NgxSkeletonLoaderModule,
     NgxSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [
     AuthenticationService,

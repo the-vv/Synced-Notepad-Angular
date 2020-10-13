@@ -4,6 +4,8 @@ import { NotesService } from '../services/notes.service'
 import Note from '../Interfaces/Note'
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-note-view',
@@ -16,12 +18,19 @@ export class NoteViewComponent implements OnInit {
   Note: Note
 
   constructor(
+    private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private router: Router,
     public Notes: NotesService
   ) { }
+
+  openSnackBar(message: string, action: string = 'Dismiss') {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -46,6 +55,7 @@ export class NoteViewComponent implements OnInit {
           .then((res) => {
             this.spinner.hide()
             console.log(res)
+            this.openSnackBar('Note deleted')
             this.router.navigate(['/notes'])
           })
           .catch((res) => {

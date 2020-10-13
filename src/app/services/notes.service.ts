@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Note from '../Interfaces/Note'
 import { map } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Injectable({
@@ -18,15 +20,24 @@ export class NotesService {
   downloadURL: Observable<string>;
 
   constructor(
+    private route: ActivatedRoute,
+    private _snackBar: MatSnackBar,
     private afs: AngularFirestore,
     private storage: AngularFireStorage
   ) {
+  }
+
+  openSnackBar(message: string, dur: number = 5000, action: string = 'Dismiss') {
+    this._snackBar.open(message, action, {
+      duration: dur,
+    });
   }
 
   addNote(note: Note) {
     const notesRef: any = this.afs.collection('notes');
     return new Promise<boolean>(async (resolve, reject) => {
       await notesRef.add(note)
+      this.openSnackBar('Note added', 3000)
       resolve(true)
     })
   }
@@ -36,6 +47,7 @@ export class NotesService {
     const notesRef: any = this.afs.collection('notes').doc(id);
     return new Promise<boolean>(async (resolve, reject) => {
       await notesRef.set(note, { merge: true })
+      this.openSnackBar('Note edited', 3000)
       resolve(true)
     })
   }
@@ -64,7 +76,13 @@ export class NotesService {
     this.status.subscribe((s) =>{
       if(s && s != 'success'){
         let r = this.task.cancel()
-        console.log(r ? 'cancelled upload' : 'error canclling upload');        
+        if(r){
+          console.log('Cancelled');
+          this.openSnackBar('Uploading cancelled')
+        }else{
+          console.log('Error cancelling');
+          this.openSnackBar('Error cancelling upload')          
+        }       
       }
     })
   }

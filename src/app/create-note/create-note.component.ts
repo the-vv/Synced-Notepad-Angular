@@ -7,6 +7,7 @@ import { AuthenticationService } from '../services/authentication.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import Note from '../Interfaces/Note';
 import { NgxSpinnerService } from "ngx-spinner";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   submitted = false;
 
   constructor(
+    private _snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     public auth: AuthenticationService,
     private router: Router,
@@ -37,6 +39,12 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
   ) { }
+
+  openSnackBar(message: string, action: string = 'Dismiss') {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
 
   ngOnDestroy() {
     console.log('destroyed');
@@ -155,6 +163,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     this.noteService.delete(this.imagePreview)
       .then(() => {
         this.spinner.hide()
+        this.openSnackBar('Image deleted')
         console.log('Deleted');
         this.deletable = false
         this.imagePreview = ''
