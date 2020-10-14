@@ -66,9 +66,11 @@ export class NotesContainerComponent implements OnInit {
   searchValue: string = ''
   searchChange(q?: string) {
     let query = q ? q : this.searchValue
+    let results:any
     if(query && query.length){
       console.log('searched',q ? q : this.searchValue);
-      this.Note.searchNotes(q ? q : this.searchValue)
+      results = this.Note.searchNotes(q ? q : this.searchValue)
+      console.log(results);      
     }
     this.searchValue = ''
   }

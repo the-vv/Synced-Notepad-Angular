@@ -6,8 +6,6 @@ import Note from '../Interfaces/Note'
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { Quote } from '@angular/compiler';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 
 @Injectable({
@@ -44,26 +42,27 @@ export class NotesService {
       }
       return false
     })
-    // filteredNotes.concat(notes)
     console.log(notes);
     if (query[0] != '#') {
       let qnotes = this.userNotes.filter((el) => {
         let title = el.title.split(' ')
-        let titlesm = title.map((el) =>{
+        let titlesm = title.map((el) => {
           return el.toLocaleLowerCase()
         })
         let desc = el.description.split(' ')
-        let descs = desc.map((el) =>{
+        let descs = desc.map((el) => {
           return el.toLocaleLowerCase()
         })
-        if (titlesm.includes(query.toLocaleLowerCase()) || descs.includes(query)) {
+        if (titlesm.includes(query.toLocaleLowerCase()) || descs.includes(query.toLocaleLowerCase())) {
           notes.push(el)
           return true
         }
       })
       console.log(qnotes);
     }
-    console.log([...new Set(notes)]);    
+    let result = [...new Set(notes)]
+    // console.log(result);
+    return result
   }
 
   openSnackBar(message: string, dur: number = 3000, action: string = 'Dismiss') {
