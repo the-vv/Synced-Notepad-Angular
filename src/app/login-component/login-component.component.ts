@@ -24,8 +24,8 @@ export class LoginComponentComponent implements OnInit {
     this.Auth.user$
       .subscribe((user => {
         if (user && !this.signinCalled) {
-          this.spinner.hide()
-          this.router.navigate(['/'])
+          this.spinner.hide()        
+          this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'])
         }else if(!user){
           this.spinner.hide()
           console.log('no user');          

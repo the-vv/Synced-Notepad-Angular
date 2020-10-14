@@ -103,6 +103,11 @@ mat-form-field.mat-form-field {
     transition: 0.5s;
 }
 
+.custom-m:active mat-form-field.mat-form-field{
+    width: 100%;
+    transition: 0.5s;
+}
+
 .custom-m {
     margin-bottom: -10px;
 }

@@ -17,7 +17,7 @@
                         <hr>
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection"
                             *ngIf="hashTags">
-                            <mat-chip *ngFor="let tag of hashTags" selected color="accent">
+                            <mat-chip *ngFor="let tag of hashTags" selected color="accent" (click)="searchChange(tag)">
                                 {{tag}}
                             </mat-chip>
                         </mat-chip-list>
@@ -46,16 +46,20 @@
                             <span>Your Notes</span>
                             <span class="example-spacer"></span>
                             <div class="col-5 ml-auto text-right">
-                                <p class="p-0 m-0 custom-m">
-                                    <mat-form-field appearance="legacy" class="p-0 m-0"
-                                        [ngClass]="searchExpand ? 'd-width-on' : 'd-width-off'">
-                                        <mat-label>Search</mat-label>
-                                        <input class="s-inout" matInput placeholder="Placeholder"
-                                            (click)="searchExpand = true" (blur)="searchExpand = false">
-                                        <mat-icon matSuffix class="search-button" (click)="searchExpand = true" style="cursor: pointer;">search
-                                        </mat-icon>
-                                    </mat-form-field>
-                                </p>
+                                <form (ngSubmit)="searchChange()">
+                                    <p class="p-0 m-0 custom-m" style="min-width: 1px;">
+                                        <mat-form-field appearance="legacy" class="p-0 m-0"
+                                            [ngClass]="searchExpand ? 'd-width-on' : 'd-width-off'">
+                                            <mat-label>Search</mat-label>
+                                            <input class="s-input" matInput [(ngModel)]="searchValue" name="search"
+                                                placeholder="{{hashTags ? hashTags[0] : 'Type something'}}"
+                                                (click)="searchExpand = true" (blur)="searchExpand = false">
+                                            <mat-icon matSuffix class="search-button" (click)="searchChange(); searchExpand = true"
+                                                style="cursor: pointer;">search
+                                            </mat-icon>                                            
+                                        </mat-form-field>
+                                    </p>
+                                </form>
                             </div>
                         </mat-toolbar>
                     </div>

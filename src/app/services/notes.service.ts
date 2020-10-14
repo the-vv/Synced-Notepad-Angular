@@ -4,8 +4,10 @@ import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import Note from '../Interfaces/Note'
 import { map } from 'rxjs/operators';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {ActivatedRoute} from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { Quote } from '@angular/compiler';
+import { not } from '@angular/compiler/src/output/output_ast';
 
 
 @Injectable({
@@ -27,6 +29,43 @@ export class NotesService {
   ) {
   }
 
+  searchNotes(query: string) {
+    let filteredNotes = []
+    let notes = this.userNotes.filter((el) => {
+      for (let tag of el.hashTags) {
+        if (String(tag).toLocaleLowerCase() === query.toLocaleLowerCase()) {
+          return true
+        }
+        if (query[0] != '#') {
+          if (String(tag).toLocaleLowerCase() === '#' + query.toLocaleLowerCase()) {
+            return true
+          }
+        }
+      }
+      return false
+    })
+    // filteredNotes.concat(notes)
+    console.log(notes);
+    if (query[0] != '#') {
+      let qnotes = this.userNotes.filter((el) => {
+        let title = el.title.split(' ')
+        let titlesm = title.map((el) =>{
+          return el.toLocaleLowerCase()
+        })
+        let desc = el.description.split(' ')
+        let descs = desc.map((el) =>{
+          return el.toLocaleLowerCase()
+        })
+        if (titlesm.includes(query.toLocaleLowerCase()) || descs.includes(query)) {
+          notes.push(el)
+          return true
+        }
+      })
+      console.log(qnotes);
+    }
+    console.log([...new Set(notes)]);    
+  }
+
   openSnackBar(message: string, dur: number = 3000, action: string = 'Dismiss') {
     this._snackBar.open(message, action, {
       duration: dur,
@@ -41,9 +80,9 @@ export class NotesService {
       resolve(true)
     })
   }
-  
+
   updateNote(note: Note, id: string) {
-    console.log(note);    
+    console.log(note);
     const notesRef: any = this.afs.collection('notes').doc(id);
     return new Promise<boolean>(async (resolve, reject) => {
       await notesRef.set(note, { merge: true })
@@ -66,27 +105,27 @@ export class NotesService {
         let url = await res.ref.getDownloadURL()
         resolve(url);
       })
-      .catch((err) =>{
-        if(err.code_ == 'storage/unauthorized'){
-          this.openSnackBar('Permission denied: Max. file size is 5MB',  3000)
-          console.log(err.message_);        
-          reject(err.code_)
-        }
-      })
+        .catch((err) => {
+          if (err.code_ == 'storage/unauthorized') {
+            this.openSnackBar('Permission denied: Max. file size is 5MB', 3000)
+            console.log(err.message_);
+            reject(err.code_)
+          }
+        })
     })
   }
 
-  cancelUpload(){
-    this.status.subscribe((s) =>{
-      if(s && s != 'success'){
+  cancelUpload() {
+    this.status.subscribe((s) => {
+      if (s && s != 'success') {
         let r = this.task.cancel()
-        if(r){
+        if (r) {
           console.log('Cancelled');
           this.openSnackBar('Uploading cancelled')
-        }else{
+        } else {
           console.log('Error cancelling');
-          this.openSnackBar('Error cancelling upload')          
-        }       
+          this.openSnackBar('Error cancelling upload')
+        }
       }
     })
   }
