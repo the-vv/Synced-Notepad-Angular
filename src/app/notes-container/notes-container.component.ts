@@ -66,4 +66,10 @@ export class NotesContainerComponent implements OnInit {
     this.isDrawerOpen = window.innerWidth >= 768
   }
 
+  searchExpand = false
+  searchChange(){
+    console.log('changed');
+    
+  }
+
 }
