@@ -43,7 +43,9 @@
                                 *ngIf="!isDrawerOpen">
                                 <i class="fas fa-2x fa-angle-right"></i>
                             </button>
-                            <span>Your Notes</span>
+                            <span *ngIf="!searchResults">Your Notes</span>
+                            <span *ngIf="searchResults">Search Results</span>
+                            <button class="btn btn-danger btn-sm" *ngIf="searchResults">Cancel</button>
                             <span class="example-spacer"></span>
                             <div class="col-5 ml-auto text-right">
                                 <form (ngSubmit)="searchChange()">
@@ -66,8 +68,13 @@
                 </div>
 
                 <div class="container-fluid">
-                    <div class="dynamic notes-container row pb-4" *ngIf="Notes && Notes.length>=1">
+                    <div class="dynamic notes-container row pb-4" *ngIf="(Notes && Notes.length>=1) && !searchResults">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
+                            <app-note-card [note]="Note"></app-note-card>
+                        </div>
+                    </div>
+                    <div class="dynamic notes-container row pb-4" *ngIf="searchResults">
+                        <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of searchResults">
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
                     </div>
@@ -79,7 +86,7 @@
                     </div>
                     <div class="row noNotes d-flex align-items-center justify-content-center mt-3" *ngIf="!Notes">
                         <div class="item">
-                            <ngx-skeleton-loader count="4" appearance="rectangle" animation="progress-dark" [theme]="{ 
+                            <ngx-skeleton-loader count="3" appearance="rectangle" animation="progress-dark" [theme]="{ 
                                 'border-radius': '5px',
                                 height: '150px',
                                 width: '98%',
