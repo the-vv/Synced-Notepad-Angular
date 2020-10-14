@@ -44,21 +44,26 @@ export class NotesService {
     })
     console.log(notes);
     if (query[0] != '#') {
-      let qnotes = this.userNotes.filter((el) => {
-        let title = el.title.split(' ')
-        let titlesm = title.map((el) => {
-          return el.toLocaleLowerCase()
-        })
-        let desc = el.description.split(' ')
-        let descs = desc.map((el) => {
-          return el.toLocaleLowerCase()
-        })
-        if (titlesm.includes(query.toLocaleLowerCase()) || descs.includes(query.toLocaleLowerCase())) {
+      this.userNotes.forEach((el) => {
+        let title = el.title.toLowerCase();
+        let desc = el.description.toLowerCase();
+        if(title.includes(String(query).toLowerCase()) || desc.includes(String(query.toLowerCase()))){
           notes.push(el)
-          return true
         }
+        // let title = el.title.split(' ')
+        // let titlesm = title.map((el) => {
+        //   return el.toLocaleLowerCase()
+        // })
+        // let desc = el.description.split(' ')
+        // let descs = desc.map((el) => {
+        //   return el.toLocaleLowerCase()
+        // })
+        // if (titlesm.includes(query.toLocaleLowerCase()) || descs.includes(query.toLocaleLowerCase())) {
+        //   notes.push(el)
+        //   // return true
+        // }
       })
-      console.log(qnotes);
+      // console.log(qnotes);
     }
     let result = [...new Set(notes)]
     // console.log(result);
