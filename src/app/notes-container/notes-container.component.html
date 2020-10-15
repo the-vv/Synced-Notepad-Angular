@@ -4,14 +4,20 @@
             <mat-sidenav #sidenav mode="side" [opened]='isDrawerOpen' class="sidebar">
                 <div class="container-fluid">
                     <div class="row  d-flex align-items-center">
-                        <div class="col-9 col-sm-10">
-                            <p class="my-1 h3"># Tags</p>
+                        <div class="col-10 col-sm-10">
+                            <p class="my-1 h3">Filter by</p>
                         </div>
-                        <hr>
+                        <div class="col-2 d-flex justify-content-end p-0 m-0">
+                            <i class="fas fa-times fa-lg p-0 m-0" *ngIf="isDrawerOpen"
+                                (click)="isDrawerOpen = !isDrawerOpen" style="cursor: pointer;"></i>
+                        </div>
+                        <h4 class="p-0 m-0">#Tags</h4>
+                        <hr class="m-0 p-0">
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection"
                             *ngIf="Note.hashTags && Note.hashTags.length">
-                            <mat-chip *ngFor="let tag of Note.hashTags" selected color="accent" (click)="searchChange(tag)">
-                                {{tag}}
+                            <mat-chip *ngFor="let tag of Note.hashTags" selected color="accent"
+                                (click)="searchChange(tag)">
+                                <span class="text-truncate">{{tag}}</span>
                             </mat-chip>
                         </mat-chip-list>
                         <div *ngIf="Note.hashTags && !Note.hashTags.length">No #tags in your notes to show</div>
@@ -32,44 +38,62 @@
                 <div class="container-fluid p-0 m-0">
                     <div class="">
                         <mat-toolbar>
-                            <span *ngIf="!searchResults">
-                                <i class="fas fas fa-bars" (click)="isDrawerOpen = !isDrawerOpen" *ngIf="!isDrawerOpen"
-                                    style="cursor: pointer;"></i>
-                                <i class="fas fa-times" *ngIf="isDrawerOpen" (click)="isDrawerOpen = !isDrawerOpen"
-                                    style="cursor: pointer;"></i>
-                                Your Notes</span>
-                            <span *ngIf="searchResults">
-                                <!-- <i class="fas fa-arrow-left" (click)="router.navigate(['notes/'])"
-                                    style="cursor: pointer;"></i> -->
-                                <i class="fas fas fa-bars" (click)="isDrawerOpen = !isDrawerOpen" *ngIf="!isDrawerOpen"
-                                    style="cursor: pointer;"></i>
-                                <i class="fas fa-times" *ngIf="isDrawerOpen" (click)="isDrawerOpen = !isDrawerOpen"
-                                    style="cursor: pointer;"></i>
-                                Search Results</span>
-                            <span class="example-spacer"></span>
-                            <div class="col-5 ml-auto text-right">
-                                <form (ngSubmit)="searchChange()">
-                                    <p class="p-0 m-0 custom-m" style="min-width: 1px;">
-                                        <mat-form-field appearance="legacy" class="p-0 m-0"
-                                            [ngClass]="searchExpand ? 'd-width-on' : 'd-width-off'">
-                                            <mat-label>Search</mat-label>
-                                            <input class="s-input" matInput [(ngModel)]="searchValue" name="search"
-                                                placeholder="{{Note.hashTags ? Note.hashTags[0] : 'Type something'}}"
-                                                (click)="searchExpand = true" (blur)="searchExpand = false">
-                                            <mat-icon matSuffix class="search-button"
-                                                (click)="searchChange(); searchExpand = true" style="cursor: pointer;">
-                                                search
-                                            </mat-icon>
-                                        </mat-form-field>
-                                    </p>
-                                </form>
+                            <div class="col-5 text-truncate">
+                                <span *ngIf="!searchResults" class="text-truncate">
+                                    Your Notes</span>
+                                <span *ngIf="searchResults">
+                                    <i class="fas fas fa-filter" (click)="isDrawerOpen = !isDrawerOpen"
+                                        *ngIf="!isDrawerOpen" style="cursor: pointer;"></i>
+                                    <i class="fas fa-times" *ngIf="isDrawerOpen" (click)="isDrawerOpen = !isDrawerOpen"
+                                        style="cursor: pointer;"></i>
+                                    Search Results</span>
+                                <span class="example-spacer"></span>
+                            </div>
+                            <div class="col-7 ml-auto text-right">
+                                <div class="row d-flex justify-content-end">
+                                    <div class="col-8">
+                                        <form (ngSubmit)="searchChange()" class="d-inline">
+                                            <span class="p-0 m-0 custom-m" style="min-width: 1px;">
+                                                <mat-form-field appearance="legacy" class="p-0 m-0"
+                                                    [ngClass]="searchExpand ? 'd-width-on' : 'd-width-off'">
+                                                    <mat-label>Search</mat-label>
+                                                    <input class="s-input" matInput [(ngModel)]="searchValue"
+                                                        name="search"
+                                                        placeholder="{{Note.hashTags ? Note.hashTags[0] : 'Type something'}}"
+                                                        (click)="searchExpand = true" (blur)="searchExpand = false">
+                                                    <mat-icon matSuffix class="search-button"
+                                                        (click)="searchChange(); searchExpand = true"
+                                                        style="cursor: pointer;">
+                                                        search
+                                                    </mat-icon>
+                                                </mat-form-field>
+                                            </span>
+                                        </form>
+                                    </div>
+                                    <div class="col-auto p-0 m-0 d-flex align-content-center justify-content-end">
+                                        <span class="text-white p-0 m-0" *ngIf="!isDrawerOpen">
+                                            <i class="fas fa-filter fa-sm p-0 m-0 mt-3"
+                                                (click)="isDrawerOpen = !isDrawerOpen" *ngIf="!isDrawerOpen"
+                                                style="cursor: pointer;"></i>
+                                        </span>
+                                        <span class="text-white p-0 m-0 ml-2">
+                                            <i class="fas fa-sort-amount-down fa-sm p-0 m-0 mt-3"
+                                                style="cursor: pointer;" [matMenuTriggerFor]="menu"></i>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item>Date</button>
+                                                <button mat-menu-item>A-Z</button>
+                                            </mat-menu>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </mat-toolbar>
                     </div>
                 </div>
 
                 <div class="container-fluid">
-                    <div class="dynamic notes-container row pb-4" *ngIf="(Note.userNotes && Note.userNotes.length>=1) && !searchResults">
+                    <div class="dynamic notes-container row pb-4"
+                        *ngIf="(Note.userNotes && Note.userNotes.length>=1) && !searchResults">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Note.userNotes">
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
@@ -85,7 +109,8 @@
                             <h1>Create your first note by Clicking + icon</h1>
                         </div>
                     </div>
-                    <div class="row noNotes d-flex align-items-center justify-content-center mt-3" *ngIf="!Note.userNotes">
+                    <div class="row noNotes d-flex align-items-center justify-content-center mt-3"
+                        *ngIf="!Note.userNotes">
                         <div class="item">
                             <ngx-skeleton-loader count="4" appearance="rectangle" animation="progress-dark" [theme]="{ 
                                 'border-radius': '5px',

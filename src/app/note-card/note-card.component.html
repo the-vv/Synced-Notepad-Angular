@@ -1,6 +1,6 @@
 <div class="card text-center shadow m-2 bg-dark">
     <div class="card-header text-muted">
-        2 days ago
+        {{note.timestamp | date : 'short'}}
     </div>
     <div class="card-body">
         <h2 class="card-title text-truncate">{{note.title}}</h2>
@@ -10,10 +10,12 @@
         <a routerLink="/notes/view/{{note.id}}" class="btn btn-primary">View</a>
     </div>
     <div class="card-footer text-muted text-truncate text-left">
-        {{note.hashTags}}
+        {{note.created | date : 'short'}}
         <div class="float-right">
-            <span class="ml-auto text-danger btn btn-dark btn-sm mr-1" (click)="DeleteNote()"><i class="fas fa-trash"></i></span>
-            <a routerLink='/notes/create/{{note.id}}' class="ml-auto text-warning btn btn-dark btn-sm ml-1"><i class="fas fa-edit"></i></a>
+            <span class="ml-auto text-danger btn btn-dark btn-sm mr-1" (click)="DeleteNote()"><i
+                    class="fas fa-trash"></i></span>
+            <a routerLink='/notes/create/{{note.id}}' class="ml-auto text-warning btn btn-dark btn-sm ml-1"><i
+                    class="fas fa-edit"></i></a>
         </div>
     </div>
 </div>
@@ -21,4 +23,3 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>
- 

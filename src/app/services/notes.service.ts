@@ -65,8 +65,8 @@ export class NotesService {
   }
 
   addNote(note: Note) {
+    note.timestamp = Date.now()
     const notesRef: any = this.afs.collection('notes');
-    notesRef.add({ created: Date.now() })
     return new Promise<boolean>(async (resolve, reject) => {
       await notesRef.add(note)
       this.openSnackBar('Note added', 3000)
@@ -75,6 +75,7 @@ export class NotesService {
   }
 
   updateNote(note: Note, id: string) {
+    note.timestamp = Date.now()
     console.log(note);
     const notesRef: any = this.afs.collection('notes').doc(id);
     return new Promise<boolean>(async (resolve, reject) => {
@@ -152,7 +153,10 @@ export class NotesService {
   }
 
   getNotes(uid: string) { //return all the notes
-    this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
+    this.afs.collection("notes", (ref) => {
+      return ref.where('uid', '==', uid).orderBy('timestamp', 'desc')
+    })
+      .snapshotChanges()
       .subscribe((data) => {
         if (data.length) {
           // console.log(data[0].payload.doc.data()); 
@@ -165,14 +169,14 @@ export class NotesService {
             }
             notes.push(note)
           });
-          this.userNotes = notes;      
+          this.userNotes = notes;
           this.getHashTags()
         }
         else {
           this.userNotes = [];
           this.getHashTags()
         }
-        
+
       })
   }
 

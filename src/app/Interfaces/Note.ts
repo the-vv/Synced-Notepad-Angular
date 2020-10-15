@@ -3,7 +3,7 @@ export default interface Note {
   id: String,
   title: String,
   description: String,
-  created?: String,
+  timestamp?: any,
   hashTags?: any[],
   images?: any
   [prop: string]: any
