@@ -20,7 +20,6 @@ export class NotesContainerComponent implements OnInit {
   isDrawerOpen: boolean = true;
   hashTags: any[]
   uid: string
-  loading: boolean = true;
   searchQuery: string
 
   constructor(
@@ -50,7 +49,6 @@ export class NotesContainerComponent implements OnInit {
               this.Note.userNotes = notes;
               this.Notes = notes
               this.hashTags = this.Note.getHashTags()
-              this.loading = false 
               this.route.params.subscribe(params => {
                 this.searchQuery = params['id'];
                 if (this.searchQuery) {
@@ -63,8 +61,8 @@ export class NotesContainerComponent implements OnInit {
               })
             }
             else {
-              this.hashTags = this.Note.getHashTags()
               this.Note.userNotes = [];
+              this.hashTags = this.Note.getHashTags()
               this.Notes = []
             }
           })

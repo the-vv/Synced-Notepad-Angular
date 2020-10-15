@@ -7,13 +7,6 @@
                         <div class="col-9 col-sm-10">
                             <p class="my-1 h3"># Tags</p>
                         </div>
-                        <!-- <div class="col-3 col-sm-2">
-                            <button mat-icon-button class="example-icon btn btn-sm p-0 text-white"
-                                aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
-                                *ngIf="isDrawerOpen">
-                                <i class="fas fa-lg fa-times"></i>
-                            </button>
-                        </div> -->
                         <hr>
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection"
                             *ngIf="hashTags">
@@ -93,7 +86,7 @@
                     </div>
                     <div class="row noNotes d-flex align-items-center justify-content-center mt-3" *ngIf="!Notes">
                         <div class="item">
-                            <ngx-skeleton-loader count="3" appearance="rectangle" animation="progress-dark" [theme]="{ 
+                            <ngx-skeleton-loader count="4" appearance="rectangle" animation="progress-dark" [theme]="{ 
                                 'border-radius': '5px',
                                 height: '150px',
                                 width: '98%',

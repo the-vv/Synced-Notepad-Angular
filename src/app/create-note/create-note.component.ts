@@ -142,7 +142,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
           })
       }
     } else {
-      alert('Notes must have a Title')
+      this.openSnackBar('Notes must have a Title')
     }
     return
   }

@@ -133,9 +133,11 @@ export class NotesService {
         .then(() => {
           if (image) {
             this.delete(image).then((res) => {
+              console.log(res);              
               resolve({ note: true, image: true });
             })
               .catch((res) => {
+                console.log(res);                
                 reject({ note: true, image: false })
               })
           } else {
