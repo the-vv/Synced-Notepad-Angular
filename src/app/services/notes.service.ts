@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -47,7 +46,7 @@ export class NotesService {
       this.userNotes.forEach((el) => {
         let title = el.title.toLowerCase();
         let desc = el.description.toLowerCase();
-        if(title.includes(String(query).toLowerCase()) || desc.includes(String(query.toLowerCase()))){
+        if (title.includes(String(query).toLowerCase()) || desc.includes(String(query.toLowerCase()))) {
           notes.push(el)
         }
       })
@@ -66,6 +65,7 @@ export class NotesService {
 
   addNote(note: Note) {
     const notesRef: any = this.afs.collection('notes');
+    notesRef.add({ created: Date.now() })
     return new Promise<boolean>(async (resolve, reject) => {
       await notesRef.add(note)
       this.openSnackBar('Note added', 3000)
@@ -133,11 +133,11 @@ export class NotesService {
         .then(() => {
           if (image) {
             this.delete(image).then((res) => {
-              console.log(res);              
+              console.log(res);
               resolve({ note: true, image: true });
             })
               .catch((res) => {
-                console.log(res);                
+                console.log(res);
                 reject({ note: true, image: false })
               })
           } else {
@@ -152,6 +152,7 @@ export class NotesService {
 
   getNotes(uid: string) { //return all the notes
     return this.afs.collection("notes", ref => ref.where('uid', '==', uid)).snapshotChanges()
+    
   }
 
   getHashTags() { //return all the #Tags
