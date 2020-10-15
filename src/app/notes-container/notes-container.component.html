@@ -9,12 +9,13 @@
                         </div>
                         <hr>
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection"
-                            *ngIf="hashTags">
-                            <mat-chip *ngFor="let tag of hashTags" selected color="accent" (click)="searchChange(tag)">
+                            *ngIf="Note.hashTags && Note.hashTags.length">
+                            <mat-chip *ngFor="let tag of Note.hashTags" selected color="accent" (click)="searchChange(tag)">
                                 {{tag}}
                             </mat-chip>
                         </mat-chip-list>
-                        <div class="item" *ngIf="!hashTags">
+                        <div *ngIf="Note.hashTags && !Note.hashTags.length">No #tags in your notes to show</div>
+                        <div class="item" *ngIf="!Note.hashTags">
                             <ngx-skeleton-loader count="10" appearance="rectangle" animation="progress-dark" [theme]="{ 
                                 height: '30px',
                                 width: '100%',
@@ -53,7 +54,7 @@
                                             [ngClass]="searchExpand ? 'd-width-on' : 'd-width-off'">
                                             <mat-label>Search</mat-label>
                                             <input class="s-input" matInput [(ngModel)]="searchValue" name="search"
-                                                placeholder="{{hashTags ? hashTags[0] : 'Type something'}}"
+                                                placeholder="{{Note.hashTags ? Note.hashTags[0] : 'Type something'}}"
                                                 (click)="searchExpand = true" (blur)="searchExpand = false">
                                             <mat-icon matSuffix class="search-button"
                                                 (click)="searchChange(); searchExpand = true" style="cursor: pointer;">

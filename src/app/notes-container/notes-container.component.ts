@@ -18,7 +18,6 @@ export class NotesContainerComponent implements OnInit {
 
   Notes: Note[]
   isDrawerOpen: boolean = true;
-  hashTags: any[]
   uid: string
   searchQuery: string
 
@@ -41,7 +40,6 @@ export class NotesContainerComponent implements OnInit {
         this.searchResults = this.Note.searchNotes(this.searchQuery)
       }
     })
-    this.hashTags = this.Note.getHashTags()
     this.isDrawerOpen = window.innerWidth >= 768
   }
 

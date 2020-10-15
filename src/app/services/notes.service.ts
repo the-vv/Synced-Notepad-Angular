@@ -14,6 +14,7 @@ export class NotesService {
 
   status: Observable<string>
   userNotes: Note[]
+  hashTags: string[]
   task: AngularFireUploadTask;
   percentage: Observable<number>;
   downloadURL: Observable<string>;
@@ -165,10 +166,13 @@ export class NotesService {
             notes.push(note)
           });
           this.userNotes = notes;      
+          this.getHashTags()
         }
         else {
           this.userNotes = [];
+          this.getHashTags()
         }
+        
       })
   }
 
@@ -181,10 +185,10 @@ export class NotesService {
     }
     hashes = [...new Set(hashes)]
     if (hashes.length) {
-      return hashes
+      this.hashTags = hashes
     }
     else {
-      return []
+      this.hashTags = []
     }
   }
 
