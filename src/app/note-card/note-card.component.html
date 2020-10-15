@@ -1,6 +1,6 @@
 <div class="card text-center shadow m-2 bg-dark">
     <div class="card-header text-muted">
-        {{note.timestamp | date : 'short'}}
+        {{note.hashTags}}
     </div>
     <div class="card-body">
         <h2 class="card-title text-truncate">{{note.title}}</h2>
@@ -10,7 +10,7 @@
         <a routerLink="/notes/view/{{note.id}}" class="btn btn-primary">View</a>
     </div>
     <div class="card-footer text-muted text-truncate text-left">
-        {{note.created | date : 'short'}}
+        {{note.timestamp | date : 'short'}}
         <div class="float-right">
             <span class="ml-auto text-danger btn btn-dark btn-sm mr-1" (click)="DeleteNote()"><i
                     class="fas fa-trash"></i></span>
