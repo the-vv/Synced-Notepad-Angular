@@ -3,6 +3,7 @@ import { NotesService } from '../services/notes.service';
 import { AuthenticationService } from '../services/authentication.service'
 import Note from '../Interfaces/Note'
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-notes-container',
@@ -22,6 +23,7 @@ export class NotesContainerComponent implements OnInit {
   searchQuery: string
 
   constructor(
+    private snackbar: MatSnackBar,
     public router: Router,
     private route: ActivatedRoute,
     private auth: AuthenticationService,
@@ -37,6 +39,7 @@ export class NotesContainerComponent implements OnInit {
           this.searchQuery = '#' + this.searchQuery.substr(5)
         }
         console.log(this.searchQuery);
+        this.openSnackBar('Showing results for ' + this.searchQuery)
         this.searchResults = this.Note.searchNotes(this.searchQuery)
       }
     })
@@ -55,6 +58,30 @@ export class NotesContainerComponent implements OnInit {
       this.router.navigate(['notes/search/' + query])
     }
     this.searchValue = ''
+  }
+
+  byDate = true
+  sortNotes(method: string) {
+    if (method == 'date') {
+      this.byDate = true
+      this.Note.userNotes = this.Note.userNotes.sort((a, b) => {
+        return b.timestamp - a.timestamp
+      })
+    } else if (method == 'a-z') {
+      this.byDate = false
+      this.Note.userNotes = this.Note.userNotes.sort((a, b) => {
+        if (a.title < b.title) { return -1; }
+        if (a.title > b.title) { return 1; }
+        return 0;
+      })
+    }
+    this.openSnackBar('Sorted by ' + method)
+  }
+  
+  openSnackBar(message: string, dur: number = 3000, action: string = 'Dismiss') {
+    this.snackbar.open(message, action, {
+      duration: dur,
+    });
   }
 
 }

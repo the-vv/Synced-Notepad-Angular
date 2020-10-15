@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand">
             <i class="fas fa-arrow-left text-dark" (click)="location.back()" style="cursor: pointer;"
-                *ngIf="router.url != '/notes' && router.url != '/home'">&nbsp;</i>
+                *ngIf="router.url != '/notes' && router.url != '/home' && !router.url.includes('search')">&nbsp;</i>
             <span routerLink="/notes" style="outline: none;"> Synced Notepad</span></a>
         <button class="navbar-toggler p-0" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
