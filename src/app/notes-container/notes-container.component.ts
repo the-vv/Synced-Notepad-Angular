@@ -72,9 +72,7 @@ export class NotesContainerComponent implements OnInit {
         this.Note.userNotes = []
       }
     })
-    setTimeout(() => {
-      this.isDrawerOpen = window.innerWidth >= 768
-    }, 1500);
+    this.isDrawerOpen = window.innerWidth >= 768
   }
 
   searchResults: Note[]

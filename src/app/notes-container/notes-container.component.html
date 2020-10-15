@@ -7,13 +7,13 @@
                         <div class="col-9 col-sm-10">
                             <p class="my-1 h3"># Tags</p>
                         </div>
-                        <div class="col-3 col-sm-2">
+                        <!-- <div class="col-3 col-sm-2">
                             <button mat-icon-button class="example-icon btn btn-sm p-0 text-white"
                                 aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
                                 *ngIf="isDrawerOpen">
                                 <i class="fas fa-lg fa-times"></i>
                             </button>
-                        </div>
+                        </div> -->
                         <hr>
                         <mat-chip-list class="mat-chip-list-stacked pr-3 p-0 m-1" aria-label="Color selection"
                             *ngIf="hashTags">
@@ -38,14 +38,18 @@
                 <div class="container-fluid p-0 m-0">
                     <div class="">
                         <mat-toolbar>
-                            <button mat-icon-button class="example-icon btn btn-danger btn-sm mr-2 p-0 px-2 text-white"
-                                aria-label="Example icon-button with menu icon" (click)="isDrawerOpen = !isDrawerOpen"
-                                *ngIf="!isDrawerOpen">
-                                <i class="fas fa-2x fa-angle-right"></i>
-                            </button>
-                            <span *ngIf="!searchResults">Your Notes</span>
+                            <span *ngIf="!searchResults">
+                                <i class="fas fas fa-bars" (click)="isDrawerOpen = !isDrawerOpen" *ngIf="!isDrawerOpen"
+                                    style="cursor: pointer;"></i>
+                                <i class="fas fa-times" *ngIf="isDrawerOpen" (click)="isDrawerOpen = !isDrawerOpen"
+                                    style="cursor: pointer;"></i>
+                                Your Notes</span>
                             <span *ngIf="searchResults">
-                                <i class="fas fa-arrow-left" (click)="router.navigate(['notes/'])"
+                                <!-- <i class="fas fa-arrow-left" (click)="router.navigate(['notes/'])"
+                                    style="cursor: pointer;"></i> -->
+                                <i class="fas fas fa-bars" (click)="isDrawerOpen = !isDrawerOpen" *ngIf="!isDrawerOpen"
+                                    style="cursor: pointer;"></i>
+                                <i class="fas fa-times" *ngIf="isDrawerOpen" (click)="isDrawerOpen = !isDrawerOpen"
                                     style="cursor: pointer;"></i>
                                 Search Results</span>
                             <span class="example-spacer"></span>
