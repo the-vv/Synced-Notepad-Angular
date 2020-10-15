@@ -31,45 +31,17 @@ export class NotesContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.user$.subscribe((user) => {
-      if (user) {
-        this.Note.getNotes(user.uid)
-          .subscribe((data) => {
-            if (data.length) {
-              // console.log(data[0].payload.doc.data()); 
-              let notes = []
-              data.forEach(element => {
-                let data = element.payload.doc.data() as Note
-                let note = {
-                  id: element.payload.doc.id,
-                  ...data
-                }
-                notes.push(note)
-              });
-              this.Note.userNotes = notes;
-              this.Notes = notes
-              this.hashTags = this.Note.getHashTags()
-              this.route.params.subscribe(params => {
-                this.searchQuery = params['id'];
-                if (this.searchQuery) {
-                  if (this.searchQuery.substr(0, 5) == 'hash-') {
-                    this.searchQuery = '#' + this.searchQuery.substr(5)
-                  }
-                  console.log(this.searchQuery);
-                  this.searchResults = this.Note.searchNotes(this.searchQuery)
-                }
-              })
-            }
-            else {
-              this.Note.userNotes = [];
-              this.hashTags = this.Note.getHashTags()
-              this.Notes = []
-            }
-          })
-      } else {
-        this.Note.userNotes = []
+    this.route.params.subscribe(params => {
+      this.searchQuery = params['id'];
+      if (this.searchQuery) {
+        if (this.searchQuery.substr(0, 5) == 'hash-') {
+          this.searchQuery = '#' + this.searchQuery.substr(5)
+        }
+        console.log(this.searchQuery);
+        this.searchResults = this.Note.searchNotes(this.searchQuery)
       }
     })
+    this.hashTags = this.Note.getHashTags()
     this.isDrawerOpen = window.innerWidth >= 768
   }
 

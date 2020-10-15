@@ -68,8 +68,8 @@
                 </div>
 
                 <div class="container-fluid">
-                    <div class="dynamic notes-container row pb-4" *ngIf="(Notes && Notes.length>=1) && !searchResults">
-                        <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Notes">
+                    <div class="dynamic notes-container row pb-4" *ngIf="(Note.userNotes && Note.userNotes.length>=1) && !searchResults">
+                        <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of Note.userNotes">
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
                     </div>
@@ -79,12 +79,12 @@
                         </div>
                     </div>
                     <div class="row noNotes d-flex align-items-center justify-content-center"
-                        *ngIf="Notes && !(Notes.length>0)">
+                        *ngIf="Note.userNotes && !(Note.userNotes.length>0)">
                         <div class=" text-center">
                             <h1>Create your first note by Clicking + icon</h1>
                         </div>
                     </div>
-                    <div class="row noNotes d-flex align-items-center justify-content-center mt-3" *ngIf="!Notes">
+                    <div class="row noNotes d-flex align-items-center justify-content-center mt-3" *ngIf="!Note.userNotes">
                         <div class="item">
                             <ngx-skeleton-loader count="4" appearance="rectangle" animation="progress-dark" [theme]="{ 
                                 'border-radius': '5px',

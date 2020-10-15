@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { NotesService } from './notes.service'
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthenticationService {
   isLoggedIn: boolean = false;
 
   constructor(
+    private notes: NotesService,
     public auth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
@@ -27,6 +29,7 @@ export class AuthenticationService {
         // Logged in
         if (user) {
           this.isLoggedIn = true;
+          this.notes.getNotes(user.uid)
           return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
         } else {
           // Logged out
@@ -67,15 +70,6 @@ export class AuthenticationService {
             .then((res) => {
               if (res) {
                 resolve(this.redirectUrl)
-                // console.log(this.redirectUrl);
-                // this.router.navigate([this.redirectUrl ? this.redirectUrl : '/'])
-                //   .then((res) => {
-                //     console.log(res);
-                //   })
-                //   .catch((err) => {
-                //     console.log('error routing from singn in');
-                //     console.log(err);
-                //   })
               }
               else {
                 reject('Write to db: false ')
