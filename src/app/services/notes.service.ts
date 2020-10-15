@@ -50,18 +50,6 @@ export class NotesService {
         if(title.includes(String(query).toLowerCase()) || desc.includes(String(query.toLowerCase()))){
           notes.push(el)
         }
-        // let title = el.title.split(' ')
-        // let titlesm = title.map((el) => {
-        //   return el.toLocaleLowerCase()
-        // })
-        // let desc = el.description.split(' ')
-        // let descs = desc.map((el) => {
-        //   return el.toLocaleLowerCase()
-        // })
-        // if (titlesm.includes(query.toLocaleLowerCase()) || descs.includes(query.toLocaleLowerCase())) {
-        //   notes.push(el)
-        //   // return true
-        // }
       })
       // console.log(qnotes);
     }

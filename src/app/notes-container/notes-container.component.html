@@ -44,8 +44,10 @@
                                 <i class="fas fa-2x fa-angle-right"></i>
                             </button>
                             <span *ngIf="!searchResults">Your Notes</span>
-                            <span *ngIf="searchResults">Search Results</span>
-                            <button class="btn btn-danger btn-sm" *ngIf="searchResults">Cancel</button>
+                            <span *ngIf="searchResults">
+                                <i class="fas fa-arrow-left" (click)="router.navigate(['notes/'])"
+                                    style="cursor: pointer;"></i>
+                                Search Results</span>
                             <span class="example-spacer"></span>
                             <div class="col-5 ml-auto text-right">
                                 <form (ngSubmit)="searchChange()">
@@ -56,9 +58,10 @@
                                             <input class="s-input" matInput [(ngModel)]="searchValue" name="search"
                                                 placeholder="{{hashTags ? hashTags[0] : 'Type something'}}"
                                                 (click)="searchExpand = true" (blur)="searchExpand = false">
-                                            <mat-icon matSuffix class="search-button" (click)="searchChange(); searchExpand = true"
-                                                style="cursor: pointer;">search
-                                            </mat-icon>                                            
+                                            <mat-icon matSuffix class="search-button"
+                                                (click)="searchChange(); searchExpand = true" style="cursor: pointer;">
+                                                search
+                                            </mat-icon>
                                         </mat-form-field>
                                     </p>
                                 </form>
@@ -105,7 +108,6 @@
                             <i class="fas fa-plus"></i> Add a Note
                         </a>
                     </div>
-
                 </div>
             </mat-sidenav-content>
         </mat-sidenav-container>

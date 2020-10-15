@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { NotesService } from '../services/notes.service';
 import { AuthenticationService } from '../services/authentication.service'
 import Note from '../Interfaces/Note'
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-notes-container',
@@ -20,8 +21,11 @@ export class NotesContainerComponent implements OnInit {
   hashTags: any[]
   uid: string
   loading: boolean = true;
+  searchQuery: string
 
   constructor(
+    public router: Router,
+    private route: ActivatedRoute,
     private auth: AuthenticationService,
     public Note: NotesService
   ) {
@@ -46,14 +50,25 @@ export class NotesContainerComponent implements OnInit {
               this.Note.userNotes = notes;
               this.Notes = notes
               this.hashTags = this.Note.getHashTags()
-              this.loading = false
+              this.loading = false 
+              this.route.params.subscribe(params => {
+                this.searchQuery = params['id'];
+                if (this.searchQuery) {
+                  if (this.searchQuery.substr(0, 5) == 'hash-') {
+                    this.searchQuery = '#' + this.searchQuery.substr(5)
+                  }
+                  console.log(this.searchQuery);
+                  this.searchResults = this.Note.searchNotes(this.searchQuery)
+                }
+              })
             }
             else {
+              this.hashTags = this.Note.getHashTags()
               this.Note.userNotes = [];
               this.Notes = []
             }
-          })  
-      }else{
+          })
+      } else {
         this.Note.userNotes = []
       }
     })
@@ -62,15 +77,16 @@ export class NotesContainerComponent implements OnInit {
     }, 1500);
   }
 
-  searchResults:Note[]
+  searchResults: Note[]
   searchExpand = false
   searchValue: string = ''
   searchChange(q?: string) {
     let query = q ? q : this.searchValue
-    if(query && query.length){
-      console.log('searched',q ? q : this.searchValue);
-      this.searchResults = this.Note.searchNotes(q ? q : this.searchValue)
-      console.log(this.searchResults);      
+    if (query && query.length) {
+      if (query[0] == '#') {
+        query = 'hash-' + query.substr(1)
+      }
+      this.router.navigate(['notes/search/' + query])
     }
     this.searchValue = ''
   }
