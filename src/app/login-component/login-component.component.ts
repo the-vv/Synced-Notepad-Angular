@@ -74,7 +74,7 @@ export class LoginComponentComponent implements OnInit {
         console.log(err);
       })
   }
-  
+
   onSubmit(){    
     if (!this.f.title.errors) {
 

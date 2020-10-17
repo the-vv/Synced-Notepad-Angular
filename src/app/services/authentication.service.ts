@@ -76,9 +76,34 @@ export class AuthenticationService {
               reject(err)
             })
         })
-        .catch((err) => {
+        .catch(async (err) => {
           console.log('error signing in with facebook');
-          reject(err)
+          if (err.code == 'auth/account-exists-with-different-credential') {
+            let methods = await this.auth.fetchSignInMethodsForEmail(err.email);
+            const provider = new auth.GoogleAuthProvider();
+            provider.setCustomParameters({ 'login_hint': err.email });
+            this.auth.signInWithPopup(provider)
+              .then(async (credential) => {
+                // await this.addUserToDB(credential);
+                this.addUserToDB(credential)
+                  .then((res) => {
+                    if (res) {
+                      resolve(this.redirectUrl)
+                    }
+                    else {
+                      reject('Write to db: false ')
+                    }
+                  })
+                  .catch((err) => {
+                    console.log('error writing user to db');
+                    reject(err)
+                  })
+              })
+              .catch((err) => {
+                console.log(err);
+                reject(err)
+              })
+          }
         })
     })
   }
