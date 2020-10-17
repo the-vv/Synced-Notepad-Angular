@@ -7,7 +7,7 @@ import { AuthenticationService } from '../services/authentication.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import Note from '../Interfaces/Note';
 import { NgxSpinnerService } from "ngx-spinner";
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -72,10 +72,10 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
           description: Note.description,
         }, {
         });
-        if(Note.hashTags.length){
+        if (Note.hashTags.length) {
           this.tags = this.tags.concat(Note.hashTags)
         }
-        console.log(this.tags);        
+        console.log(this.tags);
         if (Note.images) {
           this.hasFile = true
           this.imagePreview = Note.images
@@ -122,18 +122,18 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         }
       }
       console.log(note);
-      if(this.editMode){
-        if(!this.hasFile){
+      if (this.editMode) {
+        if (!this.hasFile) {
           note.images = ''
         }
         this.noteService.updateNote(note, this.NoteId)
-        .then(() => {
-          this.spinner.hide()
-          this.submitted = true;
-          this.router.navigate(['/notes']);
-        })
+          .then(() => {
+            this.spinner.hide()
+            this.submitted = true;
+            this.router.navigate(['/notes']);
+          })
       }
-      else{
+      else {
         this.noteService.addNote(note)
           .then(() => {
             this.spinner.hide()
@@ -188,7 +188,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         this.deletable = true
         console.log(this.imagePreview)
       })
-      .catch((err) =>{
+      .catch((err) => {
         this.spinner.hide()
         this.imagePreview = ''
         this.hasFile = false

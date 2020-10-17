@@ -44,3 +44,12 @@ button.google:hover{
 	color: white;
 	background: linear-gradient(-45deg,#23a6d5, #23d5ab);
 }
+.example-small-box, .example-large-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 16px;
+	padding: 16px;
+	border-radius: 8px;
+  }
+  

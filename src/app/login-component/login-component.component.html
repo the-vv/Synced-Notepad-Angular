@@ -8,40 +8,70 @@
                             Sign In With
                         </p>
                     </div>
-                    <div class="col-sm-8 mx-auto mt-5">
-                        <button type="button" class="google btn btn-primary btn-lg btn-block shadow" disabled data-ripple-color="dark"
-                        (click)="FBLogin()"> 
+                    <div class="col-sm-8 mx-auto mt-3">
+                        <button type="button" class="google btn btn-primary btn-lg btn-block shadow"
+                            data-ripple-color="dark" (click)="FBLogin()">
                             <i class="fab fa-facebook"></i> Sign In with Facebook
                         </button>
-                    </div>                    
+                    </div>
                     <div class="col-sm-8 mx-auto mt-3">
                         <button type="button" class="google btn btn-light btn-lg btn-block shadow"
                             data-ripple-color="dark" (click)="Glogin()">
                             <i class="fab fa-google"></i> Sign In with Google
                         </button>
                     </div>
-                    <div class="col-sm-8 mt-5 mx-auto text-dark">
-                        <p class=" m-0">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Username (Unavailable)</mat-label>
-                                <input matInput placeholder="Placeholder" disabled>
-                            </mat-form-field>
-                        </p>
-                        <p class="m-0">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Password (Unavailable)</mat-label>
-                                <input matInput placeholder="Placeholder" [type]="hide ? 'password' : 'text'" disabled>
-                                <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
-                                    {{hide ? 'visibility_off' : 'visibility'}}
-                                </mat-icon>
-                            </mat-form-field>
-                        </p>
-                        <div class="col-6 mx-auto mb-4">
-                            <button type="button" class="btn btn-primary btn-lg btn-block shadow"
-                                data-ripple-color="dark" disabled>
-                                Login <i class="fas fa-sign-in-alt"></i>
-                            </button>
-                        </div>
+                    <div class="col-sm-8 mt-3 mx-auto text-dark">
+                        <mat-tab-group dynamicHeight mat-align-tabs="center">
+                            <mat-tab label="Login">
+                                    <p class=" m-0">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Username (Unavailable)</mat-label>
+                                            <input matInput placeholder="Placeholder" disabled>
+                                        </mat-form-field>
+                                    </p>
+                                    <p class="m-0">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Password (Unavailable)</mat-label>
+                                            <input matInput placeholder="Placeholder"
+                                                [type]="hide ? 'password' : 'text'" disabled>
+                                            <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
+                                                {{hide ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </p>
+                                    <div class="col-6 mx-auto mb-4">
+                                        <button type="button" class="btn btn-primary btn-lg btn-block shadow"
+                                            data-ripple-color="dark" disabled>
+                                            Login <i class="fas fa-sign-in-alt"></i>
+                                        </button>
+                                    </div>
+                            </mat-tab>
+                            <mat-tab label="SignUp">
+                                <p class=" m-0">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Username (Unavailable)</mat-label>
+                                        <input matInput placeholder="Placeholder" disabled>
+                                    </mat-form-field>
+                                </p>
+                                <p class="m-0">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Password (Unavailable)</mat-label>
+                                        <input matInput placeholder="Placeholder"
+                                            [type]="hide ? 'password' : 'text'" disabled>
+                                        <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
+                                            {{hide ? 'visibility_off' : 'visibility'}}
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </p>
+                                <div class="col-6 mx-auto mb-4">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block shadow"
+                                        data-ripple-color="dark" disabled>
+                                        Login <i class="fas fa-sign-in-alt"></i>
+                                    </button>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+
                     </div>
                 </div>
             </div>

@@ -56,7 +56,31 @@ export class AuthenticationService {
   }
 
   FacebookLogin() {
-    return new Promise<any>((resolve, reject) => { }) //not working so deprecated
+    const provider = new auth.FacebookAuthProvider();
+    // const credential = await this.auth.signInWithPopup(provider); 
+    return new Promise<any>((resolve, reject) => {
+      this.auth.signInWithPopup(provider)
+        .then(async (credential) => {
+          // await this.addUserToDB(credential);
+          this.addUserToDB(credential)
+            .then((res) => {
+              if (res) {
+                resolve(this.redirectUrl)
+              }
+              else {
+                reject('Write to db: false ')
+              }
+            })
+            .catch((err) => {
+              console.log('error writing user to db');
+              reject(err)
+            })
+        })
+        .catch((err) => {
+          console.log('error signing in with facebook');
+          reject(err)
+        })
+    })
   }
 
   async GoogleLogin() {
@@ -91,6 +115,7 @@ export class AuthenticationService {
     this.isLoggedIn = false
     console.log("signing out");
     await this.auth.signOut()
+    this.notes.userNotes = undefined
     this.router.navigate(['/'])
   }
 }
