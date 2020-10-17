@@ -14,10 +14,12 @@ export class NotesContainerComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    this.isSmallScreen = event.target.innerWidth <= 768
     this.isDrawerOpen = event.target.innerWidth >= 768
   }
 
   Notes: Note[]
+  isSmallScreen:boolean;
   isDrawerOpen: boolean = true;
   uid: string
   searchQuery: string
@@ -43,6 +45,7 @@ export class NotesContainerComponent implements OnInit {
         this.searchResults = this.Note.searchNotes(this.searchQuery)
       }
     })
+    this.isSmallScreen = window.innerWidth <= 768
     this.isDrawerOpen = window.innerWidth >= 768
   }
 

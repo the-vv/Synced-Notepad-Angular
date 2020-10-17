@@ -1,15 +1,12 @@
 <div class="bg-dark m-0 p-0 main-container">
     <div class="">
         <mat-sidenav-container class="example-container">
-            <mat-sidenav #sidenav mode="side" [opened]='isDrawerOpen' class="sidebar">
+            <mat-sidenav #sidenav [mode]="isSmallScreen ? 'over' : 'side'" [opened]='isDrawerOpen' class="sidebar"
+                (closedStart)='isSmallScreen && isDrawerOpen = !isDrawerOpen'>
                 <div class="container-fluid">
                     <div class="row  d-flex align-items-center">
-                        <div class="col-10 col-sm-10">
+                        <div class="col-12 col-sm-10">
                             <p class="my-1 h3">Filter by</p>
-                        </div>
-                        <div class="col-2 d-flex justify-content-end p-0 m-0">
-                            <i class="fas fa-times fa-lg p-0 m-0" *ngIf="isDrawerOpen"
-                                (click)="isDrawerOpen = !isDrawerOpen" style="cursor: pointer;"></i>
                         </div>
                         <h4 class="p-0 m-0">#Tags</h4>
                         <hr class="m-0 p-0">
@@ -40,9 +37,10 @@
                         <mat-toolbar>
                             <div class="col-5 text-truncate">
                                 <span *ngIf="!searchResults" class="text-truncate">
-                                    Your Notes</span>
-                                <span *ngIf="searchResults"> 
-                                    <i class="fas fa-arrow-left text-white" style="cursor: pointer;" (click)="router.navigate(['/notes'])"></i>
+                                    All Notes</span>
+                                <span *ngIf="searchResults">
+                                    <i class="fas fa-arrow-left text-white" style="cursor: pointer;"
+                                        (click)="router.navigate(['/notes'])"></i>
                                     Results</span>
                                 <span class="example-spacer"></span>
                             </div>
@@ -67,13 +65,12 @@
                                             </span>
                                         </form>
                                     </div>
-                                    <div class="col-auto p-0 m-0 d-flex align-content-center justify-content-end pr-1">
-                                        <span class="text-white p-0 m-0" *ngIf="!isDrawerOpen">
+                                    <div class="col-auto p-0 m-0 d-flex align-content-center justify-content-end">
+                                        <span (click)="isDrawerOpen = !isDrawerOpen"  class="text-white p-0 m-0 mr-3">
                                             <i class="fas fa-filter fa-sm p-0 m-0 mt-3"
-                                                (click)="isDrawerOpen = !isDrawerOpen" *ngIf="!isDrawerOpen"
                                                 style="cursor: pointer;"></i>
                                         </span>
-                                        <span class="text-white p-0 m-0 ml-2">
+                                        <span class="text-white p-0 m-0 mr-2" >
                                             <i class="fas fa-sort-amount-down fa-sm p-0 m-0 mt-3"
                                                 style="cursor: pointer;" [matMenuTriggerFor]="menu"></i>
                                             <mat-menu #menu="matMenu">
@@ -97,9 +94,15 @@
                             <app-note-card [note]="Note"></app-note-card>
                         </div>
                     </div>
-                    <div class="dynamic notes-container row pb-4" *ngIf="searchResults">
+                    <div class="dynamic notes-container row pb-4" *ngIf="searchResults && searchResults.length">
                         <div class="col-sm-6 col-md-6 col-lg-4" *ngFor="let Note of searchResults">
                             <app-note-card [note]="Note"></app-note-card>
+                        </div>
+                    </div>
+                    <div class="row noNotes d-flex align-items-center justify-content-center"
+                    *ngIf="searchResults && !searchResults.length">
+                        <div class=" text-center">
+                            <h1>No results found</h1>
                         </div>
                     </div>
                     <div class="row noNotes d-flex align-items-center justify-content-center"
@@ -124,7 +127,7 @@
                 </div>
 
                 <div class="container-fluid shadow-lg p-0 m-0 bg-dark">
-                    <div class="text-center col-12 bottom-bar bg-dark" [ngClass]="{'bottomBar-dynamic': isDrawerOpen}">
+                    <div class="text-center col-12 bottom-bar bg-dark" [ngClass]="{'bottomBar-dynamic': isDrawerOpen && !isSmallScreen}">
                         <a type="button" class="btn btn-danger btn-rounded shadow new-button"
                             routerLink="/notes/create">
                             <i class="fas fa-plus"></i> Add a Note

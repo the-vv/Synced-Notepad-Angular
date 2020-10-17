@@ -47,3 +47,4 @@ Thumbs.db
 
 # my custom
 src/app/enviornments/envs.ts
+.firebase/*
