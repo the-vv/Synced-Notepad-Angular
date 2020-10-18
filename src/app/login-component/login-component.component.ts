@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponentComponent implements OnInit {
 
   registerForm: FormGroup;
+  loginForm: FormGroup;
   submitted = false;
   hide = true;
   signinCalled = false
@@ -25,8 +26,15 @@ export class LoginComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      title: ['', Validators.required,],
-      description: '',
+      name: ['',Validators.required ],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.required, Validators.email]],
+      confirmp: ['', Validators.required]
+    }, {
+    });
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(5)]]
     }, {
     });
     this.spinner.show()
@@ -41,7 +49,9 @@ export class LoginComponentComponent implements OnInit {
         }
       }))
   }
-  get f() { return this.registerForm.controls; }
+
+  get rf() { return this.registerForm.controls; }
+  get lf() { return this.loginForm.controls; }
  
   Glogin() {
     this.signinCalled = true;
@@ -75,10 +85,35 @@ export class LoginComponentComponent implements OnInit {
       })
   }
 
-  onSubmit(){    
-    if (!this.f.title.errors) {
-
+  onLogin(){        
+    if(!this.loginForm.invalid){
+      console.log(this.loginForm.value);      
     }
+  }
+
+  incorrectConfirm:boolean = false
+  onRegister(){        
+    if (!this.registerForm.invalid) {
+      console.log(this.registerForm.value);
+      // let formValue = this.registerForm.value
+      // if(formValue.password != formValue.confirmp){
+      //   console.log('incorrect');
+      //   this.incorrectConfirm = true
+      // }else{        
+      //   this.incorrectConfirm = false
+      // }
+      
+    }
+  }
+
+  onRetypePassword(){
+    let formValue = this.registerForm.value
+      if(formValue.password != formValue.confirmp){
+        console.log('incorrect');
+        this.incorrectConfirm = true
+      }else{        
+        this.incorrectConfirm = false
+      }
   }
 
 }

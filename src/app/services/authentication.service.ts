@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NotesService } from './notes.service'
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class AuthenticationService {
   isLoggedIn: boolean = false;
 
   constructor(
+    private _snackBar: MatSnackBar,
     private notes: NotesService,
     public auth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -38,6 +40,12 @@ export class AuthenticationService {
         }
       })
     )
+  }
+  
+  openSnackBar(message: string, action: string = 'Dismiss') {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
   }
 
   addUserToDB({ user }) {
@@ -79,6 +87,7 @@ export class AuthenticationService {
         .catch(async (err) => {
           console.log('error signing in with facebook');
           if (err.code == 'auth/account-exists-with-different-credential') {
+            this.openSnackBar('Signing in with exising google provider')
             let methods = await this.auth.fetchSignInMethodsForEmail(err.email);
             const provider = new auth.GoogleAuthProvider();
             provider.setCustomParameters({ 'login_hint': err.email });

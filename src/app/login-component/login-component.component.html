@@ -1,10 +1,11 @@
 <div class="bg">
-    <div class="container-fluid h-100 background-blue">
-        <div class="row justify-content-center h-100 align-content-center">
-            <div class="col-12 col-sm-10 col-md-8 col-lg-6 background-blue-inverse rounded text-center shadow-lg">
+    <div class="container-fluid h-100 background-blue bg-dark">
+        <div class="row justify-content-center h-100 align-content-center overflow-auto">
+            <div
+                class="col-12 col-sm-10 col-md-8 col-lg-6 background-blue-inverse text-center shadow-lg bg-dark rounded-box">
                 <div class="">
                     <div class="col-12 my-4">
-                        <p class="display-6 text-dark">
+                        <p class="display-6 text-light">
                             Sign In With
                         </p>
                     </div>
@@ -20,55 +21,96 @@
                             <i class="fab fa-google"></i> Sign In with Google
                         </button>
                     </div>
-                    <div class="col-sm-8 mt-3 mx-auto text-dark">
+                    <div class="col-sm-8 mt-3 mx-auto text-white">
                         <mat-tab-group dynamicHeight mat-align-tabs="center">
                             <mat-tab label="Login">
+                                <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="mt-3">
                                     <p class=" m-0">
                                         <mat-form-field appearance="outline">
-                                            <mat-label>Username (Unavailable)</mat-label>
-                                            <input matInput placeholder="Placeholder" disabled>
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="Your Email" formControlName="email">
+                                            <mat-error *ngIf="lf.email.errors?.required">This field is required
+                                            </mat-error>
+                                            <mat-error *ngIf="lf.email.errors?.email">Enter a valid email</mat-error>
                                         </mat-form-field>
                                     </p>
                                     <p class="m-0">
                                         <mat-form-field appearance="outline">
-                                            <mat-label>Password (Unavailable)</mat-label>
-                                            <input matInput placeholder="Placeholder"
-                                                [type]="hide ? 'password' : 'text'" disabled>
+                                            <mat-label>password</mat-label>
+                                            <input matInput placeholder="Your password" formControlName="password"
+                                                [type]="hide ? 'password' : 'text'">
                                             <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
                                                 {{hide ? 'visibility_off' : 'visibility'}}
                                             </mat-icon>
+                                            <mat-error *ngIf="lf.password.errors?.required">This field is required
+                                            </mat-error>
+                                            <mat-error *ngIf="lf.password.errors?.minlength">Password must be minimum 5
+                                                charecters long</mat-error>
                                         </mat-form-field>
                                     </p>
                                     <div class="col-6 mx-auto mb-4">
-                                        <button type="button" class="btn btn-primary btn-lg btn-block shadow"
-                                            data-ripple-color="dark" disabled>
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block shadow"
+                                            data-ripple-color="dark">
                                             Login <i class="fas fa-sign-in-alt"></i>
                                         </button>
                                     </div>
+                                </form>
                             </mat-tab>
                             <mat-tab label="SignUp">
-                                <p class=" m-0">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Username (Unavailable)</mat-label>
-                                        <input matInput placeholder="Placeholder" disabled>
-                                    </mat-form-field>
-                                </p>
-                                <p class="m-0">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Password (Unavailable)</mat-label>
-                                        <input matInput placeholder="Placeholder"
-                                            [type]="hide ? 'password' : 'text'" disabled>
-                                        <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
-                                            {{hide ? 'visibility_off' : 'visibility'}}
-                                        </mat-icon>
-                                    </mat-form-field>
-                                </p>
-                                <div class="col-6 mx-auto mb-4">
-                                    <button type="button" class="btn btn-primary btn-lg btn-block shadow"
-                                        data-ripple-color="dark" disabled>
-                                        Login <i class="fas fa-sign-in-alt"></i>
-                                    </button>
-                                </div>
+                                <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="mt-3">
+                                    <p class=" m-0">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Full Name</mat-label>
+                                            <input matInput placeholder="Your Name" formControlName="name">
+                                            <mat-error *ngIf="rf.name.errors?.required">This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </p>
+                                    <p class=" m-0">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="Your Email" formControlName="email">
+                                            <mat-error *ngIf="rf.email.errors?.required">This field is required
+                                            </mat-error>
+                                            <mat-error *ngIf="rf.email.errors?.email">Enter a valid email</mat-error>
+                                        </mat-form-field>
+                                    </p>
+                                    <p class="m-0">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Password</mat-label>
+                                            <input matInput placeholder="Your password" formControlName="password"
+                                                [type]="hide ? 'password' : 'text'" (change)="onRetypePassword()">
+                                            <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
+                                                {{hide ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                            <mat-error *ngIf="rf.password.errors?.required">This field is required
+                                            </mat-error>
+                                            <mat-error *ngIf="rf.password.errors?.minlength">Password must be minimum 5
+                                                charecters long</mat-error>
+                                        </mat-form-field>
+                                    </p>
+                                    <p class="m-0">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Confirm Password</mat-label>
+                                            <input matInput placeholder="Your password" formControlName="confirmp"
+                                                [type]="hide ? 'password' : 'text'">
+                                            <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
+                                                {{hide ? 'visibility_off' : 'visibility'}}
+                                            </mat-icon>
+                                            <mat-error *ngIf="rf.confirmp.errors?.required">This field is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </p>
+                                    <p>
+                                        <mat-error *ngIf="incorrectConfirm">Two passwords are not matching</mat-error>
+                                    </p>
+                                    <div class="col-6 mx-auto mb-4">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block shadow"
+                                            data-ripple-color="dark">
+                                            SignUp <i class="fas fa-sign-in-alt"></i>
+                                        </button>
+                                    </div>
+                                </form>
                             </mat-tab>
                         </mat-tab-group>
 
