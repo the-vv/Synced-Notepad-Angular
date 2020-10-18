@@ -7,7 +7,8 @@
         <button class="navbar-toggler p-0" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <button class="btn btn-link p-0 m-0 dropdown-toggle text-light usernme" *ngIf="auths.user$ | async as user">
-                Account <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="25px">
+                Account <img defaultImage="../../assets/images/dp.png" [lazyLoad]="user.photoURL" class="img-fluid"
+                    class="rounded-circle" height="25px" />
             </button>
             <i class="fas fa-bars pt-1" *ngIf="!(auths.user$ | async)"></i>
         </button>
@@ -22,7 +23,9 @@
                 <li class="nav-item d-none d-lg-inline my-auto" [matMenuTriggerFor]="menu">
                     <button class="btn btn-link p-0 px-1 m-0 dropdown-toggle text-light usernme">
                         {{user.displayName}}
-                        <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="25px">
+                        <!-- <img src="{{user.photoURL}}" alt="" class="rounded-circle" height="25px"> -->
+                        <img defaultImage="../../assets/images/dp.png" [lazyLoad]="user.photoURL" class="img-fluid"
+                            class="rounded-circle" height="25px" />
                     </button>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="auths.SignOut()">Logout</button>

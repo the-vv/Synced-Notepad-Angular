@@ -18,7 +18,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {    
     this.auths.user$.subscribe((user) =>{
-      console.log(user?user:"Logged Out");      
+      // console.log(user?user:"Logged Out");      
     })
   }
 

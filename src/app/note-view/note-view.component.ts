@@ -36,7 +36,7 @@ export class NoteViewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.id = params['id'];
       this.Note = this.Notes.getNote(this.id)
-      console.log(this.Note)
+      // console.log(this.Note)
       if (!this.Note) {
         this.router.navigate(['404'])
       }
@@ -54,7 +54,7 @@ export class NoteViewComponent implements OnInit {
         this.Notes.deleteNote(this.Note)
           .then((res) => {
             this.spinner.hide()
-            console.log(res)
+            // console.log(res)
             this.openSnackBar('Note deleted')
             this.router.navigate(['/notes'])
           })

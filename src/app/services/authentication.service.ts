@@ -157,7 +157,7 @@ export class AuthenticationService {
             photoURL: null
           }
         }
-        console.log(credential);        
+        // console.log(credential);        
         this.addUserToDB(credential)
           .then((res) => {
             if (res) {
@@ -203,7 +203,7 @@ export class AuthenticationService {
 
   async SignOut() {
     this.isLoggedIn = false
-    console.log("signing out");
+    // console.log("signing out");
     await this.auth.signOut()
     this.notes.userNotes = undefined
     this.router.navigate(['/'])

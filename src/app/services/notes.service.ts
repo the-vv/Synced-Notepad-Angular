@@ -42,7 +42,7 @@ export class NotesService {
       }
       return false
     })
-    console.log(notes);
+    // console.log(notes);
     if (query[0] != '#') {
       this.userNotes.forEach((el) => {
         let title = el.title.toLowerCase();
@@ -76,7 +76,7 @@ export class NotesService {
 
   updateNote(note: Note, id: string) {
     note.timestamp = Date.now()
-    console.log(note);
+    // console.log(note);
     const notesRef: any = this.afs.collection('notes').doc(id);
     return new Promise<boolean>(async (resolve, reject) => {
       await notesRef.set(note, { merge: true })
@@ -114,7 +114,7 @@ export class NotesService {
       if (s && s != 'success') {
         let r = this.task.cancel()
         if (r) {
-          console.log('Cancelled');
+          // console.log('Cancelled');
           this.openSnackBar('Uploading cancelled')
         } else {
           console.log('Error cancelling');
@@ -135,11 +135,11 @@ export class NotesService {
         .then(() => {
           if (image) {
             this.delete(image).then((res) => {
-              console.log(res);
+              // console.log(res);
               resolve({ note: true, image: true });
             })
               .catch((res) => {
-                console.log(res);
+                // console.log(res);
                 reject({ note: true, image: false })
               })
           } else {

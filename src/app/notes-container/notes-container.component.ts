@@ -40,7 +40,7 @@ export class NotesContainerComponent implements OnInit {
         if (this.searchQuery.substr(0, 5) == 'hash-') {
           this.searchQuery = '#' + this.searchQuery.substr(5)
         }
-        console.log(this.searchQuery);
+        // console.log(this.searchQuery);
         this.openSnackBar('Showing results for ' + this.searchQuery)
         this.searchResults = this.Note.searchNotes(this.searchQuery)
       }

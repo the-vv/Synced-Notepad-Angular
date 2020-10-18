@@ -47,7 +47,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroyed');
+    // console.log('destroyed');
     if (this.deletable && !this.submitted && !this.editMode) {
       this.removeImage();
     }
@@ -60,7 +60,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.NoteId = params['id'];
       let Note = this.noteService.getNote(this.NoteId)
-      console.log(Note)
+      // console.log(Note)
       if (this.NoteId && !Note) {
         console.log('redirect');
         this.router.navigate(['404'])
@@ -75,7 +75,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
         if (Note.hashTags.length) {
           this.tags = this.tags.concat(Note.hashTags)
         }
-        console.log(this.tags);
+        // console.log(this.tags);
         if (Note.images) {
           this.hasFile = true
           this.imagePreview = Note.images
@@ -113,7 +113,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
       }
       if (this.hasFile) {
         if (this.deletable) {
-          console.log(this.imagePreview);
+          // console.log(this.imagePreview);
           note.images = this.imagePreview
         } else {
           this.spinner.hide()
@@ -121,7 +121,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
           return
         }
       }
-      console.log(note);
+      // console.log(note);
       if (this.editMode) {
         if (!this.hasFile) {
           note.images = ''
@@ -186,7 +186,7 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
       .then((url: string) => {
         this.imagePreview = url
         this.deletable = true
-        console.log(this.imagePreview)
+        // console.log(this.imagePreview)
       })
       .catch((err) => {
         this.spinner.hide()
@@ -197,13 +197,13 @@ export class CreateNoteComponent implements OnInit, OnDestroy {
       })
     this.noteService.status.subscribe((s) => {
       this.fstate = s
-      console.log(s);
+      // console.log(s);
     })
     this.noteService.percentage.subscribe((p) => {
       if (p >= 0) {
         this.spinner.hide()
       }
-      console.log(p);
+      // console.log(p);
       this.percentage = Math.ceil(p)
     })
   }

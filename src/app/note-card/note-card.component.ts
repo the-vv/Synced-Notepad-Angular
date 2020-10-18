@@ -35,7 +35,7 @@ export class NoteCardComponent implements OnInit {
         this.Notes.deleteNote(this.note)
           .then((res) => {
             this.spinner.hide()
-            console.log(res)
+            // console.log(res)
             this.openSnackBar('Note deleted')
           })
           .catch((res) => {

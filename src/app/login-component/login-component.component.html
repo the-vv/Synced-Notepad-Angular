@@ -49,7 +49,8 @@
                                         </mat-form-field>
                                     </p>
                                     <p class="text-left">
-                                        <mat-error *ngIf="wrongPass">The password you entered is wrong or you have previousely loged in with another method</mat-error>
+                                        <mat-error *ngIf="wrongPass">The password you entered is wrong or you have
+                                            previousely loged in with another method</mat-error>
                                     </p>
                                     <div class="col-6 mx-auto mb-4">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block shadow"
@@ -119,11 +120,11 @@
 
                     </div>
                 </div>
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse"
+                    [fullScreen]="false">
+                    <p style="color: white"> Signing in... </p>
+                </ngx-spinner>
             </div>
         </div>
     </div>
 </div>
-
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
-    <p style="color: white"> Signing in... </p>
-</ngx-spinner>
