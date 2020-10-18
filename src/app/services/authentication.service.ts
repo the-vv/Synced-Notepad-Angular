@@ -117,12 +117,12 @@ export class AuthenticationService {
     })
   }
 
-  async GoogleLogin() {
+  GoogleLogin() {
     const provider = new auth.GoogleAuthProvider();
     // const credential = await this.auth.signInWithPopup(provider); 
     return new Promise<any>((resolve, reject) => {
       this.auth.signInWithPopup(provider)
-        .then(async (credential) => {
+        .then((credential) => {
           // await this.addUserToDB(credential);
           this.addUserToDB(credential)
             .then((res) => {
@@ -143,6 +143,43 @@ export class AuthenticationService {
           reject(err)
         })
     })
+  }
+
+  emailSignup(data){
+    return new Promise((resolve, reject) =>{
+      this.auth.createUserWithEmailAndPassword(data.email,data.password)
+      .then((res) => {
+        let credential = {
+          user:{
+            uid: res.user.uid,
+            email: res.user.email,
+            displayName: data.name,
+            photoURL: null
+          }
+        }
+        console.log(credential);        
+        this.addUserToDB(credential)
+          .then((res) => {
+            if (res) {
+              resolve(this.redirectUrl)
+            }
+            else {
+              reject('Write to db: false ')
+            }
+          })
+          .catch((err) => {
+            console.log('error writing user to db');
+            reject(err)
+          })
+      })
+      .catch((err) => {
+        console.log(err);
+        if(err.code == 'auth/email-already-in-use'){
+          reject({exists: true})          
+        }
+        // reject(err)
+      })
+    })    
   }
 
   async SignOut() {

@@ -3,6 +3,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-component',
@@ -19,23 +20,30 @@ export class LoginComponentComponent implements OnInit {
   signinCalled = false
 
   constructor(
+    private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
     public Auth: AuthenticationService,
     private router: Router
   ) { }
 
+  openSnackBar(message: string, action: string = 'Dismiss') {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
+
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: ['',Validators.required ],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       confirmp: ['', Validators.required]
     }, {
     });
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(5)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     }, {
     });
     this.spinner.show()
@@ -95,7 +103,17 @@ export class LoginComponentComponent implements OnInit {
   incorrectConfirm:boolean = false
   onRegister(){        
     if (!this.registerForm.invalid && !this.incorrectConfirm) {
-      console.log(this.registerForm.value);      
+      console.log(this.registerForm.value);  
+      this.Auth.emailSignup(this.registerForm.value)    
+      .then((res) =>{
+        console.log(res);
+        
+      })
+      .catch((err) =>{
+        if(err.exists){
+          this.openSnackBar("Account already exists")
+        }
+      })
     }
   }
 
