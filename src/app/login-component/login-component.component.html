@@ -44,9 +44,12 @@
                                             </mat-icon>
                                             <mat-error *ngIf="lf.password.errors?.required">This field is required
                                             </mat-error>
-                                            <mat-error *ngIf="lf.password.errors?.minlength">Password must be minimum 5
+                                            <mat-error *ngIf="lf.password.errors?.minlength">Password must be minimum 6
                                                 charecters long</mat-error>
                                         </mat-form-field>
+                                    </p>
+                                    <p class="text-left">
+                                        <mat-error *ngIf="wrongPass">The password you entered is wrong or you have previousely loged in with another method</mat-error>
                                     </p>
                                     <div class="col-6 mx-auto mb-4">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block shadow"
@@ -85,7 +88,7 @@
                                             </mat-icon>
                                             <mat-error *ngIf="rf.password.errors?.required">This field is required
                                             </mat-error>
-                                            <mat-error *ngIf="rf.password.errors?.minlength">Password must be minimum 5
+                                            <mat-error *ngIf="rf.password.errors?.minlength">Password must be minimum 6
                                                 charecters long</mat-error>
                                         </mat-form-field>
                                     </p>
@@ -101,8 +104,8 @@
                                             </mat-error>
                                         </mat-form-field>
                                     </p>
-                                    <p>
-                                        <mat-error *ngIf="incorrectConfirm">Two passwords are not matching</mat-error>
+                                    <p class="text-left">
+                                        <mat-error *ngIf="incorrectConfirm">The passwords are not matching</mat-error>
                                     </p>
                                     <div class="col-6 mx-auto mb-4">
                                         <button type="submit" class="btn btn-primary btn-lg btn-block shadow"

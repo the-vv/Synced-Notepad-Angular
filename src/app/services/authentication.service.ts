@@ -177,9 +177,28 @@ export class AuthenticationService {
         if(err.code == 'auth/email-already-in-use'){
           reject({exists: true})          
         }
-        // reject(err)
+        reject(err)
       })
     })    
+  }
+
+  emailLogin(data){
+    return new Promise((resolve, reject) =>{
+      this.auth.signInWithEmailAndPassword(data.email, data.password)
+      .then((res) =>{
+        console.log(res);
+        resolve(true)
+      })
+      .catch((err) =>{
+        console.log(err);
+        if(err.code == 'auth/wrong-password'){
+          reject({wrongPassword: true})
+        }
+        else if(err.code == 'auth/user-not-found'){
+          reject({userNotFound: true})
+        }
+      })
+    })
   }
 
   async SignOut() {

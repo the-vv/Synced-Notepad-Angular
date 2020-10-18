@@ -27,15 +27,15 @@ export class LoginComponentComponent implements OnInit {
     private router: Router
   ) { }
 
-  openSnackBar(message: string, action: string = 'Dismiss') {
+  openSnackBar(message: string, dur: number = 3000, action: string = 'Dismiss') {
     this._snackBar.open(message, action, {
-      duration: 3000,
+      duration: dur,
     });
   }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      name: ['',Validators.required ],
+      name: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       confirmp: ['', Validators.required]
@@ -50,18 +50,18 @@ export class LoginComponentComponent implements OnInit {
     this.Auth.user$
       .subscribe((user => {
         if (user && !this.signinCalled) {
-          this.spinner.hide()        
-          this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'], { replaceUrl: true })
-        }else if(!user){
           this.spinner.hide()
-          console.log('no user');          
+          this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'], { replaceUrl: true })
+        } else if (!user) {
+          this.spinner.hide()
+          console.log('no user');
         }
       }))
   }
 
   get rf() { return this.registerForm.controls; }
   get lf() { return this.loginForm.controls; }
- 
+
   Glogin() {
     this.signinCalled = true;
     this.spinner.show()
@@ -94,34 +94,67 @@ export class LoginComponentComponent implements OnInit {
       })
   }
 
-  onLogin(){        
-    if(!this.loginForm.invalid){
-      console.log(this.loginForm.value);      
+  wrongPass = false
+  onLogin() {
+    if (!this.loginForm.invalid) {
+      this.wrongPass = false
+      console.log(this.loginForm.value);
+      this.Auth.emailLogin(this.loginForm.value)
+        .then((res) => {
+          console.log(res);
+          this.loginForm.reset()
+          this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'], { replaceUrl: true })
+        })
+        .catch((err) => {
+          console.log(err);
+          if(err.wrongPassword){
+            this.wrongPass = true
+            this.loginForm.controls.password.reset()
+          }
+          else if(err.userNotFound){
+            this.openSnackBar('No user found with this email', 5000)
+            this.loginForm.reset()
+          }else{
+            this.openSnackBar(err.message)
+            this.loginForm.reset()
+          }
+        })
     }
   }
 
-  incorrectConfirm:boolean = false
-  onRegister(){        
+  incorrectConfirm: boolean = false
+  onRegister() {
     if (!this.registerForm.invalid && !this.incorrectConfirm) {
-      console.log(this.registerForm.value);  
-      this.Auth.emailSignup(this.registerForm.value)    
-      .then((res) =>{
-        console.log(res);
-        
-      })
-      .catch((err) =>{
-        if(err.exists){
-          this.openSnackBar("Account already exists")
-        }
-      })
+      console.log(this.registerForm.value);
+      this.Auth.emailSignup(this.registerForm.value)
+        .then((res) => {
+          console.log(res);
+          this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'], { replaceUrl: true })
+        })
+        .catch((err) => {
+          if (err.exists) {
+            this.openSnackBar("Account already exists", 5000)
+            this.registerForm.reset()
+          }else{
+            this.openSnackBar(err.message)
+            this.registerForm.reset()
+          }
+        })
     }
   }
 
-  onRetypePassword(){
-    this.registerForm.get('confirmp').valueChanges.subscribe(val =>{
-      console.log(val);      
+  onRetypePassword() {
+    this.registerForm.get('password').valueChanges.subscribe(val => {
+      let password = this.registerForm.value.confirmp
+      if (password != val) {
+        console.log('incorrect');
+        this.incorrectConfirm = true
+      }
+    })
+    this.registerForm.get('confirmp').valueChanges.subscribe(val => {
+      console.log(val);
       let password = this.registerForm.value.password
-      if(password != val){
+      if (password != val) {
         console.log('incorrect');
         this.incorrectConfirm = true
       } else {
