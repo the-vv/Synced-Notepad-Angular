@@ -93,9 +93,9 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>Confirm Password</mat-label>
                                             <input matInput placeholder="Your password" formControlName="confirmp"
-                                                [type]="hide ? 'password' : 'text'">
-                                            <mat-icon class="mpointer" matSuffix (click)="hide = !hide">
-                                                {{hide ? 'visibility_off' : 'visibility'}}
+                                                [type]="hideC ? 'password' : 'text'">
+                                            <mat-icon class="mpointer" matSuffix (click)="hideC = !hideC">
+                                                {{hideC ? 'visibility_off' : 'visibility'}}
                                             </mat-icon>
                                             <mat-error *ngIf="rf.confirmp.errors?.required">This field is required
                                             </mat-error>

@@ -15,6 +15,7 @@ export class LoginComponentComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   hide = true;
+  hideC = true;
   signinCalled = false
 
   constructor(
@@ -93,27 +94,22 @@ export class LoginComponentComponent implements OnInit {
 
   incorrectConfirm:boolean = false
   onRegister(){        
-    if (!this.registerForm.invalid) {
-      console.log(this.registerForm.value);
-      // let formValue = this.registerForm.value
-      // if(formValue.password != formValue.confirmp){
-      //   console.log('incorrect');
-      //   this.incorrectConfirm = true
-      // }else{        
-      //   this.incorrectConfirm = false
-      // }
-      
+    if (!this.registerForm.invalid && !this.incorrectConfirm) {
+      console.log(this.registerForm.value);      
     }
   }
 
   onRetypePassword(){
-    let formValue = this.registerForm.value
-      if(formValue.password != formValue.confirmp){
+    this.registerForm.get('confirmp').valueChanges.subscribe(val =>{
+      console.log(val);      
+      let password = this.registerForm.value.password
+      if(password != val){
         console.log('incorrect');
         this.incorrectConfirm = true
-      }else{        
+      } else {
         this.incorrectConfirm = false
       }
+    })
   }
 
 }
