@@ -19,7 +19,7 @@ export class NotesContainerComponent implements OnInit {
   }
 
   Notes: Note[]
-  isSmallScreen:boolean;
+  isSmallScreen: boolean;
   isDrawerOpen: boolean = true;
   uid: string
   searchQuery: string
@@ -41,10 +41,15 @@ export class NotesContainerComponent implements OnInit {
           this.searchQuery = '#' + this.searchQuery.substr(5)
         }
         // console.log(this.searchQuery);
-        if(/^\d+$/.test(this.searchQuery) && this.searchQuery.length == 13){     
-          let dt =new Date(Number(this.searchQuery))
-        this.openSnackBar('Showing results for  ' + dt.getDate() + '/' + (dt.getMonth()+1) + '/' + dt.getFullYear())
-        }else{
+        if (/^\d+$/.test(this.searchQuery) && this.searchQuery.length == 13) {
+          let dt = new Date(Number(this.searchQuery))
+          let time = dt.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+          })
+          this.openSnackBar('Showing results for  ' + dt.getDate() + '/' + (dt.getMonth() + 1) + '/' + dt.getFullYear().toString().substr(-2) + ' ' +  time)
+        } else {
           this.openSnackBar('Showing results for ' + this.searchQuery)
         }
         this.searchResults = this.Note.searchNotes(this.searchQuery)
@@ -59,7 +64,7 @@ export class NotesContainerComponent implements OnInit {
   searchValue: string = ''
   searchChange(q?: string) {
     let query = q ? q : this.searchValue
-    query = String(query)    
+    query = String(query)
     if (query && query.length) {
       if (query[0] == '#') {
         query = 'hash-' + query.substr(1)
@@ -86,7 +91,7 @@ export class NotesContainerComponent implements OnInit {
     }
     this.openSnackBar('Sorted by ' + method)
   }
-  
+
   openSnackBar(message: string, dur: number = 3000, action: string = 'Dismiss') {
     this.snackbar.open(message, action, {
       duration: dur,
