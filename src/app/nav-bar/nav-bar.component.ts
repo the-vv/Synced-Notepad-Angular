@@ -14,10 +14,15 @@ export class NavBarComponent implements OnInit {
     public router: Router,
     public location: Location,
     public auths: AuthenticationService
-  ) { }
+  ) {
+    window.addEventListener('beforeinstallprompt', event => {
+      // this.promptEvent = event;  
+      this.auths.PWAPrompt = event
+    })
+  }
 
-  ngOnInit(): void {    
-    this.auths.user$.subscribe((user) =>{
+  ngOnInit(): void {
+    this.auths.user$.subscribe((user) => {
       // console.log(user?user:"Logged Out");      
     })
   }

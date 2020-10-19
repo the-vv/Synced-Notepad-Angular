@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class AuthenticationService {
 
+  PWAPrompt: any; //for pwa
   user$: Observable<any>;
   redirectUrl: string;
   isLoggedIn: boolean = false;
@@ -40,6 +41,10 @@ export class AuthenticationService {
         }
       })
     )
+  }
+
+  installPWA(){
+    this.PWAPrompt.prompt()
   }
   
   openSnackBar(message: string, action: string = 'Dismiss') {

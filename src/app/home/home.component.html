@@ -13,10 +13,10 @@
                     </span>
                 </p>
             </div>
-            <div class="col-12 text-left">
+            <div class="col-12 text-left"> 
                 <button type="button" class="btn btn-primary text-white mx-2 rounded-pill" routerLink="/notes">Launch <i
                         class="fas fa-external-link-alt"></i></button>
-                <button type="button" class="btn btn-success text-white mx-2 rounded-pill">Install <i
+                <button type="button" class="btn btn-success text-white mx-2 rounded-pill" *ngIf="auth.PWAPrompt" (click)="auth.installPWA()">Install <i
                         class="fas fa-arrow-down"></i></button>
             </div>
         </div>

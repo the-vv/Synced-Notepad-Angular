@@ -9,6 +9,7 @@
         "files": [
           "/favicon.ico",
           "/index.html",
+          "/assets/images/newBG.jpg",
           "/manifest.webmanifest",
           "/*.css",
           "/*.js"
