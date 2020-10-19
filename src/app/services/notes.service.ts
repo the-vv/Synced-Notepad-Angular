@@ -15,6 +15,7 @@ export class NotesService {
   status: Observable<string>
   userNotes: Note[]
   hashTags: string[]
+  dates: any[];
   task: AngularFireUploadTask;
   percentage: Observable<number>;
   downloadURL: Observable<string>;
@@ -31,11 +32,11 @@ export class NotesService {
     let filteredNotes = []
     let notes = this.userNotes.filter((el) => {
       for (let tag of el.hashTags) {
-        if (String(tag).toLocaleLowerCase() === query.toLocaleLowerCase()) {
+        if (String(tag).toLowerCase() === query.toLowerCase()) {
           return true
         }
         if (query[0] != '#') {
-          if (String(tag).toLocaleLowerCase() === '#' + query.toLocaleLowerCase()) {
+          if (String(tag).toLowerCase() === '#' + query.toLowerCase()) {
             return true
           }
         }
@@ -53,6 +54,11 @@ export class NotesService {
       })
       // console.log(qnotes);
     }
+    this.userNotes.forEach((el) =>{
+      if(String(el.timestamp) == query){
+        notes.push(el)
+      }
+    })
     let result = [...new Set(notes)]
     // console.log(result);
     return result
@@ -193,6 +199,19 @@ export class NotesService {
     }
     else {
       this.hashTags = []
+    }
+    this.getDates();
+  }
+
+  getDates(){
+    let tdates = []
+    for(let date of this.userNotes){
+      tdates.push(date.timestamp)
+    }
+    if(tdates.length){
+      this.dates = tdates
+    }else{
+      this.dates = []
     }
   }
 

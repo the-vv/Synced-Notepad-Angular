@@ -41,7 +41,12 @@ export class NotesContainerComponent implements OnInit {
           this.searchQuery = '#' + this.searchQuery.substr(5)
         }
         // console.log(this.searchQuery);
-        this.openSnackBar('Showing results for ' + this.searchQuery)
+        if(/^\d+$/.test(this.searchQuery) && this.searchQuery.length == 13){     
+          let dt =new Date(Number(this.searchQuery))
+        this.openSnackBar('Showing results for  ' + dt.getDate() + '/' + (dt.getMonth()+1) + '/' + dt.getFullYear())
+        }else{
+          this.openSnackBar('Showing results for ' + this.searchQuery)
+        }
         this.searchResults = this.Note.searchNotes(this.searchQuery)
       }
     })
@@ -54,6 +59,7 @@ export class NotesContainerComponent implements OnInit {
   searchValue: string = ''
   searchChange(q?: string) {
     let query = q ? q : this.searchValue
+    query = String(query)    
     if (query && query.length) {
       if (query[0] == '#') {
         query = 'hash-' + query.substr(1)
