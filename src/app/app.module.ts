@@ -43,6 +43,8 @@ import { NoteViewComponent } from './note-view/note-view.component';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { PageNoteFoundComponent } from './page-note-found/page-note-found.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -83,7 +85,8 @@ import { ConfirmationComponent } from './confirmation/confirmation.component';
     NgxSpinnerModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatTabsModule
+    MatTabsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthenticationService,
