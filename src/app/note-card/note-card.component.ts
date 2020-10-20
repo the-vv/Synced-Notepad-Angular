@@ -31,8 +31,6 @@ export class NoteCardComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('test');
-      
         this.spinner.show()
         this.Notes.deleteNote(this.note)
           .then((res) => {

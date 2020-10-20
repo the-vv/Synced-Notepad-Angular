@@ -56,12 +56,12 @@ export class NoteViewComponent implements OnInit {
             this.spinner.hide()
             // console.log(res)
             this.openSnackBar('Note deleted')
-            this.router.navigate(['/notes'])
+            this.router.navigate(['/notes'], { replaceUrl: true })
           })
           .catch((res) => {
             if (res.note) {
               this.spinner.hide()
-              this.router.navigate(['/notes'])
+              this.router.navigate(['/notes'], { replaceUrl: true })
             }
           })
       }

@@ -46,17 +46,19 @@ export class LoginComponentComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]]
     }, {
     });
-    this.spinner.show()
-    this.Auth.user$
-      .subscribe((user => {
-        if (user && !this.signinCalled) {
-          this.spinner.hide()
-          this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'], { replaceUrl: true })
-        } else if (!user) {
-          this.spinner.hide()
-          // console.log('no user');
-        }
-      }))
+    if (this.Auth.isOnline) {
+      this.spinner.show()
+      this.Auth.user$
+        .subscribe((user => {
+          if (user && !this.signinCalled) {
+            this.spinner.hide()
+            this.router.navigate([this.Auth.redirectUrl ? this.Auth.redirectUrl : '/'], { replaceUrl: true })
+          } else if (!user) {
+            this.spinner.hide()
+            // console.log('no user');
+          }
+        }))
+    }
   }
 
   get rf() { return this.registerForm.controls; }
@@ -110,14 +112,14 @@ export class LoginComponentComponent implements OnInit {
         .catch((err) => {
           this.spinner.hide()
           console.log(err);
-          if(err.wrongPassword){
+          if (err.wrongPassword) {
             this.wrongPass = true
             this.loginForm.controls.password.reset()
           }
-          else if(err.userNotFound){
+          else if (err.userNotFound) {
             this.openSnackBar('No user found with this email', 5000)
             this.loginForm.reset()
-          }else{
+          } else {
             this.openSnackBar(err.message)
             this.loginForm.reset()
           }
@@ -141,7 +143,7 @@ export class LoginComponentComponent implements OnInit {
           if (err.exists) {
             this.openSnackBar("Account already exists", 5000)
             this.registerForm.reset()
-          }else{
+          } else {
             this.openSnackBar(err.message)
             this.registerForm.reset()
           }

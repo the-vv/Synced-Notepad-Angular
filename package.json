@@ -25,6 +25,7 @@
     "@angular/service-worker": "~9.1.0",
     "angularfire2": "^5.4.2",
     "firebase": "^7.23.0",
+    "ng-connection-service": "^1.0.4",
     "ng-lazyload-image": "^9.0.1",
     "ngx-skeleton-loader": "^2.5.0",
     "ngx-spinner": "^9.0.2",

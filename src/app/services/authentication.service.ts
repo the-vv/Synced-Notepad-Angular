@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs'
+import { fromEvent, Observable, of } from 'rxjs'
 import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NotesService } from './notes.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,24 @@ export class AuthenticationService {
   user$: Observable<any>;
   redirectUrl: string;
   isLoggedIn: boolean = false;
+  isOnline: boolean = true;
 
   constructor(
+    private spinner: NgxSpinnerService,
     private _snackBar: MatSnackBar,
     private notes: NotesService,
     public auth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
   ) {
+    fromEvent(window, 'online').subscribe((res) => {
+      this.spinner.hide();
+      this.isOnline = true
+    })
+    fromEvent(window, 'offline').subscribe((res) => {
+      this.spinner.show();
+      this.isOnline = false
+    })
     // Get the auth state, then fetch the Firestore user document or return null
     this.user$ = this.auth.authState.pipe(
       switchMap(user => {
@@ -43,7 +54,7 @@ export class AuthenticationService {
     )
   }
 
-  installPWA(){
+  installPWA() {
     this.PWAPrompt.prompt()
     this.PWAPrompt.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === 'accepted') {
@@ -54,7 +65,7 @@ export class AuthenticationService {
       }
     })
   }
-  
+
   openSnackBar(message: string, action: string = 'Dismiss') {
     this._snackBar.open(message, action, {
       duration: 3000,
@@ -158,59 +169,59 @@ export class AuthenticationService {
     })
   }
 
-  emailSignup(data){
-    return new Promise((resolve, reject) =>{
-      this.auth.createUserWithEmailAndPassword(data.email,data.password)
-      .then((res) => {
-        let credential = {
-          user:{
-            uid: res.user.uid,
-            email: res.user.email,
-            displayName: data.name,
-            photoURL: null
+  emailSignup(data) {
+    return new Promise((resolve, reject) => {
+      this.auth.createUserWithEmailAndPassword(data.email, data.password)
+        .then((res) => {
+          let credential = {
+            user: {
+              uid: res.user.uid,
+              email: res.user.email,
+              displayName: data.name,
+              photoURL: null
+            }
           }
-        }
-        // console.log(credential);        
-        this.addUserToDB(credential)
-          .then((res) => {
-            if (res) {
-              resolve(this.redirectUrl)
-            }
-            else {
-              reject('Write to db: false ')
-            }
-          })
-          .catch((err) => {
-            console.log('error writing user to db');
-            reject(err)
-          })
-      })
-      .catch((err) => {
-        console.log(err);
-        if(err.code == 'auth/email-already-in-use'){
-          reject({exists: true})          
-        }
-        reject(err)
-      })
-    })    
+          // console.log(credential);        
+          this.addUserToDB(credential)
+            .then((res) => {
+              if (res) {
+                resolve(this.redirectUrl)
+              }
+              else {
+                reject('Write to db: false ')
+              }
+            })
+            .catch((err) => {
+              console.log('error writing user to db');
+              reject(err)
+            })
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.code == 'auth/email-already-in-use') {
+            reject({ exists: true })
+          }
+          reject(err)
+        })
+    })
   }
 
-  emailLogin(data){
-    return new Promise((resolve, reject) =>{
+  emailLogin(data) {
+    return new Promise((resolve, reject) => {
       this.auth.signInWithEmailAndPassword(data.email, data.password)
-      .then((res) =>{
-        console.log(res);
-        resolve(true)
-      })
-      .catch((err) =>{
-        console.log(err);
-        if(err.code == 'auth/wrong-password'){
-          reject({wrongPassword: true})
-        }
-        else if(err.code == 'auth/user-not-found'){
-          reject({userNotFound: true})
-        }
-      })
+        .then((res) => {
+          console.log(res);
+          resolve(true)
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.code == 'auth/wrong-password') {
+            reject({ wrongPassword: true })
+          }
+          else if (err.code == 'auth/user-not-found') {
+            reject({ userNotFound: true })
+          }
+        })
     })
   }
 

@@ -1,6 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <router-outlet></router-outlet>
 
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
+<ngx-spinner *ngIf="auth.isOnline" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-pulse" [fullScreen]="true">
     <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<ngx-spinner *ngIf="!auth.isOnline" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="line-scale" [fullScreen]="true">
+    <p style="color: white"> Waiting for Network... </p>
 </ngx-spinner>
