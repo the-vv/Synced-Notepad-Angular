@@ -31,6 +31,8 @@ export class NoteCardComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log('test');
+      
         this.spinner.show()
         this.Notes.deleteNote(this.note)
           .then((res) => {
@@ -46,7 +48,7 @@ export class NoteCardComponent implements OnInit {
       }
     });
   }
-  
+   
   openSnackBar(message: string, action: string = 'Dismiss') {
     this._snackBar.open(message, action, {
       duration: 3000,
