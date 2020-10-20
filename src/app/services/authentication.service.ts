@@ -45,6 +45,14 @@ export class AuthenticationService {
 
   installPWA(){
     this.PWAPrompt.prompt()
+    this.PWAPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+        this.PWAPrompt = undefined
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+    })
   }
   
   openSnackBar(message: string, action: string = 'Dismiss') {
