@@ -2,7 +2,7 @@
 <div mat-dialog-content>
     <p>Are you sure want to delete note "{{data | slice:0:10}}..."?</p>
 </div>
-<div mat-dialog-actions class="mt-4">
+<div mat-dialog-actions class="mt-4 text-right">
     <button (click)="onNoClick()" class="btn btn-dark mr-2">Cancel</button>
     <button (click)="YesNoClick()" class="btn btn-danger ml-2" cdkFocusInitial>Ok</button>
 </div>

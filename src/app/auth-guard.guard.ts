@@ -16,7 +16,7 @@ constructor(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {      
     const url: string = state.url;
-    if(this.auth.isLoggedIn){
+    if(this.auth.isLoggedIn && this.auth.isOnline){
       return true
     }
     this.auth.redirectUrl = url;    

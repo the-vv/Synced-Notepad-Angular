@@ -29,14 +29,15 @@ export class AuthenticationService {
     private afs: AngularFirestore,
     private router: Router
   ) {
-    fromEvent(window, 'online').subscribe((res) => {
-      this.spinner.hide();
-      this.isOnline = true
-    })
-    fromEvent(window, 'offline').subscribe((res) => {
-      this.spinner.show();
-      this.isOnline = false
-    })
+    
+    // fromEvent(window, 'online').subscribe((res) => {
+    //   this.spinner.hide();
+    //   this.isOnline = true
+    // })
+    // fromEvent(window, 'offline').subscribe((res) => {
+    //   this.spinner.show();
+    //   this.isOnline = false
+    // })
     // Get the auth state, then fetch the Firestore user document or return null
     this.user$ = this.auth.authState.pipe(
       switchMap(user => {
