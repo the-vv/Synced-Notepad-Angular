@@ -18,7 +18,7 @@ export class NoteCardComponent implements OnInit {
   constructor(
     private _snackBar: MatSnackBar,
     public Notes: NotesService,
-    private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService, 
     public dialog: MatDialog
     ) { }
 

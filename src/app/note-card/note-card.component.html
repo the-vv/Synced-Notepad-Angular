@@ -1,21 +1,24 @@
-<div class="card text-center shadow m-2 bg-dark">
-    <div class="card-header text-muted">
-        {{note.hashTags}}
-    </div>
-    <div class="card-body">
-        <h2 class="card-title text-truncate">{{note.title}}</h2>
-        <p class="card-text text-truncate">
-            {{note.description}}
-        </p>
-        <a routerLink="/notes/view/{{note.id}}" class="btn btn-primary">View</a>
-    </div>
-    <div class="card-footer text-muted text-truncate text-left">
-        {{note.timestamp | date : 'short'}}
-        <div class="float-right">
-            <span class="ml-auto text-danger btn btn-dark btn-sm mr-1" (click)="DeleteNote()"><i
-                    class="fas fa-trash"></i></span>
-            <a routerLink='/notes/create/{{note.id}}' class="ml-auto text-warning btn btn-dark btn-sm ml-1"><i
-                    class="fas fa-edit"></i></a>
+<div class="card text-center shadow m-2" [ngClass]="(note.images) ? 'bg-img' : 'bg-dark'"
+    [ngStyle]="{'background-image': note.images?'url('+note.images+')':''}">
+    <div [ngClass]="(note.images) ? 'bg-img-sub' : ''">
+        <div class="card-header text-muted">
+            {{note.hashTags}}
+        </div>
+        <div class="card-body">
+            <h2 class="card-title text-truncate">{{note.title}}</h2>
+            <p class="card-text text-truncate">
+                {{note.description}}
+            </p>
+            <a routerLink="/notes/view/{{note.id}}" class="btn btn-primary">View</a>
+        </div>
+        <div class="card-footer text-muted text-truncate text-left">
+            {{note.timestamp | date : 'short'}}
+            <div class="float-right">
+                <span class="ml-auto text-danger btn btn-dark btn-sm mr-1" (click)="DeleteNote()"><i
+                        class="fas fa-trash"></i></span>
+                <a routerLink='/notes/create/{{note.id}}' class="ml-auto text-warning btn btn-dark btn-sm ml-1"><i
+                        class="fas fa-edit"></i></a>
+            </div>
         </div>
     </div>
 </div>
