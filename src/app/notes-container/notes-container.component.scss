@@ -32,9 +32,9 @@
         height: calc(100vh - 53px);
     }
 
-    .bottomBar-dynamic {
+    div.bottomBar-dynamic {
         width     : calc(100vw - 200px);
-        transition: 0.5s;
+        transition: 0.35s;
     }
 
     .sidebar {
@@ -76,6 +76,7 @@ mat-chip {
     border-top             : 1px solid #f93154;
     border-top-right-radius: 1rem;
     border-top-left-radius : 1rem;
+    transition: 0.15s;
 }
 
 .new-button {
