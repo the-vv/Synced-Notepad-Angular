@@ -27,8 +27,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -86,7 +86,11 @@ import { environment } from '../environments/environment';
     MatDialogModule,
     MatSnackBarModule,
     MatTabsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: "registerImmediately"  })
+    ServiceWorkerModule.register('ngsw-worker.js',
+      {
+        enabled: environment.production,
+        registrationStrategy: "registerImmediately"
+      })
   ],
   providers: [
     AuthenticationService,
